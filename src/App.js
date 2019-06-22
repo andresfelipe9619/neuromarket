@@ -1,20 +1,23 @@
 import React from "react";
 import GlobalState from "./context/GlobalState";
-import ProductsPage from "./features/products";
-import CartPage from "./features/cart";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-
-const App = () => {
-  return (
-    <GlobalState>
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" component={ProductsPage} exact />
-          <Route path="/cart" component={CartPage} exact />
-        </Switch>
-      </BrowserRouter>
-    </GlobalState>
-  );
-};
+import AppRouter from "./AppRouter";
+import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import { purple, green } from "@material-ui/core/colors";
+const theme = createMuiTheme({
+  palette: {
+    primary: purple,
+    secondary: green
+  },
+  status: {
+    danger: "orange"
+  }
+});
+const App = () => (
+  <GlobalState>
+    <MuiThemeProvider theme={theme}>
+      <AppRouter />
+    </MuiThemeProvider>
+  </GlobalState>
+);
 
 export default App;
