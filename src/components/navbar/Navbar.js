@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -7,38 +7,45 @@ import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { ShoppingCart, Favorite } from "@material-ui/icons";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
-
+import ShopContext from "../../context/shop-context";
+import { Link as RouterLink } from "react-router-dom";
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const context = useContext(ShopContext);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const isMenuOpen = !!anchorEl;
+  const isMobileMenuOpen = !!mobileMoreAnchorEl;
 
-  function handleProfileMenuOpen(event) {
+  const cartItemsCount = context.cart.reduce(
+    (count, curItem) => count + curItem.quantity,
+    0
+  );
+  const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
-  }
+  };
 
-  function handleMobileMenuClose() {
+  const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  }
+  };
 
-  function handleMenuClose() {
+  const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
-  }
+  };
 
-  function handleMobileMenuOpen(event) {
+  const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
-  }
-
+  };
+  const AdapterLink = React.forwardRef((props, ref) => (
+    <RouterLink innerRef={ref} {...props} />
+  ));
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -66,21 +73,21 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="Show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
+      <MenuItem component={AdapterLink}>
+        <IconButton aria-label={`Show ${cartItemsCount} cart`} color="inherit">
+          <Badge badgeContent={cartItemsCount} color="secondary">
             <ShoppingCart />
           </Badge>
         </IconButton>
         <p>Cart</p>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="Show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
+        <IconButton aria-label="Show 4 new notifications" color="inherit">
+          <Badge badgeContent={4} color="secondary">
             <Favorite />
           </Badge>
         </IconButton>
-        <p>Notifications</p>
+        <p>Favorites</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -118,13 +125,16 @@ export default function PrimarySearchAppBar() {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="Show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
+            <IconButton
+              aria-label={`Show ${cartItemsCount} cart`}
+              color="inherit"
+            >
+              <Badge badgeContent={cartItemsCount} color="secondary">
                 <ShoppingCart />
               </Badge>
             </IconButton>
-            <IconButton aria-label="Show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
+            <IconButton aria-label="Show 4 new notifications" color="inherit">
+              <Badge badgeContent={4} color="secondary">
                 <Favorite />
               </Badge>
             </IconButton>
