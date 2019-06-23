@@ -1,6 +1,6 @@
 import React from "react";
 import CartPage from "./features/cart";
-// import HomePage from "./features/home";
+import HomePage from "./features/home";
 import LoginPage from "./features/login";
 import CheckoutPage from "./features/checkout";
 import ProductsPage from "./features/products";
@@ -13,7 +13,7 @@ const AppRouter = () => {
     <BrowserRouter>
       <Navbar />
       <Switch>
-        {/* <Route path="/" component={HomePage} exact /> */}
+        <Route path="/" component={HomePage} exact />
         <Route path="/cart" component={CartPage} exact />
         <Route path="/login" component={LoginPage} exact />
         <Route path="/register" component={RegisterPage} exact />

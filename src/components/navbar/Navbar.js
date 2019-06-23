@@ -161,7 +161,7 @@ export default function PrimarySearchAppBar() {
             </IconButton>
           </div>
         </Toolbar>
-        <Toolbar>
+        <Toolbar component="nav" variant="dense">
           <Typography variant="h6" noWrap>
             Categories
           </Typography>
