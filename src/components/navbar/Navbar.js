@@ -31,7 +31,7 @@ function Navbar(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleOnIconClick = route => event => props.history.push(route);
+  const goTo = route => event => props.history.push(route);
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -77,7 +77,7 @@ function Navbar(props) {
         <IconButton
           aria-label={`Show ${cartItemsCount} cart`}
           color="inherit"
-          onClick={handleOnIconClick("/cart")}
+          onClick={goTo("/cart")}
         >
           <Badge badgeContent={cartItemsCount} color="secondary">
             <ShoppingCart />
@@ -89,7 +89,7 @@ function Navbar(props) {
         <IconButton
           aria-label="Show 4 new notifications"
           color="inherit"
-          onClick={handleOnIconClick("/favorites")}
+          onClick={goTo("/favorites")}
         >
           <Badge badgeContent={4} color="secondary">
             <Favorite />
@@ -119,7 +119,7 @@ function Navbar(props) {
             className={classes.title}
             variant="h6"
             noWrap
-            onClick={handleOnIconClick("/")}
+            onClick={goTo("/")}
           >
             NeuroMarker
           </Typography>
@@ -141,7 +141,7 @@ function Navbar(props) {
             <IconButton
               aria-label={`Show ${cartItemsCount} cart`}
               color="inherit"
-              onClick={handleOnIconClick("/cart")}
+              onClick={goTo("/cart")}
             >
               <Badge badgeContent={cartItemsCount} color="secondary">
                 <ShoppingCart />
@@ -150,7 +150,7 @@ function Navbar(props) {
             <IconButton
               aria-label="Show 4 new notifications"
               color="inherit"
-              onClick={handleOnIconClick("/favorites")}
+              onClick={goTo("/favorites")}
             >
               <Badge badgeContent={4} color="secondary">
                 <Favorite />
@@ -179,8 +179,8 @@ function Navbar(props) {
             </IconButton>
           </div>
         </Toolbar>
-        <Toolbar component="nav" variant="dense">
-          <Typography variant="h6" noWrap>
+        <Toolbar component="nav" variant="dense" color="secondary">
+          <Typography variant="h6" noWrap onClick={goTo("/products")}>
             Categories
           </Typography>
         </Toolbar>
