@@ -13,8 +13,8 @@ import { ShoppingCart, Favorite } from "@material-ui/icons";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
 import ShopContext from "../../context/shop-context";
-import { Link as RouterLink } from "react-router-dom";
-export default function PrimarySearchAppBar() {
+import { withRouter } from "react-router-dom";
+function Navbar(props) {
   const classes = useStyles();
   const context = useContext(ShopContext);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -31,6 +31,8 @@ export default function PrimarySearchAppBar() {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleOnIconClick = route => event => props.history.push(route);
+
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
@@ -43,9 +45,7 @@ export default function PrimarySearchAppBar() {
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-  const AdapterLink = React.forwardRef((props, ref) => (
-    <RouterLink innerRef={ref} {...props} />
-  ));
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -73,8 +73,12 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem component={AdapterLink}>
-        <IconButton aria-label={`Show ${cartItemsCount} cart`} color="inherit">
+      <MenuItem>
+        <IconButton
+          aria-label={`Show ${cartItemsCount} cart`}
+          color="inherit"
+          onClick={handleOnIconClick("/cart")}
+        >
           <Badge badgeContent={cartItemsCount} color="secondary">
             <ShoppingCart />
           </Badge>
@@ -82,7 +86,11 @@ export default function PrimarySearchAppBar() {
         <p>Cart</p>
       </MenuItem>
       <MenuItem>
-        <IconButton aria-label="Show 4 new notifications" color="inherit">
+        <IconButton
+          aria-label="Show 4 new notifications"
+          color="inherit"
+          onClick={handleOnIconClick("/favorites")}
+        >
           <Badge badgeContent={4} color="secondary">
             <Favorite />
           </Badge>
@@ -107,7 +115,12 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <Typography className={classes.title} variant="h6" noWrap>
+          <Typography
+            className={classes.title}
+            variant="h6"
+            noWrap
+            onClick={handleOnIconClick("/")}
+          >
             NeuroMarker
           </Typography>
           <div className={classes.search}>
@@ -128,12 +141,17 @@ export default function PrimarySearchAppBar() {
             <IconButton
               aria-label={`Show ${cartItemsCount} cart`}
               color="inherit"
+              onClick={handleOnIconClick("/cart")}
             >
               <Badge badgeContent={cartItemsCount} color="secondary">
                 <ShoppingCart />
               </Badge>
             </IconButton>
-            <IconButton aria-label="Show 4 new notifications" color="inherit">
+            <IconButton
+              aria-label="Show 4 new notifications"
+              color="inherit"
+              onClick={handleOnIconClick("/favorites")}
+            >
               <Badge badgeContent={4} color="secondary">
                 <Favorite />
               </Badge>
@@ -172,3 +190,5 @@ export default function PrimarySearchAppBar() {
     </div>
   );
 }
+
+export default withRouter(Navbar);

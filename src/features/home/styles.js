@@ -63,11 +63,6 @@ const useStyles = makeStyles(theme => ({
   },
   sidebarSection: {
     marginTop: theme.spacing(3)
-  },
-  footer: {
-    backgroundColor: theme.palette.background.paper,
-    marginTop: theme.spacing(8),
-    padding: theme.spacing(6, 0)
   }
 }));
 export default useStyles;
