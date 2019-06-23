@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
 import ShopContext from "../../context/shop-context";
-import "./styles.css";
 
 const CartPage = props => {
   const context = useContext(ShopContext);

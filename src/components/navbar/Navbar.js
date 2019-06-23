@@ -161,6 +161,11 @@ export default function PrimarySearchAppBar() {
             </IconButton>
           </div>
         </Toolbar>
+        <Toolbar>
+          <Typography variant="h6" noWrap>
+            Categories
+          </Typography>
+        </Toolbar>
       </AppBar>
       {renderMobileMenu}
       {renderMenu}

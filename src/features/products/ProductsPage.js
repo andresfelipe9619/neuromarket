@@ -1,18 +1,11 @@
 import React from "react";
 import ShopContext from "../../context/shop-context";
-import MainNavigation from "../../components/main-navigation";
-import "./styles.css";
 
 const ProductsPage = props => {
   return (
     <ShopContext.Consumer>
       {context => (
         <React.Fragment>
-          <MainNavigation
-            cartItemNumber={context.cart.reduce((count, curItem) => {
-              return count + curItem.quantity;
-            }, 0)}
-          />
           <main className="products">
             <ul>
               {context.products.map(product => (
