@@ -2,11 +2,14 @@ import React from "react";
 import GlobalState from "./context/GlobalState";
 import AppRouter from "./AppRouter";
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import { purple, green } from "@material-ui/core/colors";
 const theme = createMuiTheme({
   palette: {
-    primary: purple,
-    secondary: green
+    primary: {
+      main: "#1b1f3a"
+    },
+    secondary: {
+      main: "#ff7844"
+    }
   },
   status: {
     danger: "orange"

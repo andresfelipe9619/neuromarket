@@ -1,190 +1,159 @@
-import React, { useState, useEffect } from "react";
-import withStyles from "@material-ui/core/styles/withStyles";
-import { Link, withRouter } from "react-router-dom";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Toolbar from "@material-ui/core/Toolbar";
+import React from "react";
 import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import MenuIcon from "@material-ui/icons/Menu";
+import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import Menu from "./Menu";
-import logo from "../../logo.svg";
-const styles = theme => ({
-  appBar: {
-    position: "relative",
-    boxShadow: "none",
-    borderBottom: `1px solid ${theme.palette.grey["100"]}`,
-    backgroundColor: "white"
-  },
-  inline: {
-    display: "inline"
-  },
-  flex: {
-    display: "flex",
-    [theme.breakpoints.down("sm")]: {
-      display: "flex",
-      justifyContent: "space-evenly",
-      alignItems: "center"
-    }
-  },
-  link: {
-    textDecoration: "none",
-    color: "inherit"
-  },
-  productLogo: {
-    display: "inline-block",
-    borderLeft: `1px solid ${theme.palette.grey["A100"]}`,
-    marginLeft: 32,
-    paddingLeft: 24,
-    [theme.breakpoints.up("md")]: {
-      paddingTop: "1.5em"
-    }
-  },
-  tagline: {
-    display: "inline-block",
-    margin: "0 auto",
-    [theme.breakpoints.up("md")]: {
-      paddingTop: "0.8em"
-    }
-  },
-  iconContainer: {
-    display: "none",
-    [theme.breakpoints.down("sm")]: {
-      display: "block"
-    }
-  },
-  iconButton: {
-    float: "right"
-  },
-  tabContainer: {
-    marginLeft: 32,
-    [theme.breakpoints.down("sm")]: {
-      display: "none"
-    }
-  },
-  tabItem: {
-    paddingTop: 20,
-    paddingBottom: 20,
-    minWidth: "auto"
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import Badge from "@material-ui/core/Badge";
+import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import MenuIcon from "@material-ui/icons/Menu";
+import SearchIcon from "@material-ui/icons/Search";
+import AccountCircle from "@material-ui/icons/AccountCircle";
+import { ShoppingCart, Favorite } from "@material-ui/icons";
+import MoreIcon from "@material-ui/icons/MoreVert";
+import useStyles from "./styles";
+
+export default function PrimarySearchAppBar() {
+  const classes = useStyles();
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+
+  const isMenuOpen = Boolean(anchorEl);
+  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+  function handleProfileMenuOpen(event) {
+    setAnchorEl(event.currentTarget);
   }
-});
 
-const Navbar = props => {
-  const { classes } = props;
-  const [value, setValue] = useState(0);
-  const [menuDrawer, setMenuDrawer] = useState(false);
+  function handleMobileMenuClose() {
+    setMobileMoreAnchorEl(null);
+  }
 
-  const handleChange = (event, value) => setValue(value);
+  function handleMenuClose() {
+    setAnchorEl(null);
+    handleMobileMenuClose();
+  }
 
-  const mobileMenuOpen = event => setMenuDrawer(true);
+  function handleMobileMenuOpen(event) {
+    setMobileMoreAnchorEl(event.currentTarget);
+  }
 
-  const mobileMenuClose = event => setMenuDrawer(false);
+  const menuId = "primary-search-account-menu";
+  const renderMenu = (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
 
-  useEffect(() => window.scrollTo(0, 0), []);
-
-  const current = () => {
-    if (props.currentPath === "/home") {
-      return 0;
-    }
-    if (props.currentPath === "/dashboard") {
-      return 1;
-    }
-    if (props.currentPath === "/signup") {
-      return 2;
-    }
-    if (props.currentPath === "/wizard") {
-      return 3;
-    }
-    if (props.currentPath === "/cards") {
-      return 4;
-    }
-  };
+  const mobileMenuId = "primary-search-account-menu-mobile";
+  const renderMobileMenu = (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton aria-label="Show 4 new mails" color="inherit">
+          <Badge badgeContent={4} color="secondary">
+            <ShoppingCart />
+          </Badge>
+        </IconButton>
+        <p>Cart</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton aria-label="Show 11 new notifications" color="inherit">
+          <Badge badgeContent={11} color="secondary">
+            <Favorite />
+          </Badge>
+        </IconButton>
+        <p>Notifications</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          aria-label="Account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
 
   return (
-    <AppBar position="absolute" color="default" className={classes.appBar}>
-      <Toolbar>
-        <Grid container spacing={24} alignItems="baseline">
-          <Grid item xs={12} className={classes.flex}>
-            <div className={classes.inline}>
-              <Typography variant="h6" color="inherit" noWrap>
-                <Link to="/" className={classes.link}>
-                  <img width={30} alt="logo" src={logo} />
-                  <span className={classes.tagline}>NeuroMarker</span>
-                </Link>
-              </Typography>
+    <div className={classes.grow}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography className={classes.title} variant="h6" noWrap>
+            NeuroMarker
+          </Typography>
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
             </div>
-            {!props.noTabs && (
-              <React.Fragment>
-                <div className={classes.productLogo}>
-                  <Typography>An A.I. Based E-Commerce</Typography>
-                </div>
-                <div className={classes.iconContainer}>
-                  <IconButton
-                    onClick={mobileMenuOpen}
-                    className={classes.iconButton}
-                    color="inherit"
-                    aria-label="Menu"
-                  >
-                    <MenuIcon />
-                  </IconButton>
-                </div>
-                <div className={classes.tabContainer}>
-                  <SwipeableDrawer
-                    anchor="right"
-                    open={menuDrawer}
-                    onClose={mobileMenuClose}
-                    onOpen={mobileMenuOpen}
-                  >
-                    <AppBar title="Menu" />
-                    <List>
-                      {Menu.map((item, index) => (
-                        <ListItem
-                          component={Link}
-                          to={{
-                            pathname: item.pathname,
-                            search: props.location.search
-                          }}
-                          button
-                          key={item.label}
-                        >
-                          <ListItemText primary={item.label} />
-                        </ListItem>
-                      ))}
-                    </List>
-                  </SwipeableDrawer>
-                  <Tabs
-                    value={current() || value}
-                    indicatorColor="primary"
-                    textColor="primary"
-                    onChange={handleChange}
-                  >
-                    {Menu.map((item, index) => (
-                      <Tab
-                        key={index}
-                        component={Link}
-                        to={{
-                          pathname: item.pathname,
-                          search: props.location.search
-                        }}
-                        classes={{ root: classes.tabItem }}
-                        label={item.label}
-                      />
-                    ))}
-                  </Tabs>
-                </div>
-              </React.Fragment>
-            )}
-          </Grid>
-        </Grid>
-      </Toolbar>
-    </AppBar>
+            <InputBase
+              placeholder="Search…"
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput
+              }}
+              inputProps={{ "aria-label": "Search" }}
+            />
+          </div>
+          <div className={classes.grow} />
+          <div className={classes.sectionDesktop}>
+            <IconButton aria-label="Show 4 new mails" color="inherit">
+              <Badge badgeContent={4} color="secondary">
+                <ShoppingCart />
+              </Badge>
+            </IconButton>
+            <IconButton aria-label="Show 17 new notifications" color="inherit">
+              <Badge badgeContent={17} color="secondary">
+                <Favorite />
+              </Badge>
+            </IconButton>
+            <IconButton
+              edge="end"
+              aria-label="Account of current user"
+              aria-controls={menuId}
+              aria-haspopup="true"
+              onClick={handleProfileMenuOpen}
+              color="inherit"
+            >
+              <AccountCircle />
+            </IconButton>
+          </div>
+          <div className={classes.sectionMobile}>
+            <IconButton
+              aria-label="Show more"
+              aria-controls={mobileMenuId}
+              aria-haspopup="true"
+              onClick={handleMobileMenuOpen}
+              color="inherit"
+            >
+              <MoreIcon />
+            </IconButton>
+          </div>
+        </Toolbar>
+      </AppBar>
+      {renderMobileMenu}
+      {renderMenu}
+    </div>
   );
-};
-
-export default withRouter(withStyles(styles)(Navbar));
+}
