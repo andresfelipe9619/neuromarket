@@ -1,3 +1,4 @@
 {
-  "checkout.title": "Orden"
+	"checkout.shipping": "Dirección de Envío\n",
+	"checkout.title": "Orden"
 }

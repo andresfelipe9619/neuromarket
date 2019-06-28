@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -13,17 +13,28 @@ import { ShoppingCart, Favorite } from "@material-ui/icons";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
 import ShopContext from "../../context/shop-context";
+import { IntlContext } from "../../context/IntlContext";
 import { withRouter } from "react-router-dom";
+
+import Switch from "@material-ui/core/Switch";
+import Grid from "@material-ui/core/Grid";
+
 function Navbar(props) {
   const classes = useStyles();
-  const context = useContext(ShopContext);
+  const shopContext = useContext(ShopContext);
+  const intlContext = useContext(IntlContext);
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
+  console.log("intlContext", intlContext);
+
+  const [state, setState] = useState({
+    checked: true
+  });
 
   const isMenuOpen = !!anchorEl;
   const isMobileMenuOpen = !!mobileMoreAnchorEl;
 
-  const cartItemsCount = context.cart.reduce(
+  const cartItemsCount = shopContext.cart.reduce(
     (count, curItem) => count + curItem.quantity,
     0
   );
@@ -40,6 +51,12 @@ function Navbar(props) {
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
+  };
+
+  const handleChange = name => event => {
+    setState({ ...state, [name]: event.target.checked });
+    if (!event.target.checked) return intlContext.switchToSpanish();
+    return intlContext.switchToEnglish();
   };
 
   const handleMobileMenuOpen = event => {
@@ -182,6 +199,20 @@ function Navbar(props) {
         <Toolbar component="nav" variant="dense" color="secondary">
           <Typography variant="h6" noWrap onClick={goTo("/products")}>
             Categories
+          </Typography>
+          <div className={classes.grow} />
+          <Typography component="div">
+            <Grid component="label" container alignItems="center" spacing={1}>
+              <Grid item>Spanish</Grid>
+              <Grid item>
+                <Switch
+                  checked={state.checked}
+                  onChange={handleChange("checked")}
+                  value="checked"
+                />
+              </Grid>
+              <Grid item>English</Grid>
+            </Grid>
           </Typography>
         </Toolbar>
       </AppBar>

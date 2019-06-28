@@ -16,7 +16,7 @@ function IntlProviderWrapper(props) {
   const switchToEnglish = () =>
     setState({ ...state, locale: "en", messages: messages_en });
 
-  const switchToDeutsch = () =>
+  const switchToSpanish = () =>
     setState({ ...state, locale: "es", messages: messages_es });
 
   const { children } = props;
@@ -26,7 +26,7 @@ function IntlProviderWrapper(props) {
       value={{
         ...state,
         switchToEnglish: switchToEnglish,
-        switchToDeutsch: switchToDeutsch
+        switchToSpanish: switchToSpanish
       }}
     >
       <IntlProvider
