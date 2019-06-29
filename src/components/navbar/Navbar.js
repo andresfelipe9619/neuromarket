@@ -13,7 +13,7 @@ import { ShoppingCart, Favorite } from "@material-ui/icons";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
 import ShopContext from "../../context/shop-context";
-import { IntlContext } from "../../context/IntlContext";
+import { useIntlState } from "../../context/intl-context";
 import { withRouter } from "react-router-dom";
 
 import Switch from "@material-ui/core/Switch";
@@ -22,15 +22,10 @@ import Grid from "@material-ui/core/Grid";
 function Navbar(props) {
   const classes = useStyles();
   const shopContext = useContext(ShopContext);
-  const intlContext = useContext(IntlContext);
+  const intlContext = useIntlState();
   const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  console.log("intlContext", intlContext);
-
-  const [state, setState] = useState({
-    checked: true
-  });
-
+  const checked = intlContext.locale === "en";
   const isMenuOpen = !!anchorEl;
   const isMobileMenuOpen = !!mobileMoreAnchorEl;
 
@@ -53,9 +48,9 @@ function Navbar(props) {
     handleMobileMenuClose();
   };
 
-  const handleChange = name => event => {
-    setState({ ...state, [name]: event.target.checked });
-    if (!event.target.checked) return intlContext.switchToSpanish();
+  const handleChange = event => {
+    let checked = event.target.checked;
+    if (!checked) return intlContext.switchToSpanish();
     return intlContext.switchToEnglish();
   };
 
@@ -127,7 +122,6 @@ function Navbar(props) {
       </MenuItem>
     </Menu>
   );
-
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -205,11 +199,7 @@ function Navbar(props) {
             <Grid component="label" container alignItems="center" spacing={1}>
               <Grid item>Spanish</Grid>
               <Grid item>
-                <Switch
-                  checked={state.checked}
-                  onChange={handleChange("checked")}
-                  value="checked"
-                />
+                <Switch checked={checked} onChange={handleChange} />
               </Grid>
               <Grid item>English</Grid>
             </Grid>

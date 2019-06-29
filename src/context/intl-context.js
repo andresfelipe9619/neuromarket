@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { IntlProvider, addLocaleData } from "react-intl";
 import locale_en from "react-intl/locale-data/en";
 import locale_es from "react-intl/locale-data/es";
 import messages_es from "../translations/es.json";
 import messages_en from "../translations/en.json";
 
+const IntlContext = React.createContext();
 addLocaleData([...locale_en, ...locale_es]);
-const Context = React.createContext();
 
-function IntlProviderWrapper(props) {
+function IntlProviderWrapper({ children }) {
   const [state, setState] = useState({
     locale: "en",
     messages: messages_en
   });
+
   const switchToEnglish = () =>
     setState({ ...state, locale: "en", messages: messages_en });
 
   const switchToSpanish = () =>
     setState({ ...state, locale: "es", messages: messages_es });
 
-  const { children } = props;
   const { locale, messages } = state;
   return (
-    <Context.Provider
+    <IntlContext.Provider
       value={{
         ...state,
         switchToEnglish: switchToEnglish,
@@ -37,8 +37,16 @@ function IntlProviderWrapper(props) {
       >
         {children}
       </IntlProvider>
-    </Context.Provider>
+    </IntlContext.Provider>
   );
 }
 
-export { IntlProviderWrapper, Context as IntlContext };
+function useIntlState() {
+  const context = useContext(IntlContext);
+  if (context === undefined) {
+    throw new Error("useIntlState must be used within a CountProvider");
+  }
+  return context;
+}
+
+export { IntlProviderWrapper, IntlContext, useIntlState };
