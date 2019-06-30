@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -13,14 +13,14 @@ import { FormattedMessage } from "react-intl";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
-function getStepContent(step) {
+function getStepContent(step, props) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <AddressForm {...props} />;
     case 1:
-      return <PaymentForm />;
+      return <PaymentForm {...props} />;
     case 2:
-      return <Review />;
+      return <Review {...props} />;
     default:
       throw new Error("Unknown step");
   }
@@ -28,18 +28,32 @@ function getStepContent(step) {
 
 export default function Checkout() {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    handleSubmitMyForm();
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  let submitMyForm = null;
+  let isValidForm = false;
+  const handleSubmitMyForm = e => {
+    console.log("{submitMyForm, isValidForm}", { submitMyForm, isValidForm });
+    if (submitMyForm) {
+      submitMyForm(e);
+    }
+    if (isValidForm) {
+      setActiveStep(activeStep + 1);
+    }
+  };
+  const bindSubmitForm = (submitForm, isValid) => {
+    submitMyForm = submitForm;
+    isValidForm = isValid;
+  };
   return (
-    <React.Fragment>
+    <>
       <div className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
@@ -52,9 +66,9 @@ export default function Checkout() {
               </Step>
             ))}
           </Stepper>
-          <React.Fragment>
+          <>
             {activeStep === steps.length ? (
-              <React.Fragment>
+              <>
                 <Typography variant="h5" gutterBottom>
                   Thank you for your order.
                 </Typography>
@@ -63,10 +77,10 @@ export default function Checkout() {
                   confirmation, and will send you an update when your order has
                   shipped.
                 </Typography>
-              </React.Fragment>
+              </>
             ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
+              <>
+                {getStepContent(activeStep, { bindSubmitForm })}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
@@ -82,11 +96,11 @@ export default function Checkout() {
                     {activeStep === steps.length - 1 ? "Place order" : "Next"}
                   </Button>
                 </div>
-              </React.Fragment>
+              </>
             )}
-          </React.Fragment>
+          </>
         </Paper>
       </div>
-    </React.Fragment>
+    </>
   );
 }
