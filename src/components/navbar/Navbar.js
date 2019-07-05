@@ -33,6 +33,11 @@ function Navbar(props) {
     (count, curItem) => count + curItem.quantity,
     0
   );
+
+  const favoriteItemsCount = shopContext.favorites.reduce(
+    (count, curItem) => count + curItem.quantity,
+    0
+  );
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
@@ -103,7 +108,7 @@ function Navbar(props) {
           color="inherit"
           onClick={goTo("/favorites")}
         >
-          <Badge badgeContent={4} color="secondary">
+          <Badge badgeContent={favoriteItemsCount} color="secondary">
             <Favorite />
           </Badge>
         </IconButton>
@@ -163,7 +168,7 @@ function Navbar(props) {
               color="inherit"
               onClick={goTo("/favorites")}
             >
-              <Badge badgeContent={4} color="secondary">
+              <Badge badgeContent={favoriteItemsCount} color="secondary">
                 <Favorite />
               </Badge>
             </IconButton>
