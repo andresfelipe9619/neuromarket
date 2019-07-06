@@ -1,6 +1,5 @@
 import React from "react";
-
-export default React.createContext({
+export const initialState = {
   products: [
     { id: "p1", title: "Gaming Mouse", price: 29.99 },
     { id: "p2", title: "Harry Potter 3", price: 9.99 },
@@ -8,9 +7,6 @@ export default React.createContext({
     { id: "p4", title: "Half-dried plant", price: 2.99 }
   ],
   cart: [],
-  favorites: [],
-  addProductToCart: product => {},
-  removeProductFromCart: productId => {},
-  addProductToFavorites: product => {},
-  removeProductFromFavorites: productId => {}
-});
+  favorites: []
+};
+export default React.createContext();

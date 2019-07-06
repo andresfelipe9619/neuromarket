@@ -22,7 +22,7 @@ function MadeWithLove() {
     </Typography>
   );
 }
-const Footer = () => {
+export default function Footer() {
   const classes = useStyles();
   return (
     <footer className={classes.footer}>
@@ -42,5 +42,4 @@ const Footer = () => {
       </Container>
     </footer>
   );
-};
-export default Footer;
+}

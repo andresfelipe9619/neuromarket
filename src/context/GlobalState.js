@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
 
-import ShopContext from "./shop-context";
+import ShopContext, { initialState } from "./shop-context";
 import {
   shopReducer,
   ADD_PRODUCT,
@@ -11,16 +11,7 @@ import {
 import { IntlProviderWrapper } from "./intl-context";
 
 const GlobalState = props => {
-  const products = [
-    { id: "p1", title: "Gaming Mouse", price: 29.99 },
-    { id: "p2", title: "Harry Potter 3", price: 9.99 },
-    { id: "p3", title: "Used plastic bottle", price: 0.99 },
-    { id: "p4", title: "Half-dried plant", price: 2.99 }
-  ];
-  const [shopState, dispatch] = useReducer(shopReducer, {
-    cart: [],
-    favorites: []
-  });
+  const [shopState, dispatch] = useReducer(shopReducer, initialState);
 
   const addProductToCart = product => {
     dispatch({ type: ADD_PRODUCT, product: product });
@@ -42,8 +33,8 @@ const GlobalState = props => {
     <IntlProviderWrapper>
       <ShopContext.Provider
         value={{
-          products: products,
           cart: shopState.cart,
+          products: shopState.products,
           favorites: shopState.favorites,
           addProductToCart,
           removeProductFromCart,
