@@ -1,6 +1,5 @@
 import React, { useReducer } from "react";
-
-import ShopContext, { initialState } from "./shop-context";
+import ShopContext, { initialState as initialShop } from "./shop-context";
 import {
   shopReducer,
   ADD_PRODUCT,
@@ -9,10 +8,10 @@ import {
   REMOVE_FAVORITE
 } from "./reducers";
 import { IntlProviderWrapper } from "./intl-context";
-
+import  AlertContext, {initialState as initialAlert} from "./alert-context"
 const GlobalState = props => {
-  const [shopState, dispatch] = useReducer(shopReducer, initialState);
-
+  const [shopState, dispatch] = useReducer(shopReducer, initialShop);
+  const [alertState, setAlert] = useState(initialAlert)
   const addProductToCart = product => {
     dispatch({ type: ADD_PRODUCT, product: product });
   };
@@ -31,6 +30,12 @@ const GlobalState = props => {
 
   return (
     <IntlProviderWrapper>
+    <AlertContext.Provider
+      value={
+
+      }
+    >
+
       <ShopContext.Provider
         value={{
           cart: shopState.cart,
@@ -44,6 +49,7 @@ const GlobalState = props => {
       >
         {props.children}
       </ShopContext.Provider>
+    </AlertContext.Provider>
     </IntlProviderWrapper>
   );
 };

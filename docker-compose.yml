@@ -1,0 +1,45 @@
+version: "3.1"
+services:
+  neuromarker-client:
+    container_name: neuromarker-client
+    build: ./client
+    restart: always
+    ports:
+      - "3000:3000"
+      - "35729:35729"
+    volumes:
+      - ./client:/client
+    links:
+      - server
+    depends_on:
+      - server
+    environment:
+      PORT: 3000
+      REACT_APP_API_URL: http://localhost:4005
+  neuromarker-db:
+    container_name: neuromarker-db
+    image: mysql:5.7
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: neuromarker
+  neuromarker-server:
+    container_name: neuromarker-server
+    build: ./server
+    restart: always
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./server:/server
+    links:
+      - db
+    environment:
+      PORT: 4000
+      DB_HOST: db
+      DB_USER: root
+      DB_PASS: root
+      DB_NAME: neuromarker
