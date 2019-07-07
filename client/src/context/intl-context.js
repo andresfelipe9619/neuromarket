@@ -25,8 +25,8 @@ function IntlProviderWrapper({ children }) {
     <IntlContext.Provider
       value={{
         ...state,
-        switchToEnglish: switchToEnglish,
-        switchToSpanish: switchToSpanish
+        switchToEnglish,
+        switchToSpanish
       }}
     >
       <IntlProvider

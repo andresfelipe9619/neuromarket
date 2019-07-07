@@ -12,17 +12,17 @@ import Container from "@material-ui/core/Container";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import AlertContext from "./context/alert-context";
 export default function AppRouter() {
-  const alertContext = useContext(AlertContext);
-  console.log("alertContext", alertContext);
+  const { open, message, variant, closeAlert } = useContext(AlertContext);
   return (
     <BrowserRouter>
       <CssBaseline />
       <Navbar />
       <Container maxWidth="lg">
         <Alert
-          open={alertContext.open}
-          message={alertContext.message}
-          variant={alertContext.variant}
+          open={open}
+          message={message}
+          variant={variant}
+          handleClose={closeAlert}
         />
         <Switch>
           <Route path="/" component={HomePage} exact />

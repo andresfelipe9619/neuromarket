@@ -48,14 +48,15 @@ const styles1 = theme => ({
 function AlertContent(props) {
   const { classes, className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
-  console.log("props", props);
   return (
     <SnackbarContent
       className={[classes[variant], className].join(" ")}
       aria-describedby="client-snackbar"
       message={
         <span id="client-snackbar" className={classes.message}>
-          <Icon className={[classes.icon, classes.iconVariant].join(" ")} />
+          {Icon && (
+            <Icon className={[classes.icon, classes.iconVariant].join(" ")} />
+          )}
           {message}
         </span>
       }
@@ -94,7 +95,7 @@ export default function Alert({
         horizontal: position || "right"
       }}
       open={open}
-      autoHideDuration={duration || 3}
+      autoHideDuration={duration || 6000}
       ClickAwayListenerProps={{
         mouseEvent: false,
         touchEvent: false,

@@ -9,9 +9,19 @@ import {
 } from "./reducers";
 import { IntlProviderWrapper } from "./intl-context";
 import AlertContext, { initialState as initialAlert } from "./alert-context";
-const GlobalState = props => {
+
+export default function GlobalState(props) {
   const [shopState, dispatch] = useReducer(shopReducer, initialShop);
   const [alertState, setAlert] = useState(initialAlert);
+
+  const openAlert = ({ message, variant }) => {
+    setAlert({ ...alertState, open: true, message, variant });
+  };
+
+  const closeAlert = () => {
+    setAlert({ ...alertState, open: false, message: "" });
+  };
+
   const addProductToCart = product => {
     dispatch({ type: ADD_PRODUCT, product: product });
   };
@@ -35,7 +45,8 @@ const GlobalState = props => {
           open: alertState.open,
           message: alertState.message,
           variant: alertState.variant,
-          setAlert
+          closeAlert,
+          openAlert
         }}
       >
         <ShopContext.Provider
@@ -54,6 +65,4 @@ const GlobalState = props => {
       </AlertContext.Provider>
     </IntlProviderWrapper>
   );
-};
-
-export default GlobalState;
+}
