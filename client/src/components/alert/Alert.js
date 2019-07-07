@@ -1,6 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
-import classNames from "classnames";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import ErrorIcon from "@material-ui/icons/Error";
 import InfoIcon from "@material-ui/icons/Info";
@@ -50,14 +48,14 @@ const styles1 = theme => ({
 function AlertContent(props) {
   const { classes, className, message, onClose, variant, ...other } = props;
   const Icon = variantIcon[variant];
-
+  console.log("props", props);
   return (
     <SnackbarContent
-      className={classNames(classes[variant], className)}
+      className={[classes[variant], className].join(" ")}
       aria-describedby="client-snackbar"
       message={
         <span id="client-snackbar" className={classes.message}>
-          <Icon className={classNames(classes.icon, classes.iconVariant)} />
+          <Icon className={[classes.icon, classes.iconVariant].join(" ")} />
           {message}
         </span>
       }
@@ -79,14 +77,6 @@ function AlertContent(props) {
   );
 }
 
-AlertContent.propTypes = {
-  classes: PropTypes.object.isRequired,
-  className: PropTypes.string,
-  message: PropTypes.node,
-  onClose: PropTypes.func,
-  variant: PropTypes.oneOf(["success", "warning", "error", "info"]).isRequired
-};
-
 const SnackbarContentWrapper = withStyles(styles1)(AlertContent);
 
 export default function Alert({
@@ -104,7 +94,7 @@ export default function Alert({
         horizontal: position || "right"
       }}
       open={open}
-      autoHideDuration={duration || null}
+      autoHideDuration={duration || 3}
       ClickAwayListenerProps={{
         mouseEvent: false,
         touchEvent: false,
@@ -123,11 +113,3 @@ export default function Alert({
     </Snackbar>
   );
 }
-Alert.propTypes = {
-  open: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
-  handleClose: PropTypes.func.isRequired,
-  duration: PropTypes.number.isRequired,
-  position: PropTypes.oneOf(["left", "center", "right"]),
-  variant: PropTypes.oneOf(["success", "warning", "error", "info"]).isRequired
-};

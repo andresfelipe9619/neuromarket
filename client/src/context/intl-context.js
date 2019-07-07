@@ -2,8 +2,8 @@ import React, { useState, useContext } from "react";
 import { IntlProvider, addLocaleData } from "react-intl";
 import locale_en from "react-intl/locale-data/en";
 import locale_es from "react-intl/locale-data/es";
-import messages_es from "../translations/es.json.js";
-import messages_en from "../translations/en.json.js";
+import messages_es from "../translations/es.json";
+import messages_en from "../translations/en.json";
 
 const IntlContext = React.createContext();
 addLocaleData([...locale_en, ...locale_es]);
