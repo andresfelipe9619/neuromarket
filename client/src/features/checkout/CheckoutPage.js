@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -9,6 +9,7 @@ import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import useStyles from "./styles";
+import AlertContext from "../../context/alert-context";
 import { FormattedMessage } from "react-intl";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
@@ -26,10 +27,10 @@ function getStepContent(step, props) {
   }
 }
 
-export default function Checkout() {
+function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
-
+  const { openAlert } = useContext(AlertContext);
   const handleNext = () => {
     handleSubmitMyForm();
   };
@@ -46,6 +47,13 @@ export default function Checkout() {
     }
     if (isValidForm) {
       setActiveStep(activeStep + 1);
+      submitMyForm = null;
+      isValidForm = false;
+    } else {
+      openAlert({
+        message: "Something went wrong with your input, try again",
+        variant: "error"
+      });
     }
   };
   const bindSubmitForm = (submitForm, isValid) => {
@@ -104,3 +112,4 @@ export default function Checkout() {
     </>
   );
 }
+export default React.memo(Checkout);

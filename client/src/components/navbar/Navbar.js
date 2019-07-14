@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useCallback } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
@@ -42,7 +42,9 @@ function Navbar(props) {
     setAnchorEl(event.currentTarget);
   };
 
-  const goTo = route => event => props.history.push(route);
+  const goTo = useCallback(route => event => props.history.push(route), [
+    props.history
+  ]);
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -64,69 +66,7 @@ function Navbar(props) {
   };
 
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-
   const mobileMenuId = "primary-search-account-menu-mobile";
-  const renderMobileMenu = (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton
-          aria-label={`Show ${cartItemsCount} cart`}
-          color="inherit"
-          onClick={goTo("/cart")}
-        >
-          <Badge badgeContent={cartItemsCount} color="secondary">
-            <ShoppingCart />
-          </Badge>
-        </IconButton>
-        <p>Cart</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          aria-label="Show 4 new notifications"
-          color="inherit"
-          onClick={goTo("/favorites")}
-        >
-          <Badge badgeContent={favoriteItemsCount} color="secondary">
-            <Favorite />
-          </Badge>
-        </IconButton>
-        <p>Favorites</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="Account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
   return (
     <div className={classes.grow}>
       <AppBar position="static">
@@ -211,10 +151,98 @@ function Navbar(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
+      <MemoMobileMenu
+        {...{
+          goTo,
+          mobileMenuId,
+          cartItemsCount,
+          isMobileMenuOpen,
+          favoriteItemsCount,
+          mobileMoreAnchorEl,
+          handleProfileMenuOpen,
+          handleMobileMenuClose
+        }}
+      />
+      <MemoMenu {...{ menuId, anchorEl, isMenuOpen, handleMenuClose }} />
     </div>
   );
 }
+const MemoMobileMenu = React.memo(MobileMenu);
 
-export default withRouter(Navbar);
+function MobileMenu({
+  goTo,
+  mobileMenuId,
+  cartItemsCount,
+  isMobileMenuOpen,
+  favoriteItemsCount,
+  mobileMoreAnchorEl,
+  handleProfileMenuOpen,
+  handleMobileMenuClose
+}) {
+  return (
+    <Menu
+      anchorEl={mobileMoreAnchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={mobileMenuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMobileMenuOpen}
+      onClose={handleMobileMenuClose}
+    >
+      <MenuItem>
+        <IconButton
+          aria-label={`Show ${cartItemsCount} cart`}
+          color="inherit"
+          onClick={goTo("/cart")}
+        >
+          <Badge badgeContent={cartItemsCount} color="secondary">
+            <ShoppingCart />
+          </Badge>
+        </IconButton>
+        <p>Cart</p>
+      </MenuItem>
+      <MenuItem>
+        <IconButton
+          aria-label="Show 4 new notifications"
+          color="inherit"
+          onClick={goTo("/favorites")}
+        >
+          <Badge badgeContent={favoriteItemsCount} color="secondary">
+            <Favorite />
+          </Badge>
+        </IconButton>
+        <p>Favorites</p>
+      </MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>
+        <IconButton
+          aria-label="Account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Profile</p>
+      </MenuItem>
+    </Menu>
+  );
+}
+const MemoMenu = React.memo(MyMenu);
+function MyMenu({ menuId, anchorEl, isMenuOpen, handleMenuClose }) {
+  return (
+    <Menu
+      anchorEl={anchorEl}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      id={menuId}
+      keepMounted
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
+      open={isMenuOpen}
+      onClose={handleMenuClose}
+    >
+      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+    </Menu>
+  );
+}
+
+export default withRouter(React.memo(Navbar));

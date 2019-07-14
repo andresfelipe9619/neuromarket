@@ -1,2 +1,3 @@
 import ProductsPage from "./ProductsPage";
-export default ProductsPage;
+import ProductsDetailsPage from "./ProductDetailsPage";
+export { ProductsDetailsPage, ProductsPage };

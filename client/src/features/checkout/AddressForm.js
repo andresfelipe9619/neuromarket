@@ -6,7 +6,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Formik } from "formik";
 import * as Yup from "yup";
-export default function AddressForm({ bindSubmitForm }) {
+function AddressForm({ bindSubmitForm }) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -173,3 +173,4 @@ export default function AddressForm({ bindSubmitForm }) {
     </>
   );
 }
+export default React.memo(AddressForm);

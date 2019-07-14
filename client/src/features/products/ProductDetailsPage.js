@@ -8,17 +8,17 @@ const ProductsPage = props => {
   const { products, addProductToCart, addProductToFavorites } = useContext(
     ShopContext
   );
+  const { match } = props;
+  const [product] = products.filter(p => p.id === match.params.id);
   return (
     <React.Fragment>
       <Grid container spacing={4}>
-        {products.map(product => (
-          <Grid item key={product.id} xs={12} sm={6} md={4}>
-            <Product
-              key={product.id}
-              {...{ product, addProductToCart, addProductToFavorites }}
-            />
-          </Grid>
-        ))}
+        <Grid item key={product.id} xs={12} sm={6} md={4}>
+          <Product
+            key={product.id}
+            {...{ product, addProductToCart, addProductToFavorites }}
+          />
+        </Grid>
       </Grid>
     </React.Fragment>
   );
