@@ -40,9 +40,13 @@ const CartPage = props => {
               <Grid key={id} container item xs={12} sm={12}>
                 <Grid item xs={12} sm={3}>
                   <Typography variant="h6">{title}</Typography>
-                  <button onClick={removeProductFromCart.bind(this, id)}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={removeProductFromCart.bind(this, id)}
+                  >
                     Remove from Cart
-                  </button>
+                  </Button>
                 </Grid>
                 <Grid item xs={12} sm={3}>
                   <Typography variant="h6">{quantity}</Typography>
@@ -72,7 +76,7 @@ const CartPage = props => {
             </Grid>
             <Button
               variant="contained"
-              color="primary"
+              color="secondary"
               onClick={goTo("/checkout")}
             >
               Proceed with the Checkout

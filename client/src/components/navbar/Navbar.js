@@ -73,7 +73,9 @@ function Navbar(props) {
         <Toolbar>
           <Typography
             className={classes.title}
-            variant="h6"
+            variant="h1"
+            color="inherit"
+            gutterBottom
             noWrap
             onClick={goTo("/")}
           >
@@ -136,7 +138,7 @@ function Navbar(props) {
           </div>
         </Toolbar>
         <Toolbar component="nav" variant="dense" color="secondary">
-          <Typography variant="h6" noWrap onClick={goTo("/products")}>
+          <Typography variant="h6" noWrap gutterBottom onClick={goTo("/products")}>
             Categories
           </Typography>
           <div className={classes.grow} />
