@@ -52,6 +52,7 @@ export default function GlobalState(props) {
         <ShopContext.Provider
           value={{
             cart: shopState.cart,
+            subtotal: shopState.subtotal,
             products: shopState.products,
             favorites: shopState.favorites,
             addProductToCart,

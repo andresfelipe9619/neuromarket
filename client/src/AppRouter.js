@@ -30,8 +30,13 @@ export default function AppRouter() {
           <Route path="/login" component={LoginPage} exact />
           <Route path="/register" component={RegisterPage} exact />
           <Route path="/checkout" component={CheckoutPage} exact />
-          <Route path="/products" component={ProductsPage} exact />
-          <Route path="/products/:id" component={ProductsDetailsPage} exact />
+          <Route path="/products" component={ProductsPage} exact strict />
+          <Route
+            exact
+            strict
+            path="/products/:id"
+            component={ProductsDetailsPage}
+          />
         </Switch>
       </Container>
     </BrowserRouter>

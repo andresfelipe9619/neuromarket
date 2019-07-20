@@ -4,7 +4,7 @@ import ShopContext from "../../context/shop-context";
 import Grid from "@material-ui/core/Grid";
 import Product from "./Product";
 
-const ProductsPage = props => {
+const ProductsDetailsPage = props => {
   const { products, addProductToCart, addProductToFavorites } = useContext(
     ShopContext
   );
@@ -24,4 +24,4 @@ const ProductsPage = props => {
   );
 };
 
-export default ProductsPage;
+export default ProductsDetailsPage;
