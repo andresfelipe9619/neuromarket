@@ -10,9 +10,6 @@ import Alert from "./components/alert/Alert";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import AlertContext from "./context/alert-context";
-
-// Dashboard features
-
 import Dashboard from "./features/Dashboard";
 import ProductList from "./features/AdminProductList";
 import UserList from "./features/UserList";
@@ -48,8 +45,6 @@ export default function AppRouter() {
           <Route path="/checkout" component={CheckoutPage} exact />
           <Route path="/products" component={ProductsPage} exact />
           <Route path="/products/:id" component={ProductsDetailsPage} exact />
-
-          {/* Dashboard Routes*/}
           <Route component={Dashboard} exact path="/dashboard" />
           <Route component={UserList} exact path="/dashboard/users" />
           <Route component={ProductList} exact path="/dashboard/products" />
