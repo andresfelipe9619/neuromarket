@@ -10,20 +10,17 @@ import Alert from "./components/alert/Alert";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import AlertContext from "./context/alert-context";
-
-// Dashboard features
-
-import Dashboard from './features/Dashboard';
-import ProductList from './features/AdminProductList';
-import UserList from './features/UserList';
-import Typography from './features/Typography';
-import Icons from './features/Icons';
-import Account from './features/Account';
-import Settings from './features/Settings';
-import SignUp from './features/SignUp';
-import SignIn from './features/SignIn';
-import UnderDevelopment from './features/UnderDevelopment';
-import NotFound from './features/NotFound';
+import Dashboard from "./features/Dashboard";
+import ProductList from "./features/AdminProductList";
+import UserList from "./features/UserList";
+import Typography from "./features/Typography";
+import Icons from "./features/Icons";
+import Account from "./features/Account";
+import Settings from "./features/Settings";
+import SignUp from "./features/SignUp";
+import SignIn from "./features/SignIn";
+import UnderDevelopment from "./features/UnderDevelopment";
+import NotFound from "./features/NotFound";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
@@ -48,9 +45,12 @@ export default function AppRouter() {
           <Route path="/checkout" component={CheckoutPage} exact />
           <Route path="/products" component={ProductsPage} exact />
           <Route path="/products/:id" component={ProductsDetailsPage} exact />
+<<<<<<< HEAD
           <Route path="/busqueda" component={ProductsFound} exact />
 
           {/* Dashboard Routes*/}
+=======
+>>>>>>> 097f76ab0b99bbe1d3835b81311432af8ac67a03
           <Route component={Dashboard} exact path="/dashboard" />
           <Route component={UserList} exact path="/dashboard/users" />
           <Route component={ProductList} exact path="/dashboard/products" />

@@ -20,4 +20,4 @@ const ProductsPage = props => {
   );
 };
 
-export default ProductsPage;
+export default React.memo(ProductsPage);

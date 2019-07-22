@@ -4,6 +4,15 @@ export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 export const LOOKING_FOR="LOOKING_FOR"
 
+const getSubtotal = cart =>
+  +parseFloat(
+    cart.reduce((subtotal, { price, quantity }) => {
+      let ammount = price * quantity;
+      return ammount + subtotal;
+    }, 0),
+    2
+  );
+
 const addProductToCart = (product, state) => {
   const updatedCart = [...state.cart];
   const updatedItemIndex = updatedCart.findIndex(
@@ -17,9 +26,10 @@ const addProductToCart = (product, state) => {
       ...updatedCart[updatedItemIndex]
     };
     updatedItem.quantity++;
+    updatedItem.ammount = updatedItem.quantity * updatedItem.price;
     updatedCart[updatedItemIndex] = updatedItem;
   }
-  return { ...state, cart: updatedCart };
+  return { ...state, cart: updatedCart, subtotal: getSubtotal(updatedCart) };
 };
 
 const removeProductFromCart = (productId, state) => {
@@ -31,12 +41,14 @@ const removeProductFromCart = (productId, state) => {
     ...updatedCart[updatedItemIndex]
   };
   updatedItem.quantity--;
+  updatedItem.ammount = updatedItem.quantity * updatedItem.price;
   if (updatedItem.quantity <= 0) {
     updatedCart.splice(updatedItemIndex, 1);
   } else {
     updatedCart[updatedItemIndex] = updatedItem;
   }
-  return { ...state, cart: updatedCart };
+
+  return { ...state, cart: updatedCart, subtotal: getSubtotal(updatedCart) };
 };
 
 const addProductToFavorites = (product, state) => {
