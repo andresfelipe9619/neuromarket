@@ -45,12 +45,9 @@ export default function AppRouter() {
           <Route path="/checkout" component={CheckoutPage} exact />
           <Route path="/products" component={ProductsPage} exact />
           <Route path="/products/:id" component={ProductsDetailsPage} exact />
-<<<<<<< HEAD
           <Route path="/busqueda" component={ProductsFound} exact />
 
           {/* Dashboard Routes*/}
-=======
->>>>>>> 097f76ab0b99bbe1d3835b81311432af8ac67a03
           <Route component={Dashboard} exact path="/dashboard" />
           <Route component={UserList} exact path="/dashboard/users" />
           <Route component={ProductList} exact path="/dashboard/products" />
