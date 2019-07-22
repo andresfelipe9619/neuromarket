@@ -2,6 +2,7 @@ export const ADD_PRODUCT = "ADD_PRODUCT";
 export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
+export const LOOKING_FOR="LOOKING_FOR"
 
 const addProductToCart = (product, state) => {
   const updatedCart = [...state.cart];
@@ -75,6 +76,20 @@ const removeProductFromFavorites = (productId, state) => {
   return { ...state, favorites: updatedFavorites };
 };
 
+ const lookForProduct = (prodocutobusqueda,state)=> {
+      const busquedanormalizada = prodocutobusqueda.toLowerCase()
+      const arreglo = [];
+      state.products.map(product=>{
+          const productonormalizado= product.title.toLowerCase()
+          if(productonormalizado.includes(busquedanormalizada)){
+            console.log("entontrado");
+            arreglo.push(product)
+            
+          }
+        })
+    return{...state,productsFound:arreglo};
+  };
+
 export const shopReducer = (state, action) => {
   switch (action.type) {
     case ADD_PRODUCT:
@@ -85,6 +100,8 @@ export const shopReducer = (state, action) => {
       return addProductToFavorites(action.product, state);
     case REMOVE_FAVORITE:
       return removeProductFromFavorites(action.productId, state);
+    case LOOKING_FOR:
+      return lookForProduct(action.product,state);
     default:
       return state;
   }

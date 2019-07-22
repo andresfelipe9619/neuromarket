@@ -5,19 +5,21 @@ import Grid from "@material-ui/core/Grid";
 import Productsview from "./Productsview";
 
 
-const ProductsPage = props => {
-  const { products, addProductToCart, addProductToFavorites } = useContext(
+const ProductsFound = props => {
+    console.log("hola encontramos tu producto ");
+    
+  const { productsFound, addProductToCart, addProductToFavorites } = useContext(
     ShopContext
   );
   return (
     <React.Fragment>
 
       <Grid container spacing={4}>
-        <Productsview products={products} {...{ addProductToCart, addProductToFavorites }} />
+        <Productsview products={productsFound} {...{ addProductToCart, addProductToFavorites }} />
       </Grid>
 
     </React.Fragment>
   );
 };
 
-export default ProductsPage;
+export default ProductsFound;

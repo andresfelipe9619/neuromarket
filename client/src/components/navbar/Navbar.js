@@ -28,11 +28,24 @@ function Navbar(props) {
   const checked = intlContext.locale === "en";
   const isMenuOpen = !!anchorEl;
   const isMobileMenuOpen = !!mobileMoreAnchorEl;
+  const [busqueda,gurdarbusqueda]=useState('');
+  
 
   const cartItemsCount = shopContext.cart.reduce(
     (count, curItem) => count + curItem.quantity,
     0
   );
+  
+  const goTo = useCallback(route => event => props.history.push(route), [
+    props.history
+  ]);
+
+  const busquedacomparar = (product)=> e=> 
+  {
+  console.log("product :D", product);
+
+  shopContext.lookForProduct(product) ;
+  goTo('/busqueda')();};
 
   const favoriteItemsCount = shopContext.favorites.reduce(
     (count, curItem) => count + curItem.quantity,
@@ -41,10 +54,6 @@ function Navbar(props) {
   const handleProfileMenuOpen = event => {
     setAnchorEl(event.currentTarget);
   };
-
-  const goTo = useCallback(route => event => props.history.push(route), [
-    props.history
-  ]);
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
@@ -83,7 +92,7 @@ function Navbar(props) {
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
-              <SearchIcon />
+
             </div>
             <InputBase
               placeholder="Search…"
@@ -91,8 +100,16 @@ function Navbar(props) {
                 root: classes.inputRoot,
                 input: classes.inputInput
               }}
-              inputProps={{ "aria-label": "Search" }}
+                onChange={e=> gurdarbusqueda(e.target.value)}
+                inputProps={{ "aria-label": "Search" }}
             />
+            <IconButton
+              aria-label={`lookingo for your  product `}
+              color="inherit"
+              onClick={busquedacomparar(busqueda)}
+            >
+              <SearchIcon />
+            </IconButton>
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>

@@ -5,7 +5,8 @@ import {
   ADD_PRODUCT,
   REMOVE_PRODUCT,
   ADD_FAVORITE,
-  REMOVE_FAVORITE
+  REMOVE_FAVORITE,
+  LOOKING_FOR
 } from "./reducers";
 import { IntlProviderWrapper } from "./intl-context";
 import AlertContext, { initialState as initialAlert } from "./alert-context";
@@ -38,6 +39,10 @@ export default function GlobalState(props) {
     dispatch({ type: REMOVE_FAVORITE, productId: productId });
   };
 
+  const lookForProduct = product => {
+    dispatch({ type: LOOKING_FOR, product: product });
+  };
+
   return (
     <IntlProviderWrapper>
       <AlertContext.Provider
@@ -54,7 +59,9 @@ export default function GlobalState(props) {
             cart: shopState.cart,
             products: shopState.products,
             favorites: shopState.favorites,
+            productsFound: shopState.productsFound,
             addProductToCart,
+            lookForProduct,
             removeProductFromCart,
             addProductToFavorites,
             removeProductFromFavorites
