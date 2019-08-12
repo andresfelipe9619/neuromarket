@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import ShopContext from "../../context/shop-context";
 
 import Grid from "@material-ui/core/Grid";
-import Productsview from "./Productsview";
-
+import ProductsList from "./ProductsList";
 
 const ProductsPage = props => {
   const { products, addProductToCart, addProductToFavorites } = useContext(
@@ -11,11 +10,12 @@ const ProductsPage = props => {
   );
   return (
     <React.Fragment>
-
       <Grid container spacing={4}>
-        <Productsview products={products} {...{ addProductToCart, addProductToFavorites }} />
+        <ProductsList
+          products={products}
+          {...{ addProductToCart, addProductToFavorites }}
+        />
       </Grid>
-
     </React.Fragment>
   );
 };

@@ -5,33 +5,22 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Formik } from "formik";
-import * as Yup from "yup";
-function AddressForm({ bindSubmitForm }) {
+import { addressInitialValues, addressValidationSchema } from "./form-schemas";
+function AddressForm({ bindSubmitForm, addValuesToFormData }) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
         Shipping address
       </Typography>
       <Formik
-        initialValues={{
-          address: "",
-          firstName: "",
-          lastName: "",
-          city: "",
-          state: "",
-          zip: "",
-          country: ""
-        }}
+        initialValues={addressInitialValues}
         onSubmit={(values, { setSubmitting }) => {
+          console.log("values", values);
           setSubmitting(true);
-
+          // addValuesToFormData(values);
           setTimeout(() => setSubmitting(false), 2000);
         }}
-        validationSchema={Yup.object().shape({
-          firstName: Yup.string().required("Required"),
-          lastName: Yup.string().required("Required"),
-          city: Yup.string().required("Required")
-        })}
+        validationSchema={addressValidationSchema}
       >
         {formikProps => {
           const {
@@ -45,7 +34,7 @@ function AddressForm({ bindSubmitForm }) {
             handleSubmit
           } = formikProps;
 
-          bindSubmitForm(submitForm, isValid);
+          bindSubmitForm(submitForm, isValid, values);
 
           return (
             <form onSubmit={handleSubmit}>

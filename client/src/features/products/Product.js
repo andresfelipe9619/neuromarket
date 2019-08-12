@@ -23,12 +23,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-const Product = ({
-  product,
-  addProductToCart,
-  addProductToFavorites,
-  match
-}) => {
+const Product = ({ product, addProductToCart, addProductToFavorites }) => {
   const classes = useStyles();
   const handleOnAddFavorite = useCallback(
     () => addProductToFavorites(product),
@@ -47,7 +42,7 @@ const Product = ({
       />
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom variant="h5" component="h2">
-          <Link to={`${match.url}/${product.id}`}>
+          <Link to={`/products/${product.id}`}>
             <strong>{product.title}</strong> - ${product.price}{" "}
           </Link>
         </Typography>
@@ -57,12 +52,16 @@ const Product = ({
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" color="primary" onClick={handleOnAddProduct}>
-          Add to Cart
-        </Button>
-        <IconButton color="inherit" onClick={handleOnAddFavorite}>
-          <FavoriteBorderIcon />
-        </IconButton>
+        {addProductToCart && (
+          <Button size="small" color="primary" onClick={handleOnAddProduct}>
+            Add to Cart
+          </Button>
+        )}
+        {addProductToFavorites && (
+          <IconButton color="inherit" onClick={handleOnAddFavorite}>
+            <FavoriteBorderIcon />
+          </IconButton>
+        )}
       </CardActions>
     </Card>
   );
