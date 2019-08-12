@@ -40,8 +40,13 @@ function Checkout() {
   };
   let submitMyForm = null;
   let isValidForm = false;
+  let formValues = null;
   const handleSubmitMyForm = e => {
-    console.log("{submitMyForm, isValidForm}", { submitMyForm, isValidForm });
+    console.log("{submitMyForm, isValidForm}", {
+      submitMyForm,
+      isValidForm,
+      formValues
+    });
     if (submitMyForm) {
       submitMyForm(e);
     }
@@ -56,9 +61,11 @@ function Checkout() {
       });
     }
   };
-  const bindSubmitForm = (submitForm, isValid) => {
+  const bindSubmitForm = (submitForm, isValid, values) => {
     submitMyForm = submitForm;
     isValidForm = isValid;
+    console.log("BIND =====formData", { values });
+    formValues = isValid ? formValues : { ...formValues, ...values };
   };
   return (
     <>
@@ -88,7 +95,9 @@ function Checkout() {
               </>
             ) : (
               <>
-                {getStepContent(activeStep, { bindSubmitForm })}
+                {getStepContent(activeStep, {
+                  bindSubmitForm
+                })}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
