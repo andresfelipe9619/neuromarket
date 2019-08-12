@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -22,42 +22,38 @@ const styles = theme => ({
   }
 });
 
-class Account extends Component {
-  state = { tabIndex: 0 };
+const Account = props => {
+  const { classes } = props;
 
-  render() {
-    const { classes } = this.props;
-
-    return (
-      <DashboardLayout title="Account">
-        <div className={classes.root}>
+  return (
+    <DashboardLayout title="Account">
+      <div className={classes.root}>
+        <Grid
+          container
+          spacing={4}
+        >
           <Grid
-            container
-            spacing={4}
+            item
+            lg={4}
+            md={6}
+            xl={4}
+            xs={12}
           >
-            <Grid
-              item
-              lg={4}
-              md={6}
-              xl={4}
-              xs={12}
-            >
-              <AccountProfile />
-            </Grid>
-            <Grid
-              item
-              lg={8}
-              md={6}
-              xl={8}
-              xs={12}
-            >
-              <AccountDetails />
-            </Grid>
+            <AccountProfile />
           </Grid>
-        </div>
-      </DashboardLayout>
-    );
-  }
+          <Grid
+            item
+            lg={8}
+            md={6}
+            xl={8}
+            xs={12}
+          >
+            <AccountDetails />
+          </Grid>
+        </Grid>
+      </div>
+    </DashboardLayout>
+  );
 }
 
 Account.propTypes = {

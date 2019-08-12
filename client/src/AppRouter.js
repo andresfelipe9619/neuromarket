@@ -53,7 +53,7 @@ export default function AppRouter() {
           <Route component={ProductList} exact path="/dashboard/products" />
           <Route component={Typography} exact path="/dashboard/typography" />
           <Route component={Icons} exact path="/dashboard/icons" />
-          <Route component={Account} exact path="/account" />
+          <Route component={Account} exact path="/dashboard/account" />
           <Route component={Settings} exact path="/dashboard/settings" />
           <Route component={SignUp} exact path="/sign-up" />
           <Route component={SignIn} exact path="/sign-in" />

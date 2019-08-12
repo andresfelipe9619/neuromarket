@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -21,18 +21,16 @@ const styles = theme => ({
   }
 });
 
-class Footer extends Component {
-  render() {
-    const { classes, className } = this.props;
+const Footer = props => {
+  const { classes, className } = props;
 
-    const rootClassName = classNames(classes.root, className);
+  const rootClassName = classNames(classes.root, className);
 
-    return (
-      <div className={rootClassName}>
-        <Divider />
-      </div>
-    );
-  }
+  return (
+    <div className={rootClassName}>
+      <Divider />
+    </div>
+  );
 }
 
 Footer.propTypes = {

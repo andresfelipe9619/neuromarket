@@ -28,24 +28,24 @@ function Navbar(props) {
   const checked = intlContext.locale === "en";
   const isMenuOpen = !!anchorEl;
   const isMobileMenuOpen = !!mobileMoreAnchorEl;
-  const [busqueda,gurdarbusqueda]=useState('');
-  
+  const [busqueda, gurdarbusqueda] = useState('');
+
 
   const cartItemsCount = shopContext.cart.reduce(
     (count, curItem) => count + curItem.quantity,
     0
   );
-  
+
   const goTo = useCallback(route => event => props.history.push(route), [
     props.history
   ]);
 
-  const busquedacomparar = (product)=> e=> 
-  {
-  console.log("product :D", product);
+  const busquedacomparar = (product) => e => {
+    console.log("product: ", product);
 
-  shopContext.lookForProduct(product) ;
-  goTo('/busqueda')();};
+    shopContext.lookForProduct(product);
+    goTo('/busqueda')();
+  };
 
   const favoriteItemsCount = shopContext.favorites.reduce(
     (count, curItem) => count + curItem.quantity,
@@ -100,8 +100,8 @@ function Navbar(props) {
                 root: classes.inputRoot,
                 input: classes.inputInput
               }}
-                onChange={e=> gurdarbusqueda(e.target.value)}
-                inputProps={{ "aria-label": "Search" }}
+              onChange={e => gurdarbusqueda(e.target.value)}
+              inputProps={{ "aria-label": "Search" }}
             />
             <IconButton
               aria-label={`lookingo for your  product `}
@@ -182,7 +182,7 @@ function Navbar(props) {
           handleMobileMenuClose
         }}
       />
-      <MemoMenu {...{ menuId, anchorEl, isMenuOpen, handleMenuClose }} />
+      <MemoMenu {...{ menuId, anchorEl, isMenuOpen, handleMenuClose, goTo }} />
     </div>
   );
 }
@@ -247,7 +247,7 @@ function MobileMenu({
   );
 }
 const MemoMenu = React.memo(MyMenu);
-function MyMenu({ menuId, anchorEl, isMenuOpen, handleMenuClose }) {
+function MyMenu({ menuId, anchorEl, isMenuOpen, handleMenuClose, goTo }) {
   return (
     <Menu
       anchorEl={anchorEl}
@@ -258,8 +258,8 @@ function MyMenu({ menuId, anchorEl, isMenuOpen, handleMenuClose }) {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={goTo('/dashboard/account')}>Profile</MenuItem>
+      <MenuItem onClick={goTo('/dashboard')}>My account</MenuItem>
     </Menu>
   );
 }

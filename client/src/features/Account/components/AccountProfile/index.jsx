@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 // Externals
 import PropTypes from 'prop-types';
@@ -16,10 +16,8 @@ import { Portlet, PortletContent, PortletFooter } from '../../../../components';
 // Component styles
 import styles from './styles';
 
-class AccountProfile extends Component {
-  render() {
-    const { classes, className, ...rest } = this.props;
-
+const AccountProfile = props => {
+    const { classes, className, ...rest } = props;
     const rootClassName = classNames(classes.root, className);
 
     return (
@@ -50,9 +48,9 @@ class AccountProfile extends Component {
             />
           </div>
           <div className={classes.progressWrapper}>
-            <Typography variant="body1">Profile Completeness: 70%</Typography>
+            <Typography variant="body1">Profile Completeness: 85%</Typography>
             <LinearProgress
-              value={70}
+              value={85}
               variant="determinate"
             />
           </div>
@@ -70,7 +68,6 @@ class AccountProfile extends Component {
       </Portlet>
     );
   }
-}
 
 AccountProfile.propTypes = {
   className: PropTypes.string,
