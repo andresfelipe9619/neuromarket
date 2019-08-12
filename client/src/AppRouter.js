@@ -3,8 +3,13 @@ import CartPage from "./features/cart";
 import HomePage from "./features/home";
 import LoginPage from "./features/login";
 import CheckoutPage from "./features/checkout";
-import { ProductsPage, ProductsDetailsPage,ProductsFound } from "./features/products";
+import {
+  ProductsPage,
+  ProductsDetailsPage,
+  ProductsFound
+} from "./features/products";
 import RegisterPage from "./features/register";
+import FavoritesPage from "./features/favorites";
 import Navbar from "./components/navbar/Navbar";
 import Alert from "./components/alert/Alert";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -44,6 +49,7 @@ export default function AppRouter() {
           <Route path="/register" component={RegisterPage} exact />
           <Route path="/checkout" component={CheckoutPage} exact />
           <Route path="/products" component={ProductsPage} exact />
+          <Route path="/favorites" component={FavoritesPage} exact />
           <Route path="/products/:id" component={ProductsDetailsPage} exact />
           <Route path="/busqueda" component={ProductsFound} exact />
 
