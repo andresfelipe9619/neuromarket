@@ -11,5 +11,9 @@ export default theme => ({
   },
   searchInput: {
     marginRight: theme.spacing.unit
+  },
+  select: {
+    marginRight: '5px',
+    marginBlock: '5px',
   }
 });

@@ -33,6 +33,8 @@ import { DisplayMode, SearchInput } from "../../../../components";
 // Component styles
 import styles from "./styles";
 import Modal from "../../../../components/modal/modal";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -56,13 +58,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const UsersToolbar = props => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("xl"));
   const [openModal, setOpenModal] = useState(false);
   const { classes, className, selectedUsers } = props;
   const textInputClasses = useStyles();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  function handleDateChange(date) {
+  const handleDateChange = (date) => {
     setSelectedDate(date);
   }
 
@@ -72,7 +76,7 @@ const UsersToolbar = props => {
 
   const rootClassName = classNames(classes.root, className);
 
-  function ModalForm() {
+  const ModalForm = () => {
     return (
       <div>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -81,7 +85,7 @@ const UsersToolbar = props => {
               id="outlined-name"
               label="Name:"
               required
-              helperText="Enter mermber's name"
+              helperText="Enter member's name"
               autoComplete="name"
               className={classes.field}
               margin="dense"
@@ -92,9 +96,7 @@ const UsersToolbar = props => {
                 )
               }}
             />
-          </FormControl>
 
-          <FormControl fullWidth className={textInputClasses.margin}>
             <TextField
               id="outlined-id-input"
               helperText="Enter user's ID"
@@ -102,7 +104,7 @@ const UsersToolbar = props => {
               label="ID:"
               className={classes.field}
               name="ID"
-              placeholder='DEV705225'
+              placeholder="DEV705225"
               autoComplete="email"
               margin="dense"
               variant="outlined"
@@ -112,27 +114,22 @@ const UsersToolbar = props => {
                 )
               }}
             />
-          </FormControl>
 
-          <FormControl fullWidth className={textInputClasses.margin}>
             <TextField
               id="outlined-state"
               label="State"
-              name='Select State'
+              name="Select State"
               required
               className={classes.textField}
               margin="dense"
               variant="outlined"
               helperText="Enter user's State or province"
             />
-          </FormControl>
-
-          <FormControl fullWidth className={textInputClasses.margin}>
             <TextField
               id="outlined-phone"
               label="Phone"
               type="number"
-              placeholder='(300) 000-0000'
+              placeholder="(300) 000-0000"
               className={classes.textField}
               InputLabelProps={{
                 shrink: true
@@ -141,9 +138,7 @@ const UsersToolbar = props => {
               variant="outlined"
               helperText="Enter user's phone number"
             />
-          </FormControl>
 
-          <FormControl className={textInputClasses.margin}>
             <KeyboardDatePicker
               margin="normal"
               id="date-picker-dialog"
@@ -195,6 +190,7 @@ const UsersToolbar = props => {
           Add
           {openModal ? (
             <Modal
+              fullScreen={fullScreen}
               dialogTitle="Add a user to your Network"
               bodyContent={() => {
                 return <ModalForm />;

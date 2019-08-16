@@ -88,7 +88,7 @@ function Navbar(props) {
             noWrap
             onClick={goTo("/")}
           >
-            NeuroMarker
+            NeuroMarket
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>
@@ -154,8 +154,8 @@ function Navbar(props) {
             </IconButton>
           </div>
         </Toolbar>
-        <Toolbar component="nav" variant="dense" color="secondary">
-          <Typography variant="h6" noWrap gutterBottom onClick={goTo("/products")}>
+        <Toolbar component="nav" variant="regular" color="secondary">
+          <Typography variant="button" noWrap gutterBottom onClick={goTo("/products")}>
             Categories
           </Typography>
           <div className={classes.grow} />

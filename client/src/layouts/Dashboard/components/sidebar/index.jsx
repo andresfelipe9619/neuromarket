@@ -55,7 +55,7 @@ const Sidebar = props => {
               color="primary"
               gutterBottom
             >
-              NeuroMarker
+              NeuroMarket
               </Typography>
           </CardActionArea>
         </Link>
