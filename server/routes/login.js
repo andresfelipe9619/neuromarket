@@ -8,7 +8,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
 
 
 
-const Usuario = require('../models/usuario');
+const user = require('../models/user');
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.post('/login', (req, res) => {
 
     let body = req.body;
 
-    Usuario.findOne({ email: body.email }, (err, usuarioDB) => {
+    user.findOne({ email: body.email }, (err, usuarioDB) => {
 
         if (err) {
             return res.status(500).json({
@@ -31,7 +31,7 @@ app.post('/login', (req, res) => {
             return res.status(400).json({
                 ok: false,
                 err: {
-                    message: '(Usuario) o contraseña incorrectos'
+                    message: '(user) o contraseña incorrectos'
                 }
             });
         }
@@ -41,18 +41,18 @@ app.post('/login', (req, res) => {
             return res.status(400).json({
                 ok: false,
                 err: {
-                    message: 'Usuario o (contraseña) incorrectos'
+                    message: 'user o (contraseña) incorrectos'
                 }
             });
         }
 
         let token = jwt.sign({
-            usuario: usuarioDB
+            user: usuarioDB
         }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
         res.json({
             ok: true,
-            usuario: usuarioDB,
+            user: usuarioDB,
             token
         });
 
@@ -73,7 +73,7 @@ async function verify(token) {
     const payload = ticket.getPayload();
 
     return {
-        nombre: payload.name,
+        name: payload.name,
         email: payload.email,
         img: payload.picture,
         google: true
@@ -95,7 +95,7 @@ app.post('/google', async(req, res) => {
         });
 
 
-    Usuario.findOne({ email: googleUser.email }, (err, usuarioDB) => {
+    user.findOne({ email: googleUser.email }, (err, usuarioDB) => {
 
         if (err) {
             return res.status(500).json({
@@ -115,29 +115,29 @@ app.post('/google', async(req, res) => {
                 });
             } else {
                 let token = jwt.sign({
-                    usuario: usuarioDB
+                    user: usuarioDB
                 }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
 
                 return res.json({
                     ok: true,
-                    usuario: usuarioDB,
+                    user: usuarioDB,
                     token,
                 });
 
             }
 
         } else {
-            // Si el usuario no existe en nuestra base de datos
-            let usuario = new Usuario();
+            // Si el user no existe en nuestra base de datos
+            let user = new user();
 
-            usuario.nombre = googleUser.nombre;
-            usuario.email = googleUser.email;
-            usuario.img = googleUser.img;
-            usuario.google = true;
-            usuario.password = ':)';
+            user.name = googleUser.name;
+            user.email = googleUser.email;
+            user.img = googleUser.img;
+            user.google = true;
+            user.password = ':)';
 
-            usuario.save((err, usuarioDB) => {
+            user.save((err, usuarioDB) => {
 
                 if (err) {
                     return res.status(500).json({
@@ -147,13 +147,13 @@ app.post('/google', async(req, res) => {
                 };
 
                 let token = jwt.sign({
-                    usuario: usuarioDB
+                    user: usuarioDB
                 }, process.env.SEED, { expiresIn: process.env.CADUCIDAD_TOKEN });
 
 
                 return res.json({
                     ok: true,
-                    usuario: usuarioDB,
+                    user: usuarioDB,
                     token,
                 });
 

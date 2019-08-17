@@ -12,9 +12,9 @@ let Schema = mongoose.Schema;
 
 
 let usuarioSchema = new Schema({
-    nombre: {
+    name: {
         type: String,
-        required: [true, 'El nombre es necesario']
+        required: [true, 'El name es necesario']
     },
     email: {
         type: String,
@@ -38,7 +38,7 @@ let usuarioSchema = new Schema({
         default: 'USER_ROLE',
         enum: rolesValidos
     },
-    estado: {
+    state: {
         type: Boolean,
         default: true
     },
@@ -66,4 +66,4 @@ usuarioSchema.methods.toJSON = function() {
 usuarioSchema.plugin(uniqueValidator, { message: '{PATH} debe de ser único' });
 
 
-module.exports = mongoose.model('Usuario', usuarioSchema);
+module.exports = mongoose.model('User', usuarioSchema);

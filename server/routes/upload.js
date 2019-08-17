@@ -2,8 +2,8 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const app = express();
 
-const Usuario = require('../models/usuario');
-const Producto = require('../models/producto');
+const user = require('../models/user');
+const Producto = require('../models/product');
 
 const fs = require('fs');
 const path = require('path');
@@ -56,7 +56,7 @@ app.put('/upload/:tipo/:id', function(req, res) {
         })
     }
 
-    // Cambiar nombre al archivo
+    // Cambiar name al archivo
     // 183912kuasidauso-123.jpg
     let nombreArchivo = `${ id }-${ new Date().getMilliseconds()  }.${ extension }`;
 
@@ -82,7 +82,7 @@ app.put('/upload/:tipo/:id', function(req, res) {
 
 function imagenUsuario(id, res, nombreArchivo) {
 
-    Usuario.findById(id, (err, usuarioDB) => {
+    user.findById(id, (err, usuarioDB) => {
 
         if (err) {
             borraArchivo(nombreArchivo, 'usuarios');
@@ -113,7 +113,7 @@ function imagenUsuario(id, res, nombreArchivo) {
 
             res.json({
                 ok: true,
-                usuario: usuarioGuardado,
+                user: usuarioGuardado,
                 img: nombreArchivo
             });
 

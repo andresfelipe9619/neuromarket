@@ -4,25 +4,25 @@ const { verificaToken } = require('../middlewares/autenticacion');
 
 
 let app = express();
-let Producto = require('../models/producto');
+let Producto = require('../models/product');
 
 
 // ===========================
 //  Obtener productos
 // ===========================
-app.get('/productos', verificaToken, (req, res) => {
+app.get('/productos', (req, res) => {
     // trae todos los productos
-    // populate: usuario categoria
+    // populate: user category
     // paginado
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
-    Producto.find({ disponible: true })
+    Producto.find({ availability: true })
         .skip(desde)
         .limit(5)
-        .populate('usuario', 'nombre email')
-        .populate('categoria', 'descripcion')
+        .populate('user', 'name email')
+        .populate('category', 'description')
         .exec((err, productos) => {
 
             if (err) {
@@ -46,13 +46,13 @@ app.get('/productos', verificaToken, (req, res) => {
 //  Obtener un producto por ID
 // ===========================
 app.get('/productos/:id', (req, res) => {
-    // populate: usuario categoria
+    // populate: user category
     // paginado
     let id = req.params.id;
 
     Producto.findById(id)
-        .populate('usuario', 'nombre email')
-        .populate('categoria', 'nombre')
+        .populate('user', 'name email')
+        .populate('category', 'name')
         .exec((err, productoDB) => {
 
             if (err) {
@@ -89,8 +89,8 @@ app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
 
     let regex = new RegExp(termino, 'i');
 
-    Producto.find({ nombre: regex })
-        .populate('categoria', 'nombre')
+    Producto.find({ name: regex })
+        .populate('category', 'name')
         .exec((err, productos) => {
 
 
@@ -117,18 +117,18 @@ app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
 //  Crear un nuevo producto
 // ===========================
 app.post('/productos', verificaToken, (req, res) => {
-    // grabar el usuario
-    // grabar una categoria del listado 
+    // grabar el user
+    // grabar una category del listado 
 
     let body = req.body;
 
     let producto = new Producto({
-        usuario: req.usuario._id,
-        nombre: body.nombre,
-        precioUni: body.precioUni,
-        descripcion: body.descripcion,
-        disponible: body.disponible,
-        categoria: body.categoria
+        user: req.user._id,
+        name: body.name,
+        price: body.price,
+        description: body.description,
+        availability: body.availability,
+        category: body.category
     });
 
     producto.save((err, productoDB) => {
@@ -153,8 +153,8 @@ app.post('/productos', verificaToken, (req, res) => {
 //  Actualizar un producto
 // ===========================
 app.put('/productos/:id', verificaToken, (req, res) => {
-    // grabar el usuario
-    // grabar una categoria del listado 
+    // grabar el user
+    // grabar una category del listado 
 
     let id = req.params.id;
     let body = req.body;
@@ -177,11 +177,11 @@ app.put('/productos/:id', verificaToken, (req, res) => {
             });
         }
 
-        productoDB.nombre = body.nombre;
-        productoDB.precioUni = body.precioUni;
-        productoDB.categoria = body.categoria;
-        productoDB.disponible = body.disponible;
-        productoDB.descripcion = body.descripcion;
+        productoDB.name = body.name;
+        productoDB.price = body.price;
+        productoDB.category = body.category;
+        productoDB.availability = body.availability;
+        productoDB.description = body.description;
 
         productoDB.save((err, productoGuardado) => {
 
@@ -229,7 +229,7 @@ app.delete('/productos/:id', verificaToken, (req, res) => {
             });
         }
 
-        productoDB.disponible = false;
+        productoDB.availability = false;
 
         productoDB.save((err, productoBorrado) => {
 

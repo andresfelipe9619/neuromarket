@@ -19,7 +19,7 @@ let verificaToken = (req, res, next) => {
             });
         }
 
-        req.usuario = decoded.usuario;
+        req.user = decoded.user;
         next();
 
     });
@@ -33,16 +33,16 @@ let verificaToken = (req, res, next) => {
 // =====================
 let verificaAdmin_Role = (req, res, next) => {
 
-    let usuario = req.usuario;
+    let user = req.user;
 
-    if (usuario.role === 'ADMIN_ROLE') {
+    if (user.role === 'ADMIN_ROLE') {
         next();
     } else {
 
         return res.json({
             ok: false,
             err: {
-                message: 'El usuario no es administrador'
+                message: 'El user no es administrador'
             }
         });
     }
@@ -66,7 +66,7 @@ let verificaTokenImg = (req, res, next) => {
             });
         }
 
-        req.usuario = decoded.usuario;
+        req.user = decoded.user;
         next();
 
     });
