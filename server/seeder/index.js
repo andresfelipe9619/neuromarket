@@ -1,21 +1,21 @@
-const { Seeder } = require('mongo-seeding');
+const { Seeder } = require("mongo-seeding");
+const path = require("path");
 const config = {
-    database: {
-      host: process.env.URLDB,
-      port: 27017,
-      name: 'neuromarket',
-    },
-    dropDatabase: false,
-  };
+  database: "mongodb://localhost:27017/neromarket",
+  dropDatabase: false,
+};
 const seeder = new Seeder(config);
-const collections = require('')
+const collections = seeder.readCollectionsFromPath(path.resolve("./data"));
 
-const seedDB = () =>{
-    try {
-        await seeder.import(collections);
-    } catch (err) {
-        // Handle errors
-    }
-}
+const seedDB = async () => {
+  try {
+    console.log("collections", collections);
+    await seeder.import(collections);
+  } catch (err) {
+    // Handle errors
+    console.log("err", err);
+  }
+  console.log("Seeders completed");
+};
 
 seedDB();

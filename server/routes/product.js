@@ -8,22 +8,22 @@ let Producto = require('../models/product');
 
 
 // ===========================
-//  Obtener productos
+//  Obtener products
 // ===========================
-app.get('/productos', (req, res) => {
-    // trae todos los productos
+app.get('/products', (req, res) => {
+    // trae todos los products
     // populate: user category
     // paginado
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
-    Producto.find({ availability: true })
+    Producto.find()
         .skip(desde)
         .limit(5)
-        .populate('user', 'name email')
-        .populate('category', 'description')
-        .exec((err, productos) => {
+        // .populate('user', 'name email')
+        // .populate('category', 'description')
+        .exec((err, products) => {
 
             if (err) {
                 return res.status(500).json({
@@ -34,7 +34,7 @@ app.get('/productos', (req, res) => {
 
             res.json({
                 ok: true,
-                productos
+                products
             });
 
 
@@ -45,7 +45,7 @@ app.get('/productos', (req, res) => {
 // ===========================
 //  Obtener un producto por ID
 // ===========================
-app.get('/productos/:id', (req, res) => {
+app.get('/products/:id', (req, res) => {
     // populate: user category
     // paginado
     let id = req.params.id;
@@ -81,9 +81,9 @@ app.get('/productos/:id', (req, res) => {
 });
 
 // ===========================
-//  Buscar productos
+//  Search products
 // ===========================
-app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
+app.get('/products/search/:termino', verificaToken, (req, res) => {
 
     let termino = req.params.termino;
 
@@ -91,7 +91,7 @@ app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
 
     Producto.find({ name: regex })
         .populate('category', 'name')
-        .exec((err, productos) => {
+        .exec((err, products) => {
 
 
             if (err) {
@@ -103,7 +103,7 @@ app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
 
             res.json({
                 ok: true,
-                productos
+                products
             })
 
         })
@@ -116,7 +116,7 @@ app.get('/productos/buscar/:termino', verificaToken, (req, res) => {
 // ===========================
 //  Crear un nuevo producto
 // ===========================
-app.post('/productos', verificaToken, (req, res) => {
+app.post('/products', verificaToken, (req, res) => {
     // grabar el user
     // grabar una category del listado 
 
@@ -152,7 +152,7 @@ app.post('/productos', verificaToken, (req, res) => {
 // ===========================
 //  Actualizar un producto
 // ===========================
-app.put('/productos/:id', verificaToken, (req, res) => {
+app.put('/products/:id', verificaToken, (req, res) => {
     // grabar el user
     // grabar una category del listado 
 
@@ -207,7 +207,7 @@ app.put('/productos/:id', verificaToken, (req, res) => {
 // ===========================
 //  Borrar un producto
 // ===========================
-app.delete('/productos/:id', verificaToken, (req, res) => {
+app.delete('/products/:id', verificaToken, (req, res) => {
 
     let id = req.params.id;
 

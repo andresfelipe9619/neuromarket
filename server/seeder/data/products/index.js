@@ -7,7 +7,8 @@ module.exports = [
     imageUrl: '/images/products/product_1.png',
     price: '10',
     status: 'published',
-    createdAt: '27/03/2019'
+    createdAt: '27/03/2019',
+    availability: true
   },
   {
     id: 'DEV795381',
@@ -17,7 +18,8 @@ module.exports = [
     imageUrl: '/images/products/product_2.png',
     price: '27',
     status: 'archived',
-    createdAt: '31/03/2019'
+    createdAt: '31/03/2019',
+    availability: true
   },
   {
     id: 'DEV774585',
@@ -27,7 +29,8 @@ module.exports = [
     imageUrl: '/images/products/product_3.png',
     price: '20',
     status: 'published',
-    createdAt: '03/04/2019'
+    createdAt: '03/04/2019',
+    availability: true
   },
   {
     id: 'DEV654476',
@@ -37,7 +40,8 @@ module.exports = [
     imageUrl: '/images/products/product_4.png',
     price: '28',
     status: 'draft',
-    createdAt: '04/04/2019'
+    createdAt: '04/04/2019',
+    availability: true
   },
   {
     id: 'DEV958347',
@@ -47,7 +51,8 @@ module.exports = [
     imageUrl: '/images/products/product_5.png',
     price: '32',
     status: 'published',
-    createdAt: '04/04/2019'
+    createdAt: '04/04/2019',
+    availability: true
   },
   {
     id: 'DEV773559',
@@ -57,6 +62,7 @@ module.exports = [
     imageUrl: '/images/products/product_6.png',
     price: '32',
     status: 'published',
-    createdAt: '04/04/2019'
+    createdAt: '04/04/2019',
+    availability: true
   }
 ];
