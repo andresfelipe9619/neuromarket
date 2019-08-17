@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import classNames from "classnames";
 
 // Material helpers
-import { withStyles, Divider } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 
 // Material components
 import { Button } from "@material-ui/core";
@@ -14,7 +14,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import MenuItem from "@material-ui/core/MenuItem";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
 
 // Shared components
 import { DisplayMode, SearchInput } from "../../../../components";
@@ -95,6 +94,7 @@ const categories = [
     label: "Home"
   }
 ];
+
 const ProductsToolbar = props => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("xl"));
@@ -124,7 +124,7 @@ const ProductsToolbar = props => {
     return (
       <div>
         <div>
-          <Dropzone onFilesAdded={console.log} />
+          <Dropzone />
         </div>
         <div>
           <FormControl fullWidth margin="normal">
