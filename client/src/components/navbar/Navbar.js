@@ -1,35 +1,30 @@
-import React, { useState, useContext, useCallback } from "react";
+import React, { memo, useState, useContext, useCallback } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
-import Menu from "@material-ui/core/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { ShoppingCart, Favorite } from "@material-ui/icons";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
 import ShopContext from "../../context/shop-context";
-import { useIntlState } from "../../context/intl-context";
 import { withRouter } from "react-router-dom";
-
-import Switch from "@material-ui/core/Switch";
-import Grid from "@material-ui/core/Grid";
-
+import ProfileMenu from "./ProfileMenu";
+import MobileMenu from "./MobileMenu";
+import CategoriesMenu from "./CategoriesMenu";
 function Navbar(props) {
   const classes = useStyles();
   const shopContext = useContext(ShopContext);
-  const intlContext = useIntlState();
-  const [anchorEl, setAnchorEl] = useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
-  const checked = intlContext.locale === "en";
-  const isMenuOpen = !!anchorEl;
+  const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+  const [categoriesAnchorEl, setCategoriesAnchorEl] = useState(null);
+  const isProfileMenuOpen = !!profileAnchorEl;
   const isMobileMenuOpen = !!mobileMoreAnchorEl;
-  const [busqueda, gurdarbusqueda] = useState('');
-
+  const isCategoriesMenuOpen = !!categoriesAnchorEl;
+  const [busqueda, gurdarbusqueda] = useState("");
 
   const cartItemsCount = shopContext.cart.reduce(
     (count, curItem) => count + curItem.quantity,
@@ -40,11 +35,11 @@ function Navbar(props) {
     props.history
   ]);
 
-  const busquedacomparar = (product) => e => {
+  const busquedacomparar = product => e => {
     console.log("product: ", product);
 
     shopContext.lookForProduct(product);
-    goTo('/busqueda')();
+    goTo("/busqueda")();
   };
 
   const favoriteItemsCount = shopContext.favorites.reduce(
@@ -52,28 +47,36 @@ function Navbar(props) {
     0
   );
   const handleProfileMenuOpen = event => {
-    setAnchorEl(event.currentTarget);
+    setProfileAnchorEl(event.currentTarget);
   };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
+  const handleProfileMenuClose = () => {
+    setProfileAnchorEl(null);
     handleMobileMenuClose();
-  };
-
-  const handleChange = event => {
-    let checked = event.target.checked;
-    if (!checked) return intlContext.switchToSpanish();
-    return intlContext.switchToEnglish();
   };
 
   const handleMobileMenuOpen = event => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+  const handleCategoriesMenuOpen = event => {
+    setCategoriesAnchorEl(event.currentTarget);
+  };
+
+  const handleCategoriesMenuClose = () => {
+    setCategoriesAnchorEl(null);
+  };
+
+  console.log("{state,}", {
+    isProfileMenuOpen,
+    isCategoriesMenuOpen,
+    categoriesAnchorEl,
+    profileAnchorEl
+  });
   const menuId = "primary-search-account-menu";
   const mobileMenuId = "primary-search-account-menu-mobile";
   return (
@@ -91,9 +94,6 @@ function Navbar(props) {
             NeuroMarket
           </Typography>
           <div className={classes.search}>
-            <div className={classes.searchIcon}>
-
-            </div>
             <InputBase
               placeholder="Search…"
               classes={{
@@ -155,22 +155,29 @@ function Navbar(props) {
           </div>
         </Toolbar>
         <Toolbar component="nav" variant="regular" color="secondary">
-          <Typography variant="button" noWrap gutterBottom onClick={goTo("/products")}>
+          <Typography
+            color="inherit"
+            variant="h4"
+            noWrap
+            gutterBottom
+            onClick={handleCategoriesMenuOpen}
+          >
             Categories
           </Typography>
+
           <div className={classes.grow} />
-          <Typography component="div">
-            <Grid component="label" container alignItems="center" spacing={1}>
-              <Grid item>Spanish</Grid>
-              <Grid item>
-                <Switch checked={checked} onChange={handleChange} />
-              </Grid>
-              <Grid item>English</Grid>
-            </Grid>
-          </Typography>
         </Toolbar>
       </AppBar>
-      <MemoMobileMenu
+      <CategoriesMenu
+        {...{
+          goTo,
+          menuId,
+          anchorEl: categoriesAnchorEl,
+          isMenuOpen: isCategoriesMenuOpen,
+          handleMenuClose: handleCategoriesMenuClose
+        }}
+      />
+      <MobileMenu
         {...{
           goTo,
           mobileMenuId,
@@ -182,86 +189,17 @@ function Navbar(props) {
           handleMobileMenuClose
         }}
       />
-      <MemoMenu {...{ menuId, anchorEl, isMenuOpen, handleMenuClose, goTo }} />
+      <ProfileMenu
+        {...{
+          goTo,
+          menuId,
+          anchorEl: profileAnchorEl,
+          isMenuOpen: isProfileMenuOpen,
+          handleMenuClose: handleProfileMenuClose
+        }}
+      />
     </div>
   );
 }
-const MemoMobileMenu = React.memo(MobileMenu);
 
-function MobileMenu({
-  goTo,
-  mobileMenuId,
-  cartItemsCount,
-  isMobileMenuOpen,
-  favoriteItemsCount,
-  mobileMoreAnchorEl,
-  handleProfileMenuOpen,
-  handleMobileMenuClose
-}) {
-  return (
-    <Menu
-      anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={mobileMenuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMobileMenuOpen}
-      onClose={handleMobileMenuClose}
-    >
-      <MenuItem>
-        <IconButton
-          aria-label={`Show ${cartItemsCount} cart`}
-          color="inherit"
-          onClick={goTo("/cart")}
-        >
-          <Badge badgeContent={cartItemsCount} color="secondary">
-            <ShoppingCart />
-          </Badge>
-        </IconButton>
-        <p>Cart</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          aria-label="Show 4 new notifications"
-          color="inherit"
-          onClick={goTo("/favorites")}
-        >
-          <Badge badgeContent={favoriteItemsCount} color="secondary">
-            <Favorite />
-          </Badge>
-        </IconButton>
-        <p>Favorites</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="Account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
-    </Menu>
-  );
-}
-const MemoMenu = React.memo(MyMenu);
-function MyMenu({ menuId, anchorEl, isMenuOpen, handleMenuClose, goTo }) {
-  return (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: "top", horizontal: "right" }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={goTo('/dashboard/account')}>Profile</MenuItem>
-      <MenuItem onClick={goTo('/dashboard')}>My account</MenuItem>
-    </Menu>
-  );
-}
-
-export default withRouter(React.memo(Navbar));
+export default withRouter(memo(Navbar));

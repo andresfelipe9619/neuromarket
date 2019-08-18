@@ -1,6 +1,7 @@
 // Mock data
 import users from '../../data/users';
 import orders from '../../data/orders';
+import {serverRequests} from '../axios-server';
 
 function lookupUser(user) {
   const userCopy = JSON.parse(JSON.stringify(user));
@@ -47,4 +48,13 @@ export const getUser = id => {
       }
     }, 500);
   });
+};
+
+
+export const User = {
+  getAll: () => serverRequests.get(`/user`),
+  get: id => serverRequests.get(`/user/${id}`),
+  profile: () => serverRequests.get("/profile"),
+  delete: id => serverRequests.del(`/user/${id}`),
+  update: user => serverRequests.put(`/user/${user._id}`, user)
 };

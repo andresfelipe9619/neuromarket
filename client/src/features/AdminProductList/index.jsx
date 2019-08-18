@@ -1,36 +1,20 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-
-// Externals
 import PropTypes from 'prop-types';
-
-// Material helpers
 import { withStyles } from '@material-ui/core';
-
-// Material components
 import {
   IconButton,
   CircularProgress,
   Grid,
   Typography
 } from '@material-ui/core';
-
-// Material icons
 import {
   ChevronRight as ChevronRightIcon,
   ChevronLeft as ChevronLeftIcon
 } from '@material-ui/icons';
-
-// Shared layouts
 import { Dashboard as DashboardLayout } from '../../layouts';
-
-// Shared services
-import { getProducts } from '../../services/product';
-
-// Custom components
+import { Product } from '@neuromarket/services';
 import { ProductsToolbar, ProductCard } from './components';
-
-// Component styles
 import styles from './styles';
 
 class ProductList extends Component {
@@ -48,13 +32,12 @@ class ProductList extends Component {
     try {
       this.setState({ isLoading: true });
 
-      const { products, productsTotal } = await getProducts(limit);
+      const { products } = await Product.getAll(limit);
 
       if (this.signal) {
         this.setState({
           isLoading: false,
           products,
-          productsTotal,
           limit
         });
       }

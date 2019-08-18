@@ -41,10 +41,11 @@ const useStyles = makeStyles(theme => ({
     justifyContent: "center"
   },
   inputRoot: {
-    color: "inherit"
+    color: "inherit",
+    width: "85%",
   },
   inputInput: {
-    padding: theme.spacing(1, 1, 1, 7),
+    padding: theme.spacing(1, 1, 1, 4),
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {

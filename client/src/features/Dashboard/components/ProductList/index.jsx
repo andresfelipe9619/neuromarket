@@ -1,41 +1,27 @@
-import React, { Component, Fragment } from 'react';
-import { Link } from 'react-router-dom';
-
-// Externals
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
-
-// Shared services
-import { getProducts } from '../../../../services/product';
-
-// Material helpers
-import { withStyles } from '@material-ui/core';
-
-// Material components
+import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
+import classNames from "classnames";
+import PropTypes from "prop-types";
+import { Product } from "@neuromarket/services";
+import { withStyles } from "@material-ui/core";
 import {
   Button,
   IconButton,
   Typography,
   CircularProgress
-} from '@material-ui/core';
-
-// Material icons
+} from "@material-ui/core";
 import {
   ArrowRight as ArrowRightIcon,
   MoreVert as MoreVertIcon
-} from '@material-ui/icons';
-
-// Shared components
+} from "@material-ui/icons";
 import {
   Portlet,
   PortletHeader,
   PortletLabel,
   PortletContent,
   PortletFooter
-} from '../../../../components';
-
-// Component styles
-import styles from './styles';
+} from "../../../../components";
+import styles from "./styles";
 
 class ProductList extends Component {
   signal = true;
@@ -51,11 +37,9 @@ class ProductList extends Component {
   async getProducts() {
     try {
       this.setState({ isLoading: true });
-
       const { limit } = this.state;
-
-      const { products, productsTotal } = await getProducts(limit);
-
+      const { products } = await Product.getAll(limit);
+      const productsTotal = products.length;
       if (this.signal) {
         this.setState({
           isLoading: false,
@@ -73,9 +57,8 @@ class ProductList extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.signal = true;
-
     this.getProducts();
   }
 
@@ -104,10 +87,7 @@ class ProductList extends Component {
     return (
       <Fragment>
         {products.map((product, i) => (
-          <div
-            className={classes.product}
-            key={i}
-          >
+          <div className={classes.product} key={i}>
             <div className={classes.productImageWrapper}>
               <img
                 alt="Product Name"
@@ -117,17 +97,11 @@ class ProductList extends Component {
             </div>
             <div className={classes.productDetails}>
               <Link to="#">
-                <Typography
-                  className={classes.productTitle}
-                  variant="h5"
-                >
-                  {product.title}
+                <Typography className={classes.productTitle} variant="h5">
+                  {product.name}
                 </Typography>
               </Link>
-              <Typography
-                className={classes.productTimestamp}
-                variant="body2"
-              >
+              <Typography className={classes.productTimestamp} variant="body2">
                 Updated 5hr ago
               </Typography>
             </div>
@@ -149,10 +123,7 @@ class ProductList extends Component {
     const rootClassName = classNames(classes.root, className);
 
     return (
-      <Portlet
-        {...rest}
-        className={rootClassName}
-      >
+      <Portlet {...rest} className={rootClassName}>
         <PortletHeader noDivider>
           <PortletLabel
             subtitle={`${productsTotal} in total`}
@@ -163,11 +134,7 @@ class ProductList extends Component {
           {this.renderProducts()}
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
-          <Button
-            color="primary"
-            size="small"
-            variant="text"
-          >
+          <Button color="primary" size="small" variant="text">
             View all <ArrowRightIcon />
           </Button>
         </PortletFooter>

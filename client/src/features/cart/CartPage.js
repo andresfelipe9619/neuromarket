@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 
 import useStyles from "./styles";
+import Product from "../products/Product";
 const CartPage = props => {
   const { cart, subtotal, removeProductFromCart } = useContext(ShopContext);
   const classes = useStyles();
@@ -36,10 +37,10 @@ const CartPage = props => {
                 <Typography variant="h5">Ammount</Typography>
               </Grid>
             </Grid>
-            {cart.map(({ id, title, price, quantity, ammount }) => (
+            {cart.map(({ id, name, price, quantity, ammount, imageUrl }) => (
               <Grid key={id} container item xs={12} sm={12}>
                 <Grid item xs={12} sm={3}>
-                  <Typography variant="h6">{title}</Typography>
+                  <Product product={{ id, name, price, imageUrl }} />
                   <Button
                     variant="contained"
                     color="primary"

@@ -33,17 +33,18 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
     addProductToCart,
     product
   ]);
+  const img = product.imageUrl || "https://source.unsplash.com/random"
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.cardMedia}
-        image="https://source.unsplash.com/random"
+        image={img}
         title="Image title"
       />
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom variant="h5" component="h2">
           <Link to={`/products/${product.id}`}>
-            <strong>{product.title}</strong> - ${product.price}{" "}
+            <strong>{product.name}</strong> - ${product.price}{" "}
           </Link>
         </Typography>
         <Typography>

@@ -1,5 +1,5 @@
 {
-  "name": "neuromarker",
+  "name": "neuromarket-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.2.0",
     "@material-ui/pickers": "^3.2.2",
     "@material-ui/styles": "^4.0.0-beta.1",
+    "@neuromarket/services": "file:src/services",
     "axios": "^0.19.0",
     "chart.js": "^2.7.3",
     "classnames": "^2.2.6",
