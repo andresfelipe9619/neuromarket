@@ -33,11 +33,12 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
     addProductToCart,
     product
   ]);
+  const img = product.imageUrl || "https://source.unsplash.com/random"
   return (
     <Card className={classes.card}>
       <CardMedia
         className={classes.cardMedia}
-        image="https://source.unsplash.com/random"
+        image={img}
         title="Image title"
       />
       <CardContent className={classes.cardContent}>

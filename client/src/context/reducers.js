@@ -91,8 +91,8 @@ const removeProductFromFavorites = (productId, state) => {
  const lookForProduct = (prodocutobusqueda,state)=> {
       const busquedanormalizada = prodocutobusqueda.toLowerCase()
       const arreglo = [];
-      state.products.map(product=>{
-          const productonormalizado= product.title.toLowerCase()
+      state.products.forEach(product=>{
+          const productonormalizado= product.name.toLowerCase()
           if(productonormalizado.includes(busquedanormalizada)){
             console.log("entontrado");
             arreglo.push(product)
