@@ -1,12 +1,11 @@
-import React, { memo } from "react";
+import React, { memo, useEffect, useState } from "react";
 import {
   Menu,
   Divider,
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
-  MenuItem
+  ListItemText
 } from "@material-ui/core";
 import {
   ArrowForwardIos as ArrowForwardIosIcon,
@@ -16,7 +15,7 @@ import {
   Store as StoreIcon
 } from "@material-ui/icons";
 import { Link } from "react-router-dom";
-
+import { Category } from "@neuromarket/services";
 const icons = {
   order: {
     icon: <PaymentIcon />,
@@ -35,45 +34,18 @@ const icons = {
     color: "purple"
   }
 };
-const categories = [
-  {
-    id: 1,
-    name: "Deportes",
-    description: ""
-  },
-  {
-    id: 2,
-    name: "Tecnología",
-    description: ""
-  },
-  {
-    id: 3,
-    name: "Juguetes y Bebés",
-    description: ""
-  },
-  {
-    id: 4,
-    name: "Belleza y Cuidado Personal",
-    description: ""
-  },
-  {
-    id: 5,
-    name: "Libros",
-    description: ""
-  },
-  {
-    id: 6,
-    name: "Hoogar y Electrodomésticos",
-    description: ""
-  },
-  {
-    id: 7,
-    name: "Vehículos",
-    description: ""
-  }
-];
+
 function CategoriesMenu({ anchorEl, menuId, isMenuOpen, handleMenuClose }) {
+  const [categories, setCategories] = useState([]);
   const onSelect = () => {};
+  useEffect(() => {
+    async function getCategories() {
+      const {categories} = await Category.getAll();
+      setCategories(categories);
+    }
+    getCategories();
+  }, []);
+  console.log("categories", categories);
   return (
     <Menu
       anchorEl={anchorEl}
@@ -86,7 +58,7 @@ function CategoriesMenu({ anchorEl, menuId, isMenuOpen, handleMenuClose }) {
     >
       <List component="div">
         {categories.map(category => (
-          <Link key={category.id} to="#">
+          <Link key={category._id} to="#">
             <ListItem component="div" onClick={onSelect}>
               <ListItemIcon style={{ color: icons["feature"].color }}>
                 {icons["feature"].icon}
