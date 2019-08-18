@@ -43,7 +43,7 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
       />
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom variant="h5" component="h2">
-          <Link to={`/products/${product.id}`}>
+          <Link to={`/products/${product._id}`}>
             <strong>{product.name}</strong> - ${product.price}{" "}
           </Link>
         </Typography>
@@ -68,5 +68,5 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
   );
 };
 export default withRouter(
-  React.memo(Product, (prev, next) => prev.product.id === next.product.id)
+  React.memo(Product, (prev, next) => prev.product._id === next.product._id)
 );

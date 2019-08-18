@@ -43,7 +43,7 @@ app.get('/products', (req, res) => {
 });
 
 // ===========================
-//  Obtener un producto por ID
+//  Obtener un product por ID
 // ===========================
 app.get('/products/:id', (req, res) => {
     // populate: user category
@@ -51,8 +51,8 @@ app.get('/products/:id', (req, res) => {
     let id = req.params.id;
 
     Producto.findById(id)
-        .populate('user', 'name email')
-        .populate('category', 'name')
+        // .populate('user', 'name email')
+        // .populate('category', 'name')
         .exec((err, productoDB) => {
 
             if (err) {
@@ -73,7 +73,7 @@ app.get('/products/:id', (req, res) => {
 
             res.json({
                 ok: true,
-                producto: productoDB
+                product: productoDB
             });
 
         });
@@ -114,7 +114,7 @@ app.get('/products/search/:termino', verificaToken, (req, res) => {
 
 
 // ===========================
-//  Crear un nuevo producto
+//  Crear un nuevo product
 // ===========================
 app.post('/products', verificaToken, (req, res) => {
     // grabar el user
@@ -122,7 +122,7 @@ app.post('/products', verificaToken, (req, res) => {
 
     let body = req.body;
 
-    let producto = new Producto({
+    let product = new Producto({
         user: req.user._id,
         name: body.name,
         price: body.price,
@@ -131,7 +131,7 @@ app.post('/products', verificaToken, (req, res) => {
         category: body.category
     });
 
-    producto.save((err, productoDB) => {
+    product.save((err, productoDB) => {
 
         if (err) {
             return res.status(500).json({
@@ -142,7 +142,7 @@ app.post('/products', verificaToken, (req, res) => {
 
         res.status(201).json({
             ok: true,
-            producto: productoDB
+            product: productoDB
         });
 
     });
@@ -150,7 +150,7 @@ app.post('/products', verificaToken, (req, res) => {
 });
 
 // ===========================
-//  Actualizar un producto
+//  Actualizar un product
 // ===========================
 app.put('/products/:id', verificaToken, (req, res) => {
     // grabar el user
@@ -194,7 +194,7 @@ app.put('/products/:id', verificaToken, (req, res) => {
 
             res.json({
                 ok: true,
-                producto: productoGuardado
+                product: productoGuardado
             });
 
         });
@@ -205,7 +205,7 @@ app.put('/products/:id', verificaToken, (req, res) => {
 });
 
 // ===========================
-//  Borrar un producto
+//  Borrar un product
 // ===========================
 app.delete('/products/:id', verificaToken, (req, res) => {
 
@@ -242,7 +242,7 @@ app.delete('/products/:id', verificaToken, (req, res) => {
 
             res.json({
                 ok: true,
-                producto: productoBorrado,
+                product: productoBorrado,
                 mensaje: 'Producto borrado'
             });
 
