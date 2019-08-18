@@ -1,5 +1,5 @@
 {
-    "name": "07-restserver",
+    "name": "neuromarket-server",
     "version": "1.0.0",
     "description": "",
     "main": "server.js",

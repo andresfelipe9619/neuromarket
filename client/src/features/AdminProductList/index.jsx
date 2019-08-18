@@ -25,7 +25,7 @@ import {
 import { Dashboard as DashboardLayout } from '../../layouts';
 
 // Shared services
-import { getProducts } from '../../services/product';
+// import { getProducts } from '../../services/product';
 
 // Custom components
 import { ProductsToolbar, ProductCard } from './components';
@@ -45,27 +45,27 @@ class ProductList extends Component {
   };
 
   async getProducts(limit) {
-    try {
-      this.setState({ isLoading: true });
+    // try {
+    //   this.setState({ isLoading: true });
 
-      const { products, productsTotal } = await getProducts(limit);
+    //   const { products, productsTotal } = await getProducts(limit);
 
-      if (this.signal) {
-        this.setState({
-          isLoading: false,
-          products,
-          productsTotal,
-          limit
-        });
-      }
-    } catch (error) {
-      if (this.signal) {
-        this.setState({
-          isLoading: false,
-          error
-        });
-      }
-    }
+    //   if (this.signal) {
+    //     this.setState({
+    //       isLoading: false,
+    //       products,
+    //       productsTotal,
+    //       limit
+    //     });
+    //   }
+    // } catch (error) {
+    //   if (this.signal) {
+    //     this.setState({
+    //       isLoading: false,
+    //       error
+    //     });
+    //   }
+    // }
   }
 
   componentWillMount() {
@@ -73,7 +73,7 @@ class ProductList extends Component {
 
     const { limit } = this.state;
 
-    this.getProducts(limit);
+    // this.getProducts(limit);
   }
 
   componentWillUnmount() {
