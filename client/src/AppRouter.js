@@ -17,8 +17,8 @@ import Container from "@material-ui/core/Container";
 import AlertContext from "./context/alert-context";
 import Dashboard from "./features/Dashboard";
 import ProductList from "./features/AdminProductList";
-import UserList from "./features/UserList";
-import Typography from "./features/Typography";
+import Soldproducts from "./features/Soldproducts";
+import SaleProducts from "./features/SaleProducts"
 import Icons from "./features/Icons";
 import Account from "./features/Account";
 import Settings from "./features/Settings";
@@ -55,9 +55,9 @@ export default function AppRouter() {
 
           {/* Dashboard Routes*/}
           <Route component={Dashboard} exact path="/dashboard" />
-          <Route component={UserList} exact path="/dashboard/users" />
+          <Route component={Soldproducts} exact path="/dashboard/soldproducts" />
           <Route component={ProductList} exact path="/dashboard/products" />
-          <Route component={Typography} exact path="/dashboard/typography" />
+          <Route component={SaleProducts} exact path="/dashboard/SaleProducts" />
           <Route component={Icons} exact path="/dashboard/icons" />
           <Route component={Account} exact path="/dashboard/account" />
           <Route component={Settings} exact path="/dashboard/settings" />

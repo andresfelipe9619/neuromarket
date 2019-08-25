@@ -70,7 +70,7 @@ const Sidebar = props => {
           />
         </Link>
         <Typography className={classes.nameText} variant="h6">
-          Sebastián Hernández
+          grupo www
           </Typography>
         <Typography className={classes.bioText} variant="caption">
           Brain Director
@@ -96,14 +96,14 @@ const Sidebar = props => {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
-          to="/dashboard/users"
+          to="/dashboard/soldproducts"
         >
           <ListItemIcon className={classes.listItemIcon}>
             <PeopleIcon />
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Users"
+            primary="sold products"
           />
         </ListItem>
         <ListItem
@@ -138,14 +138,14 @@ const Sidebar = props => {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
-          to="/typography"
+          to="/dashboard/SaleProducts"
         >
           <ListItemIcon className={classes.listItemIcon}>
             <TextFieldsIcon />
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Typography"
+            primary="Sales Products"
           />
         </ListItem>
         <ListItem

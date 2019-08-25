@@ -24,6 +24,7 @@ import {
 import styles from "./styles";
 
 class ProductList extends Component {
+
   signal = true;
 
   state = {
@@ -73,7 +74,7 @@ class ProductList extends Component {
     if (isLoading) {
       return (
         <div className={classes.progressWrapper}>
-          <CircularProgress />
+          <CircularProgress/>
         </div>
       );
     }
@@ -107,7 +108,8 @@ class ProductList extends Component {
             </div>
             <div>
               <IconButton>
-                <MoreVertIcon />
+                <MoreVertIcon
+                />
               </IconButton>
             </div>
           </div>
@@ -134,7 +136,7 @@ class ProductList extends Component {
           {this.renderProducts()}
         </PortletContent>
         <PortletFooter className={classes.portletFooter}>
-          <Button color="primary" size="small" variant="text">
+          <Button color="secondary" size="small" variant="text">
             View all <ArrowRightIcon />
           </Button>
         </PortletFooter>

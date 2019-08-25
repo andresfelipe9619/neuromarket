@@ -111,12 +111,12 @@ class UsersTable extends Component {
                       }
                       onChange={this.handleSelectAll}
                     />
-                    Name
+                    Product 
                   </TableCell>
-                  <TableCell align="left">ID</TableCell>
-                  <TableCell align="left">State</TableCell>
+                  <TableCell align="left">Product ID</TableCell>
+                  <TableCell align="left">Sale Date</TableCell>
                   <TableCell align="left">Phone</TableCell>
-                  <TableCell align="left">Registration date</TableCell>
+                  <TableCell align="left">Sale date</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
