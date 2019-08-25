@@ -4,6 +4,7 @@ import Grid from "@material-ui/core/Grid";
 import useStyles from "./styles";
 import { Product } from "@neuromarket/services";
 import ProductsList from "../products/ProductsList";
+import { Typography } from "@material-ui/core";
 
 export default function HomePage() {
   const classes = useStyles();
@@ -33,6 +34,9 @@ export default function HomePage() {
             </Grid>
           </Grid>
         </Paper>
+        <div className={classes.title}>
+          <Typography variant="h3">Best Sellers</Typography>
+        </div>
         <ProductsList products={products} />
         <Grid container spacing={5} className={classes.mainGrid}></Grid>
       </main>

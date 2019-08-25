@@ -42,6 +42,12 @@ const useStyles = makeStyles(theme => ({
       paddingRight: 0
     }
   },
+  title: {
+    display: "flex",
+    margin: theme.spacing(3),
+    justifyContent: "center",
+    alignItems: "center"
+  },
   mainGrid: {
     marginTop: theme.spacing(3)
   },
