@@ -5,8 +5,18 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Formik } from "formik";
+import Button from "@material-ui/core/Button";
+
 import { paymentInitialValues, paymentValidationSchema } from "./form-schemas";
-export default function PaymentForm({ bindSubmitForm, addValuesToFormData }) {
+export default function PaymentForm({
+  classes,
+  handleBack,
+  handleNext,
+  setOrderData,
+  setPaymentData,
+  setShippingData,
+  showErrorMessage
+}) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -17,8 +27,9 @@ export default function PaymentForm({ bindSubmitForm, addValuesToFormData }) {
         onSubmit={(values, { setSubmitting }) => {
           console.log("values", values);
           setSubmitting(true);
-          addValuesToFormData(values);
-          setTimeout(() => setSubmitting(false), 2000);
+          setPaymentData(values);
+          handleNext();
+          setSubmitting(false);
         }}
         validationSchema={paymentValidationSchema}
       >
@@ -27,13 +38,10 @@ export default function PaymentForm({ bindSubmitForm, addValuesToFormData }) {
             values,
             touched,
             errors,
-            submitForm,
-            isValid,
             handleChange,
             handleBlur,
             handleSubmit
           } = formikProps;
-          bindSubmitForm(submitForm, isValid, values);
           return (
             <form onSubmit={handleSubmit}>
               <Grid container spacing={3}>
@@ -50,6 +58,7 @@ export default function PaymentForm({ bindSubmitForm, addValuesToFormData }) {
                     error={!!(touched.cardName && errors.cardName)}
                   />
                 </Grid>
+
                 <Grid item xs={12} md={6}>
                   <TextField
                     required
@@ -100,6 +109,19 @@ export default function PaymentForm({ bindSubmitForm, addValuesToFormData }) {
                     label="Remember credit card details for next time"
                   />
                 </Grid>
+                <div className={classes.buttons}>
+                  <Button onClick={handleBack} className={classes.button}>
+                    Back
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    className={classes.button}
+                  >
+                    Next
+                  </Button>
+                </div>
               </Grid>
             </form>
           );

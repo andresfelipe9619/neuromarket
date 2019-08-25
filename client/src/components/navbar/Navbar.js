@@ -70,13 +70,7 @@ function Navbar(props) {
   const handleCategoriesMenuClose = () => {
     setCategoriesAnchorEl(null);
   };
-
-  console.log("{state,}", {
-    isProfileMenuOpen,
-    isCategoriesMenuOpen,
-    categoriesAnchorEl,
-    profileAnchorEl
-  });
+  
   const menuId = "primary-search-account-menu";
   const mobileMenuId = "primary-search-account-menu-mobile";
   return (

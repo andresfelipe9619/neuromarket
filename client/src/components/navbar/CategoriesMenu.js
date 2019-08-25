@@ -45,7 +45,6 @@ function CategoriesMenu({ anchorEl, menuId, isMenuOpen, handleMenuClose }) {
     }
     getCategories();
   }, []);
-  console.log("categories", categories);
   return (
     <Menu
       anchorEl={anchorEl}

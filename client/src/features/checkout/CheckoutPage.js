@@ -3,7 +3,7 @@ import Paper from "@material-ui/core/Paper";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import Button from "@material-ui/core/Button";
+import ShopContext from "../../context/shop-context";
 import Typography from "@material-ui/core/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 
 const steps = ["Shipping address", "Payment details", "Review your order"];
 
-function getStepContent(step, props) {
+function getStepContent({ step, props }) {
   switch (step) {
     case 0:
       return <AddressForm {...props} />;
@@ -31,41 +31,37 @@ function Checkout() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const { openAlert } = useContext(AlertContext);
+  const [shippingData, setShippingData] = useState(null);
+  const [paymentData, setPaymentData] = useState(null);
+  const { cart, subtotal, removeProductFromCart } = useContext(ShopContext);
+  console.log("cart", cart);
   const handleNext = () => {
-    handleSubmitMyForm();
+    setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  let submitMyForm = null;
-  let isValidForm = false;
-  let formValues = null;
-  const handleSubmitMyForm = e => {
-    console.log("{submitMyForm, isValidForm}", {
-      submitMyForm,
-      isValidForm,
-      formValues
+  const showErrorMessage = () => {
+    openAlert({
+      message: "Something went wrong with your input, try again",
+      variant: "error"
     });
-    if (submitMyForm) {
-      submitMyForm(e);
-    }
-    if (isValidForm) {
-      setActiveStep(activeStep + 1);
-      submitMyForm = null;
-      isValidForm = false;
-    } else {
-      openAlert({
-        message: "Something went wrong with your input, try again",
-        variant: "error"
-      });
-    }
   };
-  const bindSubmitForm = (submitForm, isValid, values) => {
-    submitMyForm = submitForm;
-    isValidForm = isValid;
-    console.log("BIND =====formData", { values });
-    formValues = isValid ? formValues : { ...formValues, ...values };
+  const stepsHandler = {
+    step: activeStep,
+    props: {
+      cart,
+      classes,
+      subtotal, 
+      handleBack,
+      handleNext,
+      paymentData,
+      shippingData,
+      setPaymentData,
+      setShippingData,
+      showErrorMessage
+    }
   };
   return (
     <>
@@ -94,26 +90,7 @@ function Checkout() {
                 </Typography>
               </>
             ) : (
-              <>
-                {getStepContent(activeStep, {
-                  bindSubmitForm
-                })}
-                <div className={classes.buttons}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
-                    </Button>
-                  )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? "Place order" : "Next"}
-                  </Button>
-                </div>
-              </>
+              getStepContent(stepsHandler)
             )}
           </>
         </Paper>
