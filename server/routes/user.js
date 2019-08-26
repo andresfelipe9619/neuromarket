@@ -3,13 +3,13 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 
-const user = require('../models/user');
+const User = require('../models/user');
 const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
 
 const app = express();
 
 
-app.get('/user', verificaToken, (req, res) => {
+app.get('/users', verificaToken, (req, res) => {
 
 
     let desde = req.query.desde || 0;
@@ -46,15 +46,15 @@ app.get('/user', verificaToken, (req, res) => {
 
 });
 
-app.post('/user', [verificaToken, verificaAdmin_Role], function(req, res) {
+app.post('/users', function(req, res) {
 
     let body = req.body;
 
-    let user = new user({
+    let user = new User({
         name: body.name,
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
-        role: body.role
+        phone: body.phone
     });
 
 

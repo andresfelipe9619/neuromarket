@@ -1,8 +1,8 @@
 const { Seeder } = require("mongo-seeding");
 const path = require("path");
 const config = {
-  database: "mongodb://localhost:27017/neromarket",
-  dropDatabase: false,
+  database: 'mongodb://localhost:27017/neuromarket',
+  dropDatabase: false
 };
 const seeder = new Seeder(config);
 const collections = seeder.readCollectionsFromPath(path.resolve("./data"));

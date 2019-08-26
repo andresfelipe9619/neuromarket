@@ -1,11 +1,5 @@
 export default {
-  firstName: {
-    presence: { allowEmpty: false, message: 'is required' },
-    length: {
-      maximum: 32
-    }
-  },
-  lastName: {
+  name: {
     presence: { allowEmpty: false, message: 'is required' },
     length: {
       maximum: 32
@@ -24,8 +18,10 @@ export default {
       maximum: 128
     }
   },
-  policy: {
+  phone: {
     presence: { allowEmpty: false, message: 'is required' },
-    checked: true
+    length: {
+      maximum: 10
+    }
   }
 };

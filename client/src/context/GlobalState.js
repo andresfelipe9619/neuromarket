@@ -10,10 +10,33 @@ import {
 } from "./reducers";
 import { IntlProviderWrapper } from "./intl-context";
 import AlertContext, { initialState as initialAlert } from "./alert-context";
+import UserContext, { initialUserState as initialUser } from "./user-context";
 
 export default function GlobalState(props) {
   const [shopState, dispatch] = useReducer(shopReducer, initialShop);
   const [alertState, setAlert] = useState(initialAlert);
+  const [userState, setUserState] = useState(initialUser);
+
+  const userLoggedIn = user => {
+    setUserState({
+      ...userState,
+      loggedIn: true,
+      name: user.name,
+      email: user.email,
+      img: user.img,
+      phone: user.phone
+    });
+  };
+
+  const userLoggedOut = () => {
+    setUserState({
+      ...userState,
+      loggedIn: false,
+      name: "",
+      email: "",
+      img: ""
+    });
+  };
 
   const openAlert = ({ message, variant }) => {
     setAlert({ ...alertState, open: true, message, variant });
@@ -54,22 +77,34 @@ export default function GlobalState(props) {
           openAlert
         }}
       >
-        <ShopContext.Provider
+        <UserContext.Provider
           value={{
-            cart: shopState.cart,
-            subtotal: shopState.subtotal,
-            products: shopState.products,
-            favorites: shopState.favorites,
-            productsFound: shopState.productsFound,
-            addProductToCart,
-            lookForProduct,
-            removeProductFromCart,
-            addProductToFavorites,
-            removeProductFromFavorites
+            loggedIn: userState.loggedIn,
+            name: userState.name,
+            email: userState.email,
+            img: userState.img,
+            phone: userState.phone,
+            userLoggedIn,
+            userLoggedOut
           }}
         >
-          {props.children}
-        </ShopContext.Provider>
+          <ShopContext.Provider
+            value={{
+              cart: shopState.cart,
+              subtotal: shopState.subtotal,
+              products: shopState.products,
+              favorites: shopState.favorites,
+              productsFound: shopState.productsFound,
+              addProductToCart,
+              lookForProduct,
+              removeProductFromCart,
+              addProductToFavorites,
+              removeProductFromFavorites
+            }}
+          >
+            {props.children}
+          </ShopContext.Provider>
+        </UserContext.Provider>
       </AlertContext.Provider>
     </IntlProviderWrapper>
   );

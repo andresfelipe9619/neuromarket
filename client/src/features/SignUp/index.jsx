@@ -33,39 +33,41 @@ import styles from './styles';
 // Form validation schema
 import schema from './schema';
 
+// server services
+import { Auth } from "@neuromarket/services";
+
+
 validate.validators.checked = validators.checked;
 
 // Service methods
-const signUp = () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(true);
-    }, 1500);
-  });
-};
+// const signUp = () => {
+//   return new Promise(resolve => {
+//     setTimeout(() => {
+//       resolve(true);
+//     }, 1500);
+//   });
+// };
 
 class SignUp extends Component {
   state = {
     values: {
-      firstName: '',
-      lastName: '',
+      name: '',
       email: '',
       password: '',
-      policy: false
+      phone: '',
     },
     touched: {
       firstName: false,
       lastName: false,
       email: false,
       password: false,
-      policy: null
+      phone: false,
     },
     errors: {
-      firstName: null,
-      lastName: null,
+      name: null,
       email: null,
       password: null,
-      policy: null
+      phone: null,
     },
     isValid: false,
     isLoading: false,
@@ -107,11 +109,11 @@ class SignUp extends Component {
 
       this.setState({ isLoading: true });
 
-      await signUp({
-        firstName: values.firstName,
-        lastName: values.lastName,
+      await Auth.register({
+        name: values.name,
         email: values.email,
-        password: values.password
+        password: values.password,
+        phone: values.phone,
       });
 
       history.push('/sign-in');
@@ -134,60 +136,36 @@ class SignUp extends Component {
       isLoading
     } = this.state;
 
-    const showFirstNameError =
-      touched.firstName && errors.firstName ? errors.firstName[0] : false;
-    const showLastNameError =
-      touched.lastName && errors.lastName ? errors.lastName[0] : false;
+    const showNameError =
+      touched.name && errors.name ? errors.name[0] : false;
     const showEmailError =
       touched.email && errors.email ? errors.email[0] : false;
     const showPasswordError =
       touched.password && errors.password ? errors.password[0] : false;
-    const showPolicyError =
-      touched.policy && errors.policy ? errors.policy[0] : false;
+    const showPhoneError = touched.phone && errors.phone ? errors.phone[0] : false;
 
     return (
       <div className={classes.root}>
-        <Grid
-          className={classes.grid}
-          container
-        >
-          <Grid
-            className={classes.quoteWrapper}
-            item
-            lg={5}
-          >
+        <Grid className={classes.grid} container>
+          <Grid className={classes.quoteWrapper} item lg={5}>
             <div className={classes.quote}>
               <div className={classes.quoteInner}>
-                <Typography
-                  className={classes.quoteText}
-                  variant="h1"
-                >
-                  Hella narwhal Cosby sweater McSweeney's, salvia kitsch before
-                  they sold out High Life.
+                <Typography className={classes.quoteText} variant="h1">
+                  Hella narwhal Cosby sweater McSweeney's, salvia kitsch
+                  before they sold out High Life.
                 </Typography>
                 <div className={classes.person}>
-                  <Typography
-                    className={classes.name}
-                    variant="body1"
-                  >
+                  <Typography className={classes.name} variant="body1">
                     Takamaru Ayako
                   </Typography>
-                  <Typography
-                    className={classes.bio}
-                    variant="body2"
-                  >
+                  <Typography className={classes.bio} variant="body2">
                     Manager at inVision
                   </Typography>
                 </div>
               </div>
             </div>
           </Grid>
-          <Grid
-            className={classes.content}
-            item
-            lg={7}
-            xs={12}
-          >
+          <Grid className={classes.content} item lg={7} xs={12}>
             <div className={classes.content}>
               <div className={classes.contentHeader}>
                 <IconButton
@@ -199,60 +177,56 @@ class SignUp extends Component {
               </div>
               <div className={classes.contentBody}>
                 <form className={classes.form}>
-                  <Typography
-                    className={classes.title}
-                    variant="h2"
-                  >
+                  <Typography className={classes.title} variant="h2">
                     Create new account
                   </Typography>
-                  <Typography
-                    className={classes.subtitle}
-                    variant="body1"
-                  >
+                  <Typography className={classes.subtitle} variant="body1">
                     Use your work email to create new account... it's free.
                   </Typography>
                   <div className={classes.fields}>
                     <TextField
                       className={classes.textField}
-                      label="First name"
-                      name="firstName"
+                      label="Name"
+                      name="name"
                       onChange={event =>
-                        this.handleFieldChange('firstName', event.target.value)
+                        this.handleFieldChange("name", event.target.value)
                       }
-                      value={values.firstName}
+                      value={values.name}
                       variant="outlined"
                     />
-                    {showFirstNameError && (
+                    {showNameError && (
                       <Typography
                         className={classes.fieldError}
                         variant="body2"
                       >
-                        {errors.firstName[0]}
+                        {errors.name[0]}
                       </Typography>
                     )}
                     <TextField
                       className={classes.textField}
-                      label="Last name"
+                      label="Phone Number"
+                      name="phone"
                       onChange={event =>
-                        this.handleFieldChange('lastName', event.target.value)
+                        this.handleFieldChange("phone", event.target.value)
                       }
-                      value={values.lastName}
+                      value={values.phone}
                       variant="outlined"
                     />
-                    {showLastNameError && (
+                    {showPhoneError && (
                       <Typography
                         className={classes.fieldError}
                         variant="body2"
                       >
-                        {errors.lastName[0]}
+                        {errors.phone[0]}
                       </Typography>
                     )}
+
                     <TextField
                       className={classes.textField}
                       label="Email address"
                       name="email"
                       onChange={event =>
-                        this.handleFieldChange('email', event.target.value)
+                        this.handleFieldChange("email", event.target.value)
                       }
                       value={values.email}
                       variant="outlined"
@@ -269,7 +243,10 @@ class SignUp extends Component {
                       className={classes.textField}
                       label="Password"
                       onChange={event =>
-                        this.handleFieldChange('password', event.target.value)
+                        this.handleFieldChange(
+                          "password",
+                          event.target.value
+                        )
                       }
                       type="password"
                       value={values.password}
@@ -283,38 +260,7 @@ class SignUp extends Component {
                         {errors.password[0]}
                       </Typography>
                     )}
-                    <div className={classes.policy}>
-                      <Checkbox
-                        checked={values.policy}
-                        className={classes.policyCheckbox}
-                        color="primary"
-                        name="policy"
-                        onChange={() =>
-                          this.handleFieldChange('policy', !values.policy)
-                        }
-                      />
-                      <Typography
-                        className={classes.policyText}
-                        variant="body1"
-                      >
-                        I have read the &nbsp;
-                        <Link
-                          className={classes.policyUrl}
-                          to="#"
-                        >
-                          Terms and Conditions
-                        </Link>
-                        .
-                      </Typography>
-                    </div>
-                    {showPolicyError && (
-                      <Typography
-                        className={classes.fieldError}
-                        variant="body2"
-                      >
-                        {errors.policy[0]}
-                      </Typography>
-                    )}
+                    
                   </div>
                   {submitError && (
                     <Typography
@@ -338,15 +284,9 @@ class SignUp extends Component {
                       Sign up now
                     </Button>
                   )}
-                  <Typography
-                    className={classes.signIn}
-                    variant="body1"
-                  >
-                    Have an account?{' '}
-                    <Link
-                      className={classes.signInUrl}
-                      to="/sign-in"
-                    >
+                  <Typography className={classes.signIn} variant="body1">
+                    Have an account?{" "}
+                    <Link className={classes.signInUrl} to="/sign-in">
                       Sign In
                     </Link>
                   </Typography>
