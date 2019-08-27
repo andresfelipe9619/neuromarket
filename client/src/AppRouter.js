@@ -28,6 +28,7 @@ import UnderDevelopment from "./features/UnderDevelopment";
 import NotFound from "./features/NotFound";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import PrivateRoute from './components/privateRoute/PrivateRoute';
 
 export default function AppRouter() {
   const { open, message, variant, closeAlert } = useContext(AlertContext);
@@ -45,8 +46,8 @@ export default function AppRouter() {
         <Switch>
           <Route path="/" component={HomePage} exact />
           <Route path="/cart" component={CartPage} exact />
-          <Route path="/login" component={LoginPage} exact />
-          <Route path="/register" component={RegisterPage} exact />
+          <Route path="/sign-up" component={SignUp} exact />
+          <Route path="/sign-in" component={SignIn} exact />
           <Route path="/checkout" component={CheckoutPage} exact />
           <Route path="/products" component={ProductsPage} exact />
           <Route path="/favorites" component={FavoritesPage} exact />
@@ -54,15 +55,48 @@ export default function AppRouter() {
           <Route path="/busqueda" component={ProductsFound} exact />
 
           {/* Dashboard Routes*/}
-          <Route component={Dashboard} exact path="/dashboard" />
-          <Route component={UserList} exact path="/dashboard/users" />
-          <Route component={ProductList} exact path="/dashboard/products" />
-          <Route component={Typography} exact path="/dashboard/typography" />
-          <Route component={Icons} exact path="/dashboard/icons" />
-          <Route component={Account} exact path="/dashboard/account" />
-          <Route component={Settings} exact path="/dashboard/settings" />
-          <Route component={SignUp} exact path="/sign-up" />
-          <Route component={SignIn} exact path="/sign-in" />
+          <PrivateRoute
+            restricted={true}
+            component={Dashboard}
+            exact
+            path="/dashboard"
+          />
+          <PrivateRoute
+            restricted={true}
+            component={UserList}
+            exact
+            path="/dashboard/users"
+          />
+          <PrivateRoute
+            restricted={true}
+            component={ProductList}
+            exact
+            path="/dashboard/products"
+          />
+          <PrivateRoute
+            restricted={true}
+            component={Typography}
+            exact
+            path="/dashboard/typography"
+          />
+          <PrivateRoute
+            restricted={true}
+            component={Icons}
+            exact
+            path="/dashboard/icons"
+          />
+          <PrivateRoute
+            restricted={true}
+            component={Account}
+            exact
+            path="/dashboard/account"
+          />
+          <PrivateRoute
+            restricted={true}
+            component={Settings}
+            exact
+            path="/dashboard/settings"
+          />
           <Route component={UnderDevelopment} exact path="/under-development" />
           <Route component={NotFound} exact path="/not-found" />
           <Redirect to="/not-found" />
