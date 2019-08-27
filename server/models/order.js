@@ -10,4 +10,4 @@ let OrderSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Category", OrderSchema);
+module.exports = mongoose.model("Order", OrderSchema);
