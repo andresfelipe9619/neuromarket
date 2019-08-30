@@ -8,15 +8,7 @@ import { Formik } from "formik";
 import Button from "@material-ui/core/Button";
 
 import { addressInitialValues, addressValidationSchema } from "./form-schemas";
-function AddressForm({
-  classes,
-  handleBack,
-  handleNext,
-  setOrderData,
-  setPaymentData,
-  setShippingData,
-  showErrorMessage
-}) {
+function AddressForm({ classes, handleNext, setShippingData }) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -27,7 +19,7 @@ function AddressForm({
         onSubmit={(values, { setSubmitting, ...rest }) => {
           console.log("values", { values, rest });
           setSubmitting(true);
-          setShippingData(values)
+          setShippingData(values);
           handleNext();
           setSubmitting(false);
         }}

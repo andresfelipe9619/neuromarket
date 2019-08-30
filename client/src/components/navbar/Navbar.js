@@ -6,6 +6,7 @@ import Typography from "@material-ui/core/Typography";
 import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import SearchIcon from "@material-ui/icons/Search";
+import CategoryIcon from "@material-ui/icons/Category";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import { ShoppingCart, Favorite } from "@material-ui/icons";
 import MoreIcon from "@material-ui/icons/MoreVert";
@@ -36,10 +37,8 @@ function Navbar(props) {
   ]);
 
   const busquedacomparar = product => e => {
-    console.log("product: ", product);
-
     shopContext.lookForProduct(product);
-    goTo("/busqueda")();
+    goTo("/busqueda")(e);
   };
 
   const favoriteItemsCount = shopContext.favorites.reduce(
@@ -70,7 +69,7 @@ function Navbar(props) {
   const handleCategoriesMenuClose = () => {
     setCategoriesAnchorEl(null);
   };
-  
+
   const menuId = "primary-search-account-menu";
   const mobileMenuId = "primary-search-account-menu-mobile";
   return (
@@ -149,15 +148,12 @@ function Navbar(props) {
           </div>
         </Toolbar>
         <Toolbar component="nav" variant="regular" color="secondary">
-          <Typography
-            color="inherit"
-            variant="h4"
-            noWrap
-            gutterBottom
-            onClick={handleCategoriesMenuOpen}
-          >
+          <Typography color="inherit" variant="h4" noWrap gutterBottom>
             Categories
           </Typography>
+          <IconButton color="inherit" onClick={handleCategoriesMenuOpen}>
+            <CategoryIcon />
+          </IconButton>
 
           <div className={classes.grow} />
         </Toolbar>

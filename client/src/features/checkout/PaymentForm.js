@@ -12,10 +12,7 @@ export default function PaymentForm({
   classes,
   handleBack,
   handleNext,
-  setOrderData,
-  setPaymentData,
-  setShippingData,
-  showErrorMessage
+  setPaymentData
 }) {
   return (
     <>

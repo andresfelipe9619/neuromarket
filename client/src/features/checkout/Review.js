@@ -6,33 +6,18 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 
-const addresses = [
-  "1 Material-UI Drive",
-  "Reactville",
-  "Anytown",
-  "99999",
-  "USA"
-];
-
 export default function Review({
   cart,
   classes,
   subtotal,
   handleBack,
-  handleNext,
   paymentData,
-  shippingData,
-  setPaymentData,
-  setShippingData,
-  showErrorMessage
+  shippingData
 }) {
- 
   const handlePlaceOrder = () => {
-    const orderData = {
-    
-    };
+    const orderData = {};
   };
-
+  const { firstName, lastName, address, city, state, country } = shippingData;
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -60,8 +45,12 @@ export default function Review({
           <Typography variant="h6" gutterBottom className={classes.title}>
             Shipping
           </Typography>
-          <Typography gutterBottom>{shippingData.lastName}, {shippingData.firstName}</Typography>
-          <Typography gutterBottom>{addresses.join(", ")}</Typography>
+          <Typography gutterBottom>
+            {lastName}, {firstName}
+          </Typography>
+          <Typography gutterBottom>
+            {[address, city, state, country].join(", ")}
+          </Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
@@ -69,9 +58,19 @@ export default function Review({
           </Typography>
           <Grid container>
             {Object.keys(paymentData).map(payment => (
-              <React.Fragment key={payment.name}>
+              <React.Fragment key={payment}>
                 <Grid item xs={6}>
-                  <Typography gutterBottom>{payment}</Typography>
+                  <Typography gutterBottom>
+                    {payment
+                      .split(/(?=[A-Z])/)
+                      .map(
+                        ([first, ...rest]) =>
+                          `${first.toLocaleUpperCase()}${rest
+                            .join("")
+                            .toLowerCase()}`
+                      )
+                      .join(" ")}
+                  </Typography>
                 </Grid>
                 <Grid item xs={6}>
                   <Typography gutterBottom>{paymentData[payment]}</Typography>
