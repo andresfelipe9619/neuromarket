@@ -1,27 +1,27 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component, Fragment } from "react";
 
 // Externals
-import classNames from 'classnames';
-import compose from 'recompose/compose';
-import PropTypes from 'prop-types';
+import classNames from "classnames";
+import compose from "recompose/compose";
+import PropTypes from "prop-types";
 
 // Material helpers
-import { withStyles, withWidth } from '@material-ui/core';
+import { withStyles, withWidth } from "@material-ui/core";
 
 // Material components
-import { Drawer } from '@material-ui/core';
+import { Drawer } from "@material-ui/core";
 
 // Custom components
-import { Sidebar, Topbar, Footer } from './components';
+import { Sidebar, Topbar, Footer } from "./components";
 
 // Component styles
-import styles from './styles';
+import styles from "./styles";
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
 
-    const isMobile = ['xs', 'sm', 'md'].includes(props.width);
+    const isMobile = ["xs", "sm", "md"].includes(props.width);
 
     this.state = {
       isOpen: !isMobile
@@ -42,7 +42,7 @@ class Dashboard extends Component {
     const { classes, width, title, children } = this.props;
     const { isOpen } = this.state;
 
-    const isMobile = ['xs', 'sm', 'md'].includes(width);
+    const isMobile = ["xs", "sm", "md"].includes(width);
     const shiftTopbar = isOpen && !isMobile;
     const shiftContent = isOpen && !isMobile;
 
@@ -61,7 +61,7 @@ class Dashboard extends Component {
           classes={{ paper: classes.drawerPaper }}
           onClose={this.handleClose}
           open={isOpen}
-          variant={isMobile ? 'temporary' : 'persistent'}
+          variant={isMobile ? "temporary" : "persistent"}
         >
           <Sidebar className={classes.sidebar} />
         </Drawer>

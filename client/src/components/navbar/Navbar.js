@@ -36,8 +36,6 @@ function Navbar(props) {
   ]);
 
   const busquedacomparar = product => e => {
-    console.log("product: ", product);
-
     shopContext.lookForProduct(product);
     goTo("/busqueda")();
   };
@@ -71,12 +69,6 @@ function Navbar(props) {
     setCategoriesAnchorEl(null);
   };
 
-  console.log("{state,}", {
-    isProfileMenuOpen,
-    isCategoriesMenuOpen,
-    categoriesAnchorEl,
-    profileAnchorEl
-  });
   const menuId = "primary-search-account-menu";
   const mobileMenuId = "primary-search-account-menu-mobile";
   return (
@@ -104,7 +96,7 @@ function Navbar(props) {
               inputProps={{ "aria-label": "Search" }}
             />
             <IconButton
-              aria-label={`lookingo for your  product `}
+              aria-label={`looking for your  product `}
               color="inherit"
               onClick={busquedacomparar(busqueda)}
             >

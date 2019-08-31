@@ -22,6 +22,8 @@ const AccountProfile = props => {
   const user = useContext(UserContext);
   const { classes, className, ...rest } = props;
   const rootClassName = classNames(classes.root, className);
+  const imgSrc = user.img ? user.img : '/images/avatars/empty_avatar.png';
+
 
   return (
     <Portlet {...rest} className={rootClassName}>
@@ -30,7 +32,7 @@ const AccountProfile = props => {
           <div className={classes.info}>
             <Avatar
               className={classes.avatar}
-              src="/images/avatars/empty_avatar.png"
+              src={imgSrc}
             />
             <Typography variant="h2">{user.name}</Typography>
             <Typography className={classes.locationText} variant="body1">
