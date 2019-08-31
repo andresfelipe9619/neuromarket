@@ -33,7 +33,10 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
     addProductToCart,
     product
   ]);
-  const img = product.imageUrl || "https://source.unsplash.com/random"
+  const img =
+    product.imageUrl || product.imageurls
+      ? product.imageurls.split(",")[0]
+      : "https://source.unsplash.com/random";
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -46,10 +49,6 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
           <Link to={`/products/${product._id}`}>
             <strong>{product.name}</strong> - ${product.price}{" "}
           </Link>
-        </Typography>
-        <Typography>
-          This is a media card. You can use this section to describe the
-          content.
         </Typography>
       </CardContent>
       <CardActions>

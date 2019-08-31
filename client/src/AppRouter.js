@@ -32,7 +32,12 @@ export default function AppRouter() {
   return (
     <BrowserRouter>
       <CssBaseline />
-      <Navbar />
+      <Switch>
+        <Route path="/dashboard" component={null} />
+        <Route path="/" component={Navbar} />
+      </Switch>
+
+      {/* <Navbar/> */}
       <Container maxWidth="lg">
         <Alert
           open={open}

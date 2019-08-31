@@ -19,16 +19,26 @@ export default function QuantitySelect() {
         margin: 20
       }}
     >
-      <Grid item md={3}>
-        <Button color="secondary" variant="contained" onClick={handleMinus}>
+      <Grid item md={2}>
+        <Button
+          size="small"
+          color="secondary"
+          variant="contained"
+          onClick={handleMinus}
+        >
           -
         </Button>
       </Grid>
-      <Grid item md={2}>
-        {quantity}
-      </Grid>
       <Grid item md={3}>
-        <Button color="secondary" variant="contained" onClick={handlePlus}>
+        <p color="black">{quantity}</p>
+      </Grid>
+      <Grid item md={2}>
+        <Button
+          color="secondary"
+          size="small"
+          variant="contained"
+          onClick={handlePlus}
+        >
           +
         </Button>
       </Grid>

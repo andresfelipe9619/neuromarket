@@ -37,7 +37,13 @@ const ProductsDetailsPage = props => {
           md={7}
           style={{ border: "1px solid gray", padding: 20 }}
         >
-          <ProductImage src={product.imageUrl} />
+          <ProductImage
+            src={
+              product.imageUrl || product.imageurls
+                ? product.imageurls.split(",")[0]
+                : "https://source.unsplash.com/random"
+            }
+          />
           <Typography variant="body1">{product.description}</Typography>
         </Grid>
         <Grid
