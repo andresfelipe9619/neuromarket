@@ -1,13 +1,7 @@
 import React, { useContext } from "react";
 import CartPage from "./features/cart";
 import HomePage from "./features/home";
-import LoginPage from "./features/login";
 import CheckoutPage from "./features/checkout";
-import {
-  ProductsPage,
-  ProductsDetailsPage,
-  ProductsFound
-} from "./features/products";
 import FavoritesPage from "./features/favorites";
 import Navbar from "./components/navbar/Navbar";
 import Alert from "./components/alert/Alert";
@@ -25,9 +19,13 @@ import SignUp from "./features/SignUp";
 import SignIn from "./features/SignIn";
 import UnderDevelopment from "./features/UnderDevelopment";
 import NotFound from "./features/NotFound";
-
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import {
+  ProductsPage,
+  ProductsDetailsPage,
+  ProductsFound
+} from "./features/products";
 
 export default function AppRouter() {
   const { open, message, variant, closeAlert } = useContext(AlertContext);
@@ -48,12 +46,10 @@ export default function AppRouter() {
           <Route path="/sign-up" component={SignUp} exact />
           <Route path="/sign-in" component={SignIn} exact />
           <Route path="/checkout" component={CheckoutPage} exact />
-          <Route path="/products" component={ProductsPage} exact />
+          <Route path="/category/:id" component={ProductsPage} exact />
           <Route path="/favorites" component={FavoritesPage} exact />
           <Route path="/products/:id" component={ProductsDetailsPage} exact />
           <Route path="/busqueda" component={ProductsFound} exact />
-
-          {/* Dashboard Routes*/}
           <PrivateRoute
             restricted={true}
             component={Dashboard}
@@ -84,13 +80,12 @@ export default function AppRouter() {
             exact
             path="/dashboard/settings"
           />
-          <Route
+          <PrivateRoute
             component={Soldproducts}
             exact
             path="/dashboard/soldproducts"
           />
-          <Route component={ProductList} exact path="/dashboard/products" />
-          <Route
+          <PrivateRoute
             component={SaleProducts}
             exact
             path="/dashboard/SaleProducts"

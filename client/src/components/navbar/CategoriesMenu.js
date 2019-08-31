@@ -40,7 +40,7 @@ function CategoriesMenu({ anchorEl, menuId, isMenuOpen, handleMenuClose }) {
   const onSelect = () => {};
   useEffect(() => {
     async function getCategories() {
-      const {categories} = await Category.getAll();
+      const { categories } = await Category.getAll();
       setCategories(categories);
     }
     getCategories();
@@ -57,15 +57,12 @@ function CategoriesMenu({ anchorEl, menuId, isMenuOpen, handleMenuClose }) {
     >
       <List component="div">
         {categories.map(category => (
-          <Link key={category._id} to="#">
+          <Link key={category._id} to={`/category/${category._id}`}>
             <ListItem component="div" onClick={onSelect}>
               <ListItemIcon style={{ color: icons["feature"].color }}>
                 {icons["feature"].icon}
               </ListItemIcon>
-              <ListItemText
-                primary={category.name}
-                secondary={category.description}
-              />
+              <ListItemText primary={category.name} />
               <ArrowForwardIosIcon />
             </ListItem>
             <Divider />

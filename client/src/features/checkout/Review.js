@@ -17,6 +17,18 @@ export default function Review({
   const handlePlaceOrder = () => {
     const orderData = {};
   };
+
+  const ObjectKeyToHumanString = key => {
+    if (!key) return "";
+    return key
+      .split(/(?=[A-Z])/)
+      .map(
+        ([first, ...rest]) =>
+          `${first.toUpperCase()}${rest.join("").toLowerCase()}`
+      )
+      .join(" ");
+  };
+
   const { firstName, lastName, address, city, state, country } = shippingData;
   return (
     <>
@@ -61,15 +73,7 @@ export default function Review({
               <React.Fragment key={payment}>
                 <Grid item xs={6}>
                   <Typography gutterBottom>
-                    {payment
-                      .split(/(?=[A-Z])/)
-                      .map(
-                        ([first, ...rest]) =>
-                          `${first.toLocaleUpperCase()}${rest
-                            .join("")
-                            .toLowerCase()}`
-                      )
-                      .join(" ")}
+                    {ObjectKeyToHumanString(payment)}
                   </Typography>
                 </Grid>
                 <Grid item xs={6}>
