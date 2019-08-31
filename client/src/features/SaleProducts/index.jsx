@@ -20,7 +20,7 @@ import {
   PortletLabel,
   PortletContent,
   PortletFooter
-} from "../../../../components";
+} from "../../components";
 import styles from "./styles";
 
 class ProductList extends Component {

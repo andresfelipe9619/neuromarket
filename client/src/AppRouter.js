@@ -8,7 +8,6 @@ import {
   ProductsDetailsPage,
   ProductsFound
 } from "./features/products";
-import RegisterPage from "./features/register";
 import FavoritesPage from "./features/favorites";
 import Navbar from "./components/navbar/Navbar";
 import Alert from "./components/alert/Alert";
@@ -17,8 +16,8 @@ import Container from "@material-ui/core/Container";
 import AlertContext from "./context/alert-context";
 import Dashboard from "./features/Dashboard";
 import ProductList from "./features/AdminProductList";
-import UserList from "./features/UserList";
-import Typography from "./features/Typography";
+import Soldproducts from "./features/Soldproducts";
+import SaleProducts from "./features/SaleProducts";
 import Icons from "./features/Icons";
 import Account from "./features/Account";
 import Settings from "./features/Settings";
@@ -28,7 +27,7 @@ import UnderDevelopment from "./features/UnderDevelopment";
 import NotFound from "./features/NotFound";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import PrivateRoute from './components/privateRoute/PrivateRoute';
+import PrivateRoute from "./components/privateRoute/PrivateRoute";
 
 export default function AppRouter() {
   const { open, message, variant, closeAlert } = useContext(AlertContext);
@@ -63,21 +62,9 @@ export default function AppRouter() {
           />
           <PrivateRoute
             restricted={true}
-            component={UserList}
-            exact
-            path="/dashboard/users"
-          />
-          <PrivateRoute
-            restricted={true}
             component={ProductList}
             exact
             path="/dashboard/products"
-          />
-          <PrivateRoute
-            restricted={true}
-            component={Typography}
-            exact
-            path="/dashboard/typography"
           />
           <PrivateRoute
             restricted={true}
@@ -96,6 +83,17 @@ export default function AppRouter() {
             component={Settings}
             exact
             path="/dashboard/settings"
+          />
+          <Route
+            component={Soldproducts}
+            exact
+            path="/dashboard/soldproducts"
+          />
+          <Route component={ProductList} exact path="/dashboard/products" />
+          <Route
+            component={SaleProducts}
+            exact
+            path="/dashboard/SaleProducts"
           />
           <Route component={UnderDevelopment} exact path="/under-development" />
           <Route component={NotFound} exact path="/not-found" />

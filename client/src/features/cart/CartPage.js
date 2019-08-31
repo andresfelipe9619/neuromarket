@@ -1,15 +1,13 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import ShopContext from "../../context/shop-context";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
-
-import useStyles from "./styles";
 import Product from "../products/Product";
 const CartPage = props => {
   const { cart, subtotal, removeProductFromCart } = useContext(ShopContext);
-  const classes = useStyles();
+  //const classes = useStyles();
   const goTo = route => event => props.history.push(route);
 
   // useEffect(() => {
