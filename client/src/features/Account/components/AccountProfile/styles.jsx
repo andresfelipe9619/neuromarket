@@ -1,7 +1,7 @@
 export default theme => ({
   root: {},
   details: {
-    display: 'flex'
+    display: "flex"
   },
   info: {},
   locationText: {
@@ -12,9 +12,10 @@ export default theme => ({
     color: theme.palette.text.secondary
   },
   avatar: {
-    marginLeft: 'auto',
-    height: '110px',
-    width: '110px',
+    display: 'flex',
+    marginLeft: "auto",
+    height: "110px",
+    width: "110px",
     flexShrink: 0,
     flexGrow: 0
   },

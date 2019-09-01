@@ -35,11 +35,18 @@ const useStyles = makeStyles(theme => ({
   },
   mainFeaturedPostContent: {
     position: "relative",
+    height: 300,
     padding: theme.spacing(3),
     [theme.breakpoints.up("md")]: {
       padding: theme.spacing(6),
       paddingRight: 0
     }
+  },
+  title: {
+    display: "flex",
+    margin: theme.spacing(3),
+    justifyContent: "center",
+    alignItems: "center"
   },
   mainGrid: {
     marginTop: theme.spacing(3)

@@ -160,7 +160,7 @@ function imagenProducto(id, res, nombreArchivo) {
 
             res.json({
                 ok: true,
-                producto: productoGuardado,
+                product: productoGuardado,
                 img: nombreArchivo
             });
 

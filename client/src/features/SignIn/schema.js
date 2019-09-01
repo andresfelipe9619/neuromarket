@@ -1,15 +1,7 @@
-export default {
-  email: {
-    presence: { allowEmpty: false, message: 'is required' },
-    email: true,
-    length: {
-      maximum: 64
-    }
-  },
-  password: {
-    presence: { allowEmpty: false, message: 'is required' },
-    length: {
-      maximum: 128
-    }
-  }
-};
+import * as Yup from "yup";
+
+export const userValidationSchema = Yup.object().shape({
+  email: Yup.string().email().required("Required"),
+  password: Yup.string()
+    .required("Required")
+});

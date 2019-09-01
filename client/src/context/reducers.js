@@ -2,7 +2,7 @@ export const ADD_PRODUCT = "ADD_PRODUCT";
 export const REMOVE_PRODUCT = "REMOVE_PRODUCT";
 export const ADD_FAVORITE = "ADD_FAVORITE";
 export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
-export const LOOKING_FOR="LOOKING_FOR"
+export const LOOKING_FOR = "LOOKING_FOR";
 
 const getSubtotal = cart =>
   +parseFloat(
@@ -16,7 +16,7 @@ const getSubtotal = cart =>
 const addProductToCart = (product, state) => {
   const updatedCart = [...state.cart];
   const updatedItemIndex = updatedCart.findIndex(
-    item => item.id === product.id
+    item => item._id === product._id
   );
 
   if (updatedItemIndex < 0) {
@@ -35,7 +35,9 @@ const addProductToCart = (product, state) => {
 const removeProductFromCart = (productId, state) => {
   console.log("Removing product with id: " + productId);
   const updatedCart = [...state.cart];
-  const updatedItemIndex = updatedCart.findIndex(item => item.id === productId);
+  const updatedItemIndex = updatedCart.findIndex(
+    item => item._id === productId
+  );
 
   const updatedItem = {
     ...updatedCart[updatedItemIndex]
@@ -54,7 +56,7 @@ const removeProductFromCart = (productId, state) => {
 const addProductToFavorites = (product, state) => {
   const updatedFavorites = [...state.favorites];
   const updatedItemIndex = updatedFavorites.findIndex(
-    item => item.id === product.id
+    item => item._id === product._id
   );
 
   if (updatedItemIndex < 0) {
@@ -73,7 +75,7 @@ const removeProductFromFavorites = (productId, state) => {
   console.log("Removing product with id: " + productId);
   const updatedFavorites = [...state.favorites];
   const updatedItemIndex = updatedFavorites.findIndex(
-    item => item.id === productId
+    item => item._id === productId
   );
 
   const updatedItem = {
@@ -88,19 +90,18 @@ const removeProductFromFavorites = (productId, state) => {
   return { ...state, favorites: updatedFavorites };
 };
 
- const lookForProduct = (prodocutobusqueda,state)=> {
-      const busquedanormalizada = prodocutobusqueda.toLowerCase()
-      const arreglo = [];
-      state.products.forEach(product=>{
-          const productonormalizado= product.name.toLowerCase()
-          if(productonormalizado.includes(busquedanormalizada)){
-            console.log("entontrado");
-            arreglo.push(product)
-            
-          }
-        })
-    return{...state,productsFound:arreglo};
-  };
+const lookForProduct = (prodocutobusqueda, state) => {
+  const busquedanormalizada = prodocutobusqueda.toLowerCase();
+  const arreglo = [];
+  state.products.forEach(product => {
+    const productonormalizado = product.name.toLowerCase();
+    if (productonormalizado.includes(busquedanormalizada)) {
+      console.log("entontrado");
+      arreglo.push(product);
+    }
+  });
+  return { ...state, productsFound: arreglo };
+};
 
 export const shopReducer = (state, action) => {
   switch (action.type) {
@@ -113,7 +114,7 @@ export const shopReducer = (state, action) => {
     case REMOVE_FAVORITE:
       return removeProductFromFavorites(action.productId, state);
     case LOOKING_FOR:
-      return lookForProduct(action.product,state);
+      return lookForProduct(action.product, state);
     default:
       return state;
   }

@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 
-var productoSchema = new Schema({
+var productSchema = new Schema({
     name: { type: String, required: [true, 'El name es necesario'] },
     price: { type: Number, required: [true, 'El precio únitario es necesario'] },
     description: { type: String, required: false },
@@ -13,4 +13,4 @@ var productoSchema = new Schema({
 });
 
 
-module.exports = mongoose.model('Product', productoSchema);
+module.exports = mongoose.model('Product', productSchema);

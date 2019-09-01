@@ -1,37 +1,30 @@
 module.exports = [
     {
-        id: 1,
-        name:"Deportes",
+        name:"Sports",
         description: ""
     },
     {
-        id: 2,
-        name:"Tecnología",
+        name:"Technology",
         description: ""
     },
     {
-        id: 3,
-        name:"Juguetes y Bebés",
+        name:"Toys & Babies",
         description: ""
     },
     {
-        id: 4,
-        name:"Belleza y Cuidado Personal",
+        name:"Beauty and Personal Care",
         description: ""
     },
     {
-        id: 5,
-        name:"Libros",
+        name:"Books",
         description: ""
     },
     {
-        id: 6,
-        name:"Hoogar y Electrodomésticos",
+        name:"Home appliances",
         description: ""
     },
     {
-        id: 7,
-        name:"Vehículos",
+        name:"Vehicles",
         description: ""
     },
 

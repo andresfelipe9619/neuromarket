@@ -51,7 +51,7 @@ class NotFound extends Component {
                 Whichever it is, try using the navigation
               </Typography>
               <img
-                alt="Under development"
+                alt="Not found"
                 className={classes.image}
                 src="/images/not_found.png"
               />

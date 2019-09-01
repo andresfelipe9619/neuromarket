@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
 // Externals
@@ -39,8 +39,12 @@ import {
 // Component styles
 import styles from "./styles";
 
+import UserContext from "../../../../context/user-context";
+
 const Sidebar = props => {
+  const user = useContext(UserContext);
   const { classes, className } = props;
+  const imgSrc = user.img ? user.img : "/images/avatars/empty_avatar.png";
 
   const rootClassName = classNames(classes.root, className);
 
@@ -56,25 +60,25 @@ const Sidebar = props => {
               gutterBottom
             >
               NeuroMarket
-              </Typography>
+            </Typography>
           </CardActionArea>
         </Link>
       </div>
       <Divider className={classes.logoDivider} />
       <div className={classes.profile}>
-        <Link to="/account">
+        <Link to="/dashboard/account">
           <Avatar
-            alt="Roman Kutepov"
+            alt={user.name}
             className={classes.avatar}
-            src="/public/images/avatars/avatar_1.png"
+            src="/images/avatars/empty_avatar.png"
           />
         </Link>
         <Typography className={classes.nameText} variant="h6">
-          Sebastián Hernández
-          </Typography>
-        <Typography className={classes.bioText} variant="caption">
+          {user.name}
+        </Typography>
+        {/* <Typography className={classes.bioText} variant="caption">
           Brain Director
-          </Typography>
+        </Typography> */}
       </div>
       <Divider className={classes.profileDivider} />
       <List component="div" disablePadding>
@@ -96,14 +100,14 @@ const Sidebar = props => {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
-          to="/dashboard/users"
+          to="/dashboard/soldproducts"
         >
           <ListItemIcon className={classes.listItemIcon}>
             <PeopleIcon />
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Users"
+            primary="sold products"
           />
         </ListItem>
         <ListItem
@@ -138,14 +142,14 @@ const Sidebar = props => {
           activeClassName={classes.activeListItem}
           className={classes.listItem}
           component={NavLink}
-          to="/typography"
+          to="/dashboard/SaleProducts"
         >
           <ListItemIcon className={classes.listItemIcon}>
             <TextFieldsIcon />
           </ListItemIcon>
           <ListItemText
             classes={{ primary: classes.listItemText }}
-            primary="Typography"
+            primary="Sales Products"
           />
         </ListItem>
         <ListItem
@@ -193,8 +197,7 @@ const Sidebar = props => {
       </List>
     </nav>
   );
-}
-
+};
 
 Sidebar.propTypes = {
   className: PropTypes.string,

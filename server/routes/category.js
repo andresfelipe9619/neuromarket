@@ -7,14 +7,14 @@ let app = express();
 let category = require('../models/category');
 
 // ============================
-// Mostrar todas las categorias
+// Mostrar todas las categories
 // ============================
-app.get('/category', verificaToken, (req, res) => {
+app.get('/category', (req, res) => {
 
     category.find({})
-        .sort('description')
-        .populate('user', 'name email')
-        .exec((err, categorias) => {
+        .sort('name')
+        // .populate('user', 'name email')
+        .exec((err, categories) => {
 
             if (err) {
                 return res.status(500).json({
@@ -25,7 +25,7 @@ app.get('/category', verificaToken, (req, res) => {
 
             res.json({
                 ok: true,
-                categorias
+                categories
             });
 
         })
@@ -110,7 +110,7 @@ app.post('/category', verificaToken, (req, res) => {
 });
 
 // ============================
-// Mostrar todas las categorias
+// Mostrar todas las categories
 // ============================
 app.put('/category/:id', verificaToken, (req, res) => {
 
@@ -148,10 +148,10 @@ app.put('/category/:id', verificaToken, (req, res) => {
 });
 
 // ============================
-// Mostrar todas las categorias
+// Mostrar todas las categories
 // ============================
 app.delete('/category/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
-    // solo un administrador puede borrar categorias
+    // solo un administrador puede borrar categories
     // category.findByIdAndRemove
     let id = req.params.id;
 
