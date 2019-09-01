@@ -44,7 +44,7 @@ import UserContext from "../../../../context/user-context";
 const Sidebar = props => {
   const user = useContext(UserContext);
   const { classes, className } = props;
-  console.log("props sidebar :", props);
+  const imgSrc = user.img ? user.img : "/images/avatars/empty_avatar.png";
 
   const rootClassName = classNames(classes.root, className);
 

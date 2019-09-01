@@ -8,7 +8,7 @@ const client = new OAuth2Client(process.env.CLIENT_ID);
 
 
 
-const user = require('../models/user');
+const User = require('../models/user');
 
 const app = express();
 
@@ -18,7 +18,7 @@ app.post('/login', (req, res) => {
 
     let body = req.body;
 
-    user.findOne({ email: body.email }, (err, usuarioDB) => {
+    User.findOne({ email: body.email }, (err, usuarioDB) => {
 
         if (err) {
             return res.status(500).json({
@@ -95,7 +95,7 @@ app.post('/login/google', async(req, res) => {
         });
 
 
-    user.findOne({ email: googleUser.email }, (err, usuarioDB) => {
+    User.findOne({ email: googleUser.email }, (err, usuarioDB) => {
 
         if (err) {
             return res.status(500).json({
@@ -129,7 +129,7 @@ app.post('/login/google', async(req, res) => {
 
         } else {
             // Si el user no existe en nuestra base de datos
-            let user = new user();
+            let user = new User();
 
             user.name = googleUser.name;
             user.email = googleUser.email;

@@ -97,7 +97,7 @@ function Navbar(props) {
               inputProps={{ "aria-label": "Search" }}
             />
             <IconButton
-              aria-label={`lookingo for your  product `}
+              aria-label={`looking for your  product `}
               color="inherit"
               onClick={busquedacomparar(busqueda)}
             >

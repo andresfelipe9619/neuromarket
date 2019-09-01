@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, withRouter } from "react-router-dom";
+
 const useStyles = makeStyles(theme => ({
   card: {
     height: "100%",
