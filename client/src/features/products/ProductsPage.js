@@ -9,9 +9,7 @@ const ProductsPage = props => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     async function getProducts() {
-      console.log("executing");
       const { products } = await Product.getAll();
-      console.log("products", products);
       setProducts(products);
     }
     getProducts();

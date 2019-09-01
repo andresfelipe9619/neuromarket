@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorderOutlined";
 import { makeStyles } from "@material-ui/core/styles";
 import { Link, withRouter } from "react-router-dom";
+
 const useStyles = makeStyles(theme => ({
   card: {
     height: "100%",
@@ -33,7 +34,10 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
     addProductToCart,
     product
   ]);
-  const img = product.imageUrl || "https://source.unsplash.com/random"
+  const img =
+    product.imageUrl || product.imageurls
+      ? product.imageurls.split(",")[0]
+      : "https://source.unsplash.com/random";
   return (
     <Card className={classes.card}>
       <CardMedia
@@ -43,13 +47,9 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
       />
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom variant="h5" component="h2">
-          <Link to={`/products/${product.id}`}>
+          <Link to={`/products/${product._id}`}>
             <strong>{product.name}</strong> - ${product.price}{" "}
           </Link>
-        </Typography>
-        <Typography>
-          This is a media card. You can use this section to describe the
-          content.
         </Typography>
       </CardContent>
       <CardActions>
@@ -68,5 +68,5 @@ const Product = ({ product, addProductToCart, addProductToFavorites }) => {
   );
 };
 export default withRouter(
-  React.memo(Product, (prev, next) => prev.product.id === next.product.id)
+  React.memo(Product, (prev, next) => prev.product._id === next.product._id)
 );

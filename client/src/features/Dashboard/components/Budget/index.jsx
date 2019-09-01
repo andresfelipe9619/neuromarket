@@ -39,7 +39,7 @@ class Budget extends Component {
               className={classes.title}
               variant="body2"
             >
-              BUDGET
+              Nosirver 
             </Typography>
             <Typography
               className={classes.value}

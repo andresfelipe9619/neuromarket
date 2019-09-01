@@ -5,8 +5,10 @@ import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import { Formik } from "formik";
+import Button from "@material-ui/core/Button";
+
 import { addressInitialValues, addressValidationSchema } from "./form-schemas";
-function AddressForm({ bindSubmitForm, addValuesToFormData }) {
+function AddressForm({ classes, handleNext, setShippingData }) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -14,11 +16,12 @@ function AddressForm({ bindSubmitForm, addValuesToFormData }) {
       </Typography>
       <Formik
         initialValues={addressInitialValues}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log("values", values);
+        onSubmit={(values, { setSubmitting, ...rest }) => {
+          console.log("values", { values, rest });
           setSubmitting(true);
-          // addValuesToFormData(values);
-          setTimeout(() => setSubmitting(false), 2000);
+          setShippingData(values);
+          handleNext();
+          setSubmitting(false);
         }}
         validationSchema={addressValidationSchema}
       >
@@ -27,14 +30,10 @@ function AddressForm({ bindSubmitForm, addValuesToFormData }) {
             values,
             touched,
             errors,
-            submitForm,
-            isValid,
             handleChange,
             handleBlur,
             handleSubmit
           } = formikProps;
-
-          bindSubmitForm(submitForm, isValid, values);
 
           return (
             <form onSubmit={handleSubmit}>
@@ -154,6 +153,16 @@ function AddressForm({ bindSubmitForm, addValuesToFormData }) {
                     label="Use this address for payment details"
                   />
                 </Grid>
+                <div className={classes.buttons}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                    className={classes.button}
+                  >
+                    Next
+                  </Button>
+                </div>
               </Grid>
             </form>
           );

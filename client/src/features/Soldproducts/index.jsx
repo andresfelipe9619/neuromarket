@@ -16,12 +16,13 @@ import { Dashboard as DashboardLayout } from '../../layouts';
 import { getUsers } from '../../services/user';
 
 // Custom components
-import { UsersToolbar, UsersTable } from './components';
+import { UsersToolbar } from './components';
 
 // Component styles
 import styles from './style';
-
-class UserList extends Component {
+// producto
+import ProductList from '../../features/Dashboard/components/ProductList';
+class soldproducts extends Component {
   signal = true;
 
   state = {
@@ -90,11 +91,9 @@ class UserList extends Component {
     }
 
     return (
-      <UsersTable
-        //
-        onSelect={this.handleSelect}
-        users={users}
-      />
+      <>
+        <ProductList />
+      </>
     );
   }
 
@@ -103,7 +102,7 @@ class UserList extends Component {
     const { selectedUsers } = this.state;
 
     return (
-      <DashboardLayout title="Users">
+      <DashboardLayout title="Sold products">
         <div className={classes.root}>
           <UsersToolbar selectedUsers={selectedUsers} />
           <div className={classes.content}>{this.renderUsers()}</div>
@@ -113,9 +112,9 @@ class UserList extends Component {
   }
 }
 
-UserList.propTypes = {
+soldproducts.propTypes = {
   className: PropTypes.string,
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(UserList);
+export default withStyles(styles)(soldproducts);
