@@ -37,7 +37,6 @@ export default function AppRouter() {
         <Route path="/" component={Navbar} />
       </Switch>
 
-      {/* <Navbar/> */}
       <Container maxWidth="lg">
         <Alert
           open={open}

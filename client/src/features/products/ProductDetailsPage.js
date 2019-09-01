@@ -3,8 +3,7 @@ import ShopContext from "../../context/shop-context";
 import Grid from "@material-ui/core/Grid";
 import { Product } from "@neuromarket/services";
 import ProductImage from "./ProductImage";
-import QuantitySelect from "../../components/quantity-select";
-import { Typography, Button, Divider } from "@material-ui/core";
+import { Typography, Button } from "@material-ui/core";
 const ProductsDetailsPage = props => {
   const { addProductToCart, addProductToFavorites } = useContext(ShopContext);
   const [product, setProduct] = useState(null);
@@ -59,7 +58,6 @@ const ProductsDetailsPage = props => {
             <Typography variant="h3">{product.name}</Typography>
             <Typography variant="h4">$ {product.price}</Typography>
             <Typography variant="h4">Free shipping</Typography>
-            <QuantitySelect />
             <Button
               variant="contained"
               color="primary"
@@ -67,12 +65,6 @@ const ProductsDetailsPage = props => {
             >
               Add to Cart
             </Button>
-          </Grid>
-          <Grid item sm={12} md={12}>
-            <Typography variant="h4">Seller Info</Typography>
-            <Typography variant="body1">
-              Mollit in incididunt sint nulla.
-            </Typography>
           </Grid>
         </Grid>
       </Grid>

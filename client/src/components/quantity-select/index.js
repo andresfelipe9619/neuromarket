@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Button } from "@material-ui/core";
+import { Grid, Button, Typography } from "@material-ui/core";
 
 export default function QuantitySelect() {
   const [quantity, setQuantity] = useState(1);
@@ -12,14 +12,8 @@ export default function QuantitySelect() {
     setQuantity(value);
   };
   return (
-    <Grid
-      container
-      alignItems="center"
-      style={{
-        margin: 20
-      }}
-    >
-      <Grid item md={2}>
+    <Grid container>
+      {/* <Grid item md={2}>
         <Button
           size="small"
           color="secondary"
@@ -28,9 +22,11 @@ export default function QuantitySelect() {
         >
           -
         </Button>
-      </Grid>
+      </Grid> */}
       <Grid item md={3}>
-        <p color="black">{quantity}</p>
+        <Typography color="primary" variant="h2">
+          {quantity}
+        </Typography>
       </Grid>
       <Grid item md={2}>
         <Button
