@@ -2,6 +2,7 @@ const express = require('express');
 
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
+const ObjectId = require('mongodb').ObjectID;
 
 const User = require('../models/user');
 const { verificaToken, verificaAdmin_Role } = require('../middlewares/autenticacion');
@@ -54,7 +55,8 @@ app.post('/users', function(req, res) {
         name: body.name,
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
-        phone: body.phone
+        phone: body.phone,
+        interestCategories: body.interestCategories
     });
 
 

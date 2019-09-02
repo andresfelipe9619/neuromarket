@@ -107,6 +107,10 @@ export default theme => ({
       color: theme.palette.primary.main
     }
   },
+  selectCategories: {
+    display: 'block',
+    margin: theme.spacing.unit * 2,
+  },
   progress: {
     display: 'block',
     marginTop: theme.spacing.unit * 2,
