@@ -28,7 +28,7 @@ import {Facebook as FacebookIcon} from '../../icons';
 import styles from './styles';
 
 // Form validation schema
-import {userValidationSchema} from './schema';
+import userValidationSchema from './schema';
 import {Formik} from 'formik';
 
 // server services
@@ -55,21 +55,19 @@ const SignIn = (props) => {
 
 	const handleGoogleSignIn = async (user) => {
 		const {history} = props;
-		console.log('googleUser :', user);
+		setIsLoading(true);
 		Auth.loginGoogle(user)
 			.then(() => {
 				userLoggedIn({
 					name: user.name,
 					email: user.email,
 					img: user.img,
-          phone: '',
-          
+					phone: '',
 				});
-				setIsLoading(false);
 				history.push('/dashboard');
 			})
 			.catch((err) => {
-        console.log('err :', err);
+				console.log('err :', err);
 				setIsLoading(false);
 				openAlert({
 					message: 'Failed google login',
@@ -159,7 +157,6 @@ const SignIn = (props) => {
 											<Button
 												className={classes.facebookButton}
 												color='primary'
-												onClick={handleSignIn}
 												size='large'
 												variant='contained'
 											>
