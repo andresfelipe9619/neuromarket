@@ -58,7 +58,7 @@ const SignUp = (props) => {
 		return {label: val.name, value: val._id};
 	});
 
-	const handleBack = (props) => {
+	const handleBack = () => {
 		const {history} = props;
 		history.goBack();
 	};

@@ -5,14 +5,9 @@ let OrderSchema = new Schema(
   {
     address: { type: Schema.Types.ObjectId, ref: "address" },
     user: { type: Schema.Types.ObjectId, ref: "user" },
-    products: [
-      {
-        productId: { type: Schema.Types.ObjectId, ref: "product" },
-        quantity: Number
-      }
-    ]
+    orderItems: [{ type: Schema.Types.ObjectId, ref: "orderItem" }]
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Order", OrderSchema);
+module.exports = mongoose.model("order", OrderSchema);

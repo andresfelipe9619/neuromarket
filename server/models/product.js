@@ -10,4 +10,4 @@ var productSchema = new Schema({
   category: { type: Schema.Types.ObjectId, ref: "category", required: true }
 });
 
-module.exports = mongoose.model("Product", productSchema);
+module.exports = mongoose.model("product", productSchema);

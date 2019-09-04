@@ -5,6 +5,7 @@ const { verificaToken } = require("../middlewares/autenticacion");
 let app = express();
 let Order = require("../models/order");
 let Address = require("../models/address");
+let OrderItem = require("../models/orderItem");
 
 // ===========================
 //  Obtener orders
@@ -21,7 +22,6 @@ app.get("/orders", (req, res) => {
     .skip(desde)
     .limit(5)
     // .populate('user', 'name email')
-    // .populate('category', 'description')
     .exec((err, orders) => {
       if (err) {
         return res.status(500).json({
@@ -46,8 +46,8 @@ app.get("/orders/:id", (req, res) => {
   let id = req.params.id;
 
   Order.findById(id)
-    // .populate('user', 'name email')
-    // .populate('category', 'name')
+    .populate("user", "name email")
+    .populate("orderItems")
     .exec((err, orderDB) => {
       if (err) {
         return res.status(500).json({
@@ -105,19 +105,18 @@ app.post("/orders", (req, res) => {
   // grabar una category del listado
 
   let body = req.body;
-  let clientAddress = body.address._id ? body.address._id : body.address;
+  let clientAddress = body.address._id || body.address;
   // if("address" in clientAddress){
   //   let address = new Address({
   //       // user: req.user._id,
   //       address: clientAddress.address,
-  //       products: body.products
   //     });
   // }
   let order = new Order({
     // user: req.user._id,
     user: body.user,
     address: clientAddress,
-    products: body.products
+    orderItems: body.orderItems
   });
 
   order.save((err, orderDB) => {

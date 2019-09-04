@@ -12,10 +12,22 @@ export default function Review({
   subtotal,
   handleBack,
   paymentData,
-  shippingData
+  shippingData,
+  showOrderSuccesMessage
 }) {
+  const { firstName, lastName, address, city, state, country } = shippingData;
   const handlePlaceOrder = () => {
-    const orderData = {};
+    const orderData = {
+      address: {
+        address,
+        city,
+        state,
+        country
+      },
+      products: cart
+    };
+    showOrderSuccesMessage();
+    console.log("orderData", orderData);
   };
 
   const ObjectKeyToHumanString = key => {
@@ -29,7 +41,6 @@ export default function Review({
       .join(" ");
   };
 
-  const { firstName, lastName, address, city, state, country } = shippingData;
   return (
     <>
       <Typography variant="h6" gutterBottom>
@@ -40,9 +51,11 @@ export default function Review({
           <ListItem className={classes.listItem} key={product.name}>
             <ListItemText
               primary={product.name}
-              secondary={product.description}
+              secondary={`$${product.price} x ${product.quantity}`}
             />
-            <Typography variant="body2">{product.price}</Typography>
+            <Typography variant="body2">
+              ${product.price * product.quantity}
+            </Typography>
           </ListItem>
         ))}
         <ListItem className={classes.listItem}>
