@@ -28,6 +28,7 @@
     "react-perfect-scrollbar": "^1.4.4",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-select": "^3.0.4",
     "recompose": "^0.30.0",
     "typescript": "^3.5.2",
     "underscore": "^1.9.1",

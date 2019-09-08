@@ -49,11 +49,21 @@ export default function AppRouter() {
           <Route path="/cart" component={CartPage} exact />
           <Route path="/sign-up" component={SignUp} exact />
           <Route path="/sign-in" component={SignIn} exact />
-          <Route path="/checkout" component={CheckoutPage} exact />
-          <Route path="/category/:id" component={ProductsPage} exact />
-          <Route path="/favorites" component={FavoritesPage} exact />
-          <Route path="/products/:id" component={ProductsDetailsPage} exact />
           <Route path="/busqueda" component={ProductsFound} exact />
+          <Route path="/category/:id" component={ProductsPage} exact />
+          <Route path="/products/:id" component={ProductsDetailsPage} exact />
+          <PrivateRoute
+            restricted={true}
+            path="/checkout"
+            component={CheckoutPage}
+            exact
+          />
+          <PrivateRoute
+            restricted={true}
+            path="/favorites"
+            component={FavoritesPage}
+            exact
+          />
           <PrivateRoute
             restricted={true}
             component={Dashboard}

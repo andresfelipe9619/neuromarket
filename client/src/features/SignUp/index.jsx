@@ -1,312 +1,276 @@
-import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import React, {useState, useContext, useEffect} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 
 // Externals
 import PropTypes from 'prop-types';
 import compose from 'recompose/compose';
-import validate from 'validate.js';
-import _ from 'underscore';
 
 // Material helpers
-import { withStyles } from '@material-ui/core';
+import {withStyles} from '@material-ui/core';
 
 // Material components
 import {
-  Button,
-  Checkbox,
-  CircularProgress,
-  Grid,
-  IconButton,
-  TextField,
-  Typography
+	Button,
+	CircularProgress,
+	Grid,
+	IconButton,
+	TextField,
+	Typography,
 } from '@material-ui/core';
 
 // Material icons
-import { ArrowBack as ArrowBackIcon } from '@material-ui/icons';
-
-// Shared utilities
-import validators from '../../common/validators';
+import {ArrowBack as ArrowBackIcon} from '@material-ui/icons';
 
 // Component styles
 import styles from './styles';
 
 // Form validation schema
-import schema from './schema';
+import registerUserValidationSchema from './schema';
+import {Formik} from 'formik';
 
 // server services
-import { Auth } from "@neuromarket/services";
+import {Auth} from '@neuromarket/services';
+import {Category} from '@neuromarket/services';
 
+import AlertContext from '../../context/alert-context';
+import Select from 'react-select';
 
-validate.validators.checked = validators.checked;
+const SignUp = (props) => {
+	const [isLoading, setIsLoading] = useState(false);
+	const [categories, setCategories] = useState([]);
+	const {openAlert} = useContext(AlertContext);
+	const [selectedCategories, setSelectedCategories] = useState([]);
 
-// Service methods
-// const signUp = () => {
-//   return new Promise(resolve => {
-//     setTimeout(() => {
-//       resolve(true);
-//     }, 1500);
-//   });
-// };
+	const handleSelectChange = (selectedCategories) => {
+		console.log('selectedOption :', selectedCategories);
+		setSelectedCategories(selectedCategories);
+	};
 
-class SignUp extends Component {
-  state = {
-    values: {
-      name: '',
-      email: '',
-      password: '',
-      phone: '',
-    },
-    touched: {
-      firstName: false,
-      lastName: false,
-      email: false,
-      password: false,
-      phone: false,
-    },
-    errors: {
-      name: null,
-      email: null,
-      password: null,
-      phone: null,
-    },
-    isValid: false,
-    isLoading: false,
-    submitError: null
-  };
+	useEffect(() => {
+		async function getCategories() {
+			const {categories} = await Category.getAll();
+			setCategories(categories);
+		}
+		getCategories();
+	}, []);
 
-  handleBack = () => {
-    const { history } = this.props;
+	const categoryNames = categories.map((val) => {
+		return {label: val.name, value: val._id};
+	});
 
-    history.goBack();
-  };
+	const handleBack = () => {
+		const {history} = props;
+		history.goBack();
+	};
 
-  validateForm = _.debounce(() => {
-    const { values } = this.state;
+	const handleSignUp = async (values) => {
+		const catIds = selectedCategories.map((cat) => cat.value);
+		try {
+			const {history} = props;
+			setIsLoading(true);
+			await Auth.register({
+				name: values.name,
+				email: values.email,
+				password: values.password,
+				phone: values.phone,
+				interestCategories: catIds,
+			});
 
-    const newState = { ...this.state };
-    const errors = validate(values, schema);
+			history.push('/sign-in');
+		} catch (error) {
+			setIsLoading(false);
+			openAlert({
+				message: 'Internal error',
+				variant: 'error',
+			});
+		}
+	};
 
-    newState.errors = errors || {};
-    newState.isValid = errors ? false : true;
+	const {classes} = props;
 
-    this.setState(newState);
-  }, 300);
+	return (
+		<Formik
+			onSubmit={handleSignUp}
+			validationSchema={registerUserValidationSchema}
+			initialValues={{
+				name: '',
+				email: '',
+				phone: '',
+				password: '',
+				confirmPassword: '',
+			}}
+		>
+			{(formikProps) => {
+				const {
+					values,
+					touched,
+					errors,
+					handleChange,
+					handleBlur,
+					handleSubmit,
+				} = formikProps;
 
-  handleFieldChange = (field, value) => {
-    const newState = { ...this.state };
+				return (
+					<div className={classes.root}>
+						<Grid className={classes.grid} container>
+							<Grid className={classes.quoteWrapper} item lg={5}>
+								<div className={classes.quote}>
+									<div className={classes.quoteInner}>
+										<Typography className={classes.quoteText} variant='h1'>
+											Hella narwhal Cosby sweater McSweeney's, salvia kitsch
+											before they sold out High Life.
+										</Typography>
+										<div className={classes.person}>
+											<Typography className={classes.name} variant='body1'>
+												Takamaru Ayako
+											</Typography>
+											<Typography className={classes.bio} variant='body2'>
+												Manager at inVision
+											</Typography>
+										</div>
+									</div>
+								</div>
+							</Grid>
+							<Grid className={classes.content} item lg={7} xs={12}>
+								<div className={classes.content}>
+									<div className={classes.contentHeader}>
+										<IconButton
+											className={classes.backButton}
+											onClick={handleBack}
+										>
+											<ArrowBackIcon />
+										</IconButton>
+									</div>
+									<div className={classes.contentBody}>
+										<form className={classes.form} onSubmit={handleSubmit}>
+											<Typography className={classes.title} variant='h2'>
+												Create new account
+											</Typography>
+											<Typography className={classes.subtitle} variant='body1'>
+												Use your work email to create new account... it's free.
+											</Typography>
+											<div className={classes.fields}>
+												<TextField
+													className={classes.textField}
+													label='Name'
+													name='name'
+													onChange={handleChange}
+													onBlur={handleBlur}
+													type='text'
+													helperText={touched.name && errors.name}
+													error={!!(touched.name && errors.name)}
+													value={values.name}
+													variant='outlined'
+												/>
 
-    newState.submitError = null;
-    newState.touched[field] = true;
-    newState.values[field] = value;
+												<TextField
+													className={classes.textField}
+													label='Phone Number'
+													name='phone'
+													onChange={handleChange}
+													onBlur={handleBlur}
+													helperText={touched.phone && errors.phone}
+													error={!!(touched.phone && errors.phone)}
+													value={values.phone}
+													variant='outlined'
+												/>
 
-    this.setState(newState, this.validateForm);
-  };
+												<TextField
+													className={classes.textField}
+													label='Email address'
+													name='email'
+													onChange={handleChange}
+													onBlur={handleBlur}
+													type='text'
+													helperText={touched.email && errors.email}
+													error={!!(touched.email && errors.email)}
+													value={values.email}
+													variant='outlined'
+												/>
 
-  handleSignUp = async () => {
-    try {
-      const { history } = this.props;
-      const { values } = this.state;
-
-      this.setState({ isLoading: true });
-
-      await Auth.register({
-        name: values.name,
-        email: values.email,
-        password: values.password,
-        phone: values.phone,
-      });
-
-      history.push('/sign-in');
-    } catch (error) {
-      this.setState({
-        isLoading: false,
-        serviceError: error
-      });
-    }
-  };
-
-  render() {
-    const { classes } = this.props;
-    const {
-      values,
-      touched,
-      errors,
-      isValid,
-      submitError,
-      isLoading
-    } = this.state;
-
-    const showNameError =
-      touched.name && errors.name ? errors.name[0] : false;
-    const showEmailError =
-      touched.email && errors.email ? errors.email[0] : false;
-    const showPasswordError =
-      touched.password && errors.password ? errors.password[0] : false;
-    const showPhoneError = touched.phone && errors.phone ? errors.phone[0] : false;
-
-    return (
-      <div className={classes.root}>
-        <Grid className={classes.grid} container>
-          <Grid className={classes.quoteWrapper} item lg={5}>
-            <div className={classes.quote}>
-              <div className={classes.quoteInner}>
-                <Typography className={classes.quoteText} variant="h1">
-                  Hella narwhal Cosby sweater McSweeney's, salvia kitsch
-                  before they sold out High Life.
-                </Typography>
-                <div className={classes.person}>
-                  <Typography className={classes.name} variant="body1">
-                    Takamaru Ayako
-                  </Typography>
-                  <Typography className={classes.bio} variant="body2">
-                    Manager at inVision
-                  </Typography>
-                </div>
-              </div>
-            </div>
-          </Grid>
-          <Grid className={classes.content} item lg={7} xs={12}>
-            <div className={classes.content}>
-              <div className={classes.contentHeader}>
-                <IconButton
-                  className={classes.backButton}
-                  onClick={this.handleBack}
-                >
-                  <ArrowBackIcon />
-                </IconButton>
-              </div>
-              <div className={classes.contentBody}>
-                <form className={classes.form}>
-                  <Typography className={classes.title} variant="h2">
-                    Create new account
-                  </Typography>
-                  <Typography className={classes.subtitle} variant="body1">
-                    Use your work email to create new account... it's free.
-                  </Typography>
-                  <div className={classes.fields}>
-                    <TextField
-                      className={classes.textField}
-                      label="Name"
-                      name="name"
-                      onChange={event =>
-                        this.handleFieldChange("name", event.target.value)
-                      }
-                      value={values.name}
-                      variant="outlined"
-                    />
-                    {showNameError && (
-                      <Typography
-                        className={classes.fieldError}
-                        variant="body2"
-                      >
-                        {errors.name[0]}
-                      </Typography>
-                    )}
-                    <TextField
-                      className={classes.textField}
-                      label="Phone Number"
-                      name="phone"
-                      onChange={event =>
-                        this.handleFieldChange("phone", event.target.value)
-                      }
-                      value={values.phone}
-                      variant="outlined"
-                    />
-                    {showPhoneError && (
-                      <Typography
-                        className={classes.fieldError}
-                        variant="body2"
-                      >
-                        {errors.phone[0]}
-                      </Typography>
-                    )}
-
-                    <TextField
-                      className={classes.textField}
-                      label="Email address"
-                      name="email"
-                      onChange={event =>
-                        this.handleFieldChange("email", event.target.value)
-                      }
-                      value={values.email}
-                      variant="outlined"
-                    />
-                    {showEmailError && (
-                      <Typography
-                        className={classes.fieldError}
-                        variant="body2"
-                      >
-                        {errors.email[0]}
-                      </Typography>
-                    )}
-                    <TextField
-                      className={classes.textField}
-                      label="Password"
-                      onChange={event =>
-                        this.handleFieldChange(
-                          "password",
-                          event.target.value
-                        )
-                      }
-                      type="password"
-                      value={values.password}
-                      variant="outlined"
-                    />
-                    {showPasswordError && (
-                      <Typography
-                        className={classes.fieldError}
-                        variant="body2"
-                      >
-                        {errors.password[0]}
-                      </Typography>
-                    )}
-                    
-                  </div>
-                  {submitError && (
-                    <Typography
-                      className={classes.submitError}
-                      variant="body2"
-                    >
-                      {submitError}
-                    </Typography>
-                  )}
-                  {isLoading ? (
-                    <CircularProgress className={classes.progress} />
-                  ) : (
-                    <Button
-                      className={classes.signUpButton}
-                      color="primary"
-                      disabled={!isValid}
-                      onClick={this.handleSignUp}
-                      size="large"
-                      variant="contained"
-                    >
-                      Sign up now
-                    </Button>
-                  )}
-                  <Typography className={classes.signIn} variant="body1">
-                    Have an account?{" "}
-                    <Link className={classes.signInUrl} to="/sign-in">
-                      Sign In
-                    </Link>
-                  </Typography>
-                </form>
-              </div>
-            </div>
-          </Grid>
-        </Grid>
-      </div>
-    );
-  }
-}
+												<TextField
+													className={classes.textField}
+													label='Password'
+													name='password'
+													onChange={handleChange}
+													onBlur={handleBlur}
+													helperText={touched.password && errors.password}
+													error={!!(touched.password && errors.password)}
+													type='password'
+													value={values.password}
+													variant='outlined'
+												/>
+												<TextField
+													className={classes.textField}
+													label='Confirm Password'
+													name='confirmPassword'
+													onChange={handleChange}
+													onBlur={handleBlur}
+													helperText={
+														touched.confirmPassword && errors.confirmPassword
+													}
+													error={
+														!!(
+															touched.confirmPassword && errors.confirmPassword
+														)
+													}
+													type='password'
+													value={values.confirmPassword}
+													variant='outlined'
+												/>
+												<div className={classes.selectCategories}>
+													<Typography
+														className={classes.subtitle}
+														variant='subtitle1'
+													>
+														Choose the categories of your interest
+													</Typography>
+													<Select
+														closeMenuOnSelect={false}
+														isMulti
+														isSearchable
+														options={categoryNames}
+														onChange={handleSelectChange}
+													/>
+												</div>
+											</div>
+											<Button
+												className={classes.signUpButton}
+												color='primary'
+												type='submit'
+												size='large'
+												variant='contained'
+											>
+												Sign up now
+											</Button>
+											<Typography className={classes.signIn} variant='body1'>
+												Have an account?{' '}
+												<Link className={classes.signInUrl} to='/sign-in'>
+													Sign In
+												</Link>
+											</Typography>
+											{isLoading ? (
+												<CircularProgress className={classes.progress} />
+											) : null}
+										</form>
+									</div>
+								</div>
+							</Grid>
+						</Grid>
+					</div>
+				);
+			}}
+		</Formik>
+	);
+};
 
 SignUp.propTypes = {
-  className: PropTypes.string,
-  classes: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
+	className: PropTypes.string,
+	classes: PropTypes.object.isRequired,
+	history: PropTypes.object.isRequired,
 };
 
 export default compose(
-  withRouter,
-  withStyles(styles)
+	withRouter,
+	withStyles(styles)
 )(SignUp);

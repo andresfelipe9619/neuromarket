@@ -27,14 +27,13 @@ function getStepContent({ step, props }) {
   }
 }
 
-function Checkout() {
+function Checkout({ history }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const { openAlert } = useContext(AlertContext);
   const [shippingData, setShippingData] = useState(null);
   const [paymentData, setPaymentData] = useState(null);
-  const { cart, subtotal, removeProductFromCart } = useContext(ShopContext);
-  console.log("cart", cart);
+  const { cart, subtotal } = useContext(ShopContext);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -48,19 +47,29 @@ function Checkout() {
       variant: "error"
     });
   };
+
+  const showOrderSuccesMessage = () => {
+    openAlert({
+      message: "Your Order have been placed",
+      variant: "success"
+    });
+    setTimeout(() => history.push("/dashboard"), 2000);
+  };
+
   const stepsHandler = {
     step: activeStep,
     props: {
       cart,
       classes,
-      subtotal, 
+      subtotal,
       handleBack,
       handleNext,
       paymentData,
       shippingData,
       setPaymentData,
       setShippingData,
-      showErrorMessage
+      showErrorMessage,
+      showOrderSuccesMessage
     }
   };
   return (
