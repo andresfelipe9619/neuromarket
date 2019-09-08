@@ -3,6 +3,8 @@ import Product from "./Product";
 import Grid from "@material-ui/core/Grid";
 
 const ProductsList = ({ products, ...actions }) => {
+  console.log("el arreglo de productos es "+ products);
+  
   if (!products.length) return <p>No Items found</p>;
   return (
     <Grid container spacing={4}>
