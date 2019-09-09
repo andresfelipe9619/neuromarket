@@ -6,24 +6,34 @@ import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import Product from "../products/Product";
 import QuantitySelect from "../../components/quantity-select";
-
+import useStyles from "./styles";
 const CartPage = props => {
-  const { cart, subtotal, removeProductFromCart } = useContext(ShopContext);
-  //const classes = useStyles();
+  const {
+    cart,
+    subtotal,
+    removeProductFromCart,
+    addProductToCart
+  } = useContext(ShopContext);
+  const classes = useStyles();
   const goTo = route => event => props.history.push(route);
-
-  // useEffect(() => {
-  //   console.log(context);
-  // }, []);
-
   return (
     <React.Fragment>
-      <Paper>
-        {cart.length <= 0 ? (
+      {cart.length <= 0 ? (
+        <Paper>
           <Typography variant="h5">No Item in the Cart!</Typography>
-        ) : (
-          <Grid container spacing={8} alignContent="center" justify="center">
-            <Grid container item xs={12} sm={12}>
+        </Paper>
+      ) : (
+        <Grid container spacing={8}>
+          <Grid container spacing={8} item xs={9} sm={9}>
+            {/* <Paper> */}
+            <Grid
+              container
+              item
+              xs={12}
+              sm={12}
+              alignItems="center"
+              justify="center"
+            >
               <Grid item xs={12} sm={3}>
                 <Typography variant="h5">Product</Typography>
               </Grid>
@@ -37,56 +47,55 @@ const CartPage = props => {
                 <Typography variant="h5">Ammount</Typography>
               </Grid>
             </Grid>
-            <hr />
-            {cart.map(({ _id, name, price, quantity, ammount, imageUrl }) => (
-              <Grid
-                key={_id}
-                container
-                item
-                xs={12}
-                sm={12}
-                spacing={8}
-                alignContent="center"
-                justify="center"
-                alignItems="center"
-              >
-                <Grid item xs={12} sm={3}>
-                  <Product product={{ _id, name, price, imageUrl }} />
-                  {/* <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={removeProductFromCart.bind(this, _id)}
-                  >
-                    Remove from Cart
-                  </Button> */}
+            {cart.map(product => {
+              const { _id, price, quantity, ammount } = product;
+              return (
+                <Grid
+                  key={_id}
+                  container
+                  item
+                  xs={12}
+                  sm={12}
+                  spacing={8}
+                  justify="center"
+                  alignItems="center"
+                >
+                  <Grid item xs={12} sm={3}>
+                    <Product product={product} />
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <QuantitySelect
+                      quantity={quantity}
+                      remove={removeProductFromCart.bind(this, _id)}
+                      add={addProductToCart.bind(this, product)}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <Typography align="center" variant="h6" a>
+                      {price}
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={3}>
+                    <Typography align="center" variant="h6">
+                      {ammount}
+                    </Typography>
+                  </Grid>
+                  <hr />
                 </Grid>
-                <Grid item xs={12} sm={3}>
-                  <Typography variant="h6">{quantity}</Typography>
-                  <QuantitySelect />
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                  <Typography variant="h6">{price}</Typography>
-                </Grid>
-                <Grid item xs={12} sm={3}>
-                  <Typography variant="h6">{ammount}</Typography>
-                </Grid>
-                <hr />
-              </Grid>
-            ))}
-
-            <Grid
-              container
-              item
-              xs={12}
-              sm={12}
-              alignItems="flex-start"
-              justify="flex-end"
-              direction="row"
-            >
+              );
+            })}
+            {/* </Paper> */}
+          </Grid>
+          <Grid container item xs={3} sm={3} justify="center">
+            {/* <Paper> */}
+            <Grid item xs={12} sm={12}>
               <Typography variant="h6">
+                {" "}
                 Subtotal: USD
                 {subtotal}
               </Typography>
+            </Grid>
+            <Grid item xs={8} sm={8}>
               <Button
                 variant="contained"
                 color="secondary"
@@ -95,9 +104,10 @@ const CartPage = props => {
                 Proceed with the Checkout
               </Button>
             </Grid>
+            {/* </Paper> */}
           </Grid>
-        )}
-      </Paper>
+        </Grid>
+      )}
     </React.Fragment>
   );
 };

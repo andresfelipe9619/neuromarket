@@ -9,14 +9,12 @@ let Producto = require("../models/product");
 //  Obtener products
 // ===========================
 app.get("/products", (req, res) => {
-  // trae todos los products
-  // populate: user category
-  // paginado
+  const { query } = req;
 
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
-  Producto.find()
+  Producto.find({ categoryId: query.category })
     .skip(desde)
     .limit(40)
     // .populate('user', 'name email')
@@ -100,9 +98,6 @@ app.get("/products/search/:termino", verificaToken, (req, res) => {
 //  Crear un nuevo product
 // ===========================
 app.post("/products", verificaToken, (req, res) => {
-  // grabar el user
-  // grabar una category del listado
-
   let body = req.body;
 
   let product = new Producto({
