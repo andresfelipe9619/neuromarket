@@ -28,10 +28,6 @@ import {
 import {
 	DashboardOutlined as DashboardIcon,
 	PeopleOutlined as PeopleIcon,
-	ShoppingBasketOutlined as ShoppingBasketIcon,
-	LockOpenOutlined as LockOpenIcon,
-	TextFields as TextFieldsIcon,
-	ImageOutlined as ImageIcon,
 	AccountBoxOutlined as AccountBoxIcon,
 	SettingsOutlined as SettingsIcon,
 } from '@material-ui/icons';
@@ -76,7 +72,7 @@ const Sidebar = (props) => {
 			<Divider className={classes.profileDivider} />
 			<List component='div' disablePadding>
 				<ListItem
-					activeClassName={classes.activeListItem}
+					activeclassname={classes.activeListItem}
 					className={classes.listItem}
 					component={NavLink}
 					to='/dashboard'
@@ -90,77 +86,21 @@ const Sidebar = (props) => {
 					/>
 				</ListItem>
 				<ListItem
-					activeClassName={classes.activeListItem}
+					activeclassname={classes.activeListItem}
 					className={classes.listItem}
 					component={NavLink}
-					to='/dashboard/soldproducts'
+					to='/dashboard/purchase/history'
 				>
 					<ListItemIcon className={classes.listItemIcon}>
 						<PeopleIcon />
 					</ListItemIcon>
 					<ListItemText
 						classes={{primary: classes.listItemText}}
-						primary='sold products'
+						primary='Purchase History'
 					/>
 				</ListItem>
 				<ListItem
-					activeClassName={classes.activeListItem}
-					className={classes.listItem}
-					component={NavLink}
-					to='/dashboard/products'
-				>
-					<ListItemIcon className={classes.listItemIcon}>
-						<ShoppingBasketIcon />
-					</ListItemIcon>
-					<ListItemText
-						classes={{primary: classes.listItemText}}
-						primary='Products'
-					/>
-				</ListItem>
-				<ListItem
-					activeClassName={classes.activeListItem}
-					className={classes.listItem}
-					component={NavLink}
-					to='/sign-in'
-				>
-					<ListItemIcon className={classes.listItemIcon}>
-						<LockOpenIcon />
-					</ListItemIcon>
-					<ListItemText
-						classes={{primary: classes.listItemText}}
-						primary='Authentication'
-					/>
-				</ListItem>
-				<ListItem
-					activeClassName={classes.activeListItem}
-					className={classes.listItem}
-					component={NavLink}
-					to='/dashboard/SaleProducts'
-				>
-					<ListItemIcon className={classes.listItemIcon}>
-						<TextFieldsIcon />
-					</ListItemIcon>
-					<ListItemText
-						classes={{primary: classes.listItemText}}
-						primary='Sales Products'
-					/>
-				</ListItem>
-				<ListItem
-					activeClassName={classes.activeListItem}
-					className={classes.listItem}
-					component={NavLink}
-					to='/dashboard/icons'
-				>
-					<ListItemIcon className={classes.listItemIcon}>
-						<ImageIcon />
-					</ListItemIcon>
-					<ListItemText
-						classes={{primary: classes.listItemText}}
-						primary='Icons and Images'
-					/>
-				</ListItem>
-				<ListItem
-					activeClassName={classes.activeListItem}
+					activeclassname={classes.activeListItem}
 					className={classes.listItem}
 					component={NavLink}
 					to='/dashboard/account'
@@ -174,7 +114,7 @@ const Sidebar = (props) => {
 					/>
 				</ListItem>
 				<ListItem
-					activeClassName={classes.activeListItem}
+					activeclassname={classes.activeListItem}
 					className={classes.listItem}
 					component={NavLink}
 					to='/dashboard/settings'

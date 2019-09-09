@@ -21,9 +21,6 @@ import {
 // Material icons
 import {ArrowBack as ArrowBackIcon} from '@material-ui/icons';
 
-// Shared components
-import {Facebook as FacebookIcon} from '../../icons';
-
 // Component styles
 import styles from './styles';
 
@@ -154,15 +151,6 @@ const SignIn = (props) => {
 											<Typography className={classes.subtitle} variant='body1'>
 												Sign in with social media
 											</Typography>
-											<Button
-												className={classes.facebookButton}
-												color='primary'
-												size='large'
-												variant='contained'
-											>
-												<FacebookIcon className={classes.facebookIcon} />
-												Login with Facebook
-											</Button>
 											<Google onLoginSuccess={handleGoogleSignIn} />
 											<Typography className={classes.sugestion} variant='body1'>
 												or login with email address
