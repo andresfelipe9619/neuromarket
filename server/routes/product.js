@@ -72,13 +72,13 @@ app.get("/products/:id", (req, res) => {
 // ===========================
 //  Search products
 // ===========================
-app.get("/products/search/:termino", verificaToken, (req, res) => {
+app.get("/products/search/:termino", (req, res) => {
   let termino = req.params.termino;
 
   let regex = new RegExp(termino, "i");
 
   Producto.find({ name: regex })
-    .populate("category", "name")
+  
     .exec((err, products) => {
       if (err) {
         return res.status(500).json({

@@ -90,16 +90,9 @@ const removeProductFromFavorites = (productId, state) => {
 };
 
 const lookForProduct = (prodocutobusqueda, state) => {
-  const busquedanormalizada = prodocutobusqueda.toLowerCase();
-  const arreglo = [];
-  state.products.forEach(product => {
-    const productonormalizado = product.name.toLowerCase();
-    if (productonormalizado.includes(busquedanormalizada)) {
-      console.log("entontrado");
-      arreglo.push(product);
-    }
-  });
-  return { ...state, productsFound: arreglo };
+  const prodocutobusquedareducer = prodocutobusqueda;
+  console.log("productosencotrados", { prodocutobusquedareducer, state });
+  return { ...state, productsFound: prodocutobusquedareducer };
 };
 
 export const shopReducer = (state, action) => {

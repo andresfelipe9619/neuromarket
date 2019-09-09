@@ -1,3 +1,4 @@
+import { Product } from "@neuromarket/services";
 import React, { memo, useState, useContext, useCallback } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -35,11 +36,18 @@ function Navbar(props) {
   const goTo = useCallback(route => event => props.history.push(route), [
     props.history
   ]);
+  
+  
+	const busquedacomparar = product => async e => {
+		console.log("tu producto:" + product);
+		function getSearchProducts(product) {
+			return Product.search(product);
+		}
+		const { products } = await getSearchProducts(product);
+		shopContext.lookForProduct(products);
+		goTo('/busqueda')(e);
+	};
 
-  const busquedacomparar = product => e => {
-    shopContext.lookForProduct(product);
-    goTo("/busqueda")(e);
-  };
 
   const favoriteItemsCount = shopContext.favorites.reduce(
     (count, curItem) => count + curItem.quantity,
