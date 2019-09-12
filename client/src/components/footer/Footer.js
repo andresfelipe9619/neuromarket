@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, fade } from '@material-ui/core/styles';
@@ -24,105 +24,89 @@ const useStyles = makeStyles(theme => ({
 	root: {
 		display: 'flex',
 		flexDirection: 'column',
-		minHeight: '100vh',
-	},
-	main: {
-		marginTop: theme.spacing(8),
-		marginBottom: theme.spacing(2),
+		marginTop: '20px',
 	},
 	footer: {
+		borderTopColor: 'black',
+		borderTopWidth: '4px',
+		borderTopStyle: 'solid',
 		padding: theme.spacing(2),
 		marginTop: 'auto',
-		backgroundColor: 'Gray',
+		backgroundColor: 'secondary',
 	},
 	paper: {
-		padding: theme.spacing(3, 2),
+		padding: theme.spacing(1),
 		color: theme.palette.text.secondary,
 		justifyContent: 'flex-start',
 	},
-	search: {
-		position: 'relative',
-		borderRadius: theme.shape.borderRadius,
-		backgroundColor: fade(theme.palette.common.white, 0.15),
-		'&:hover': {
-			backgroundColor: fade(theme.palette.common.white, 0.25),
-		},
-		flexGrow: 1,
-		marginRight: theme.spacing(2),
-		marginLeft: 0,
-		width: '100%',
-		[theme.breakpoints.up('sm')]: {
-			marginLeft: theme.spacing(3),
-			width: 'auto',
-		},
+	textField: {
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
+		width: 200,
 	},
-	searchIcon: {
-		width: theme.spacing(7),
-		height: '100%',
-		position: 'relative',
-		pointerEvents: 'none',
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-	inputRoot: {
-		color: 'inherit',
-		width: '85%',
-	},
-	inputInput: {
-		padding: theme.spacing(1, 1, 1, 4),
-		transition: theme.transitions.create('width'),
-		width: '100%',
-		[theme.breakpoints.up('md')]: {
-			width: 200,
-		},
-	},
-	centercontent:{
-		justifyContent: 'center',
-	}
 }));
 
 
 export default function StickyFooter() {
 	const classes = useStyles();
-
-
 	return (
 		<div className={classes.root}>
-			<CssBaseline />
-			<Container component="main" className={classes.main} maxWidth="sm">
-				<Typography variant="h2" component="h1" gutterBottom>
-					Sticky footer
-				</Typography>
-				<Typography variant="h5" component="h2" gutterBottom>
-					{'Pin a footer to the bottom of the viewport.'}
-					{'The footer will move as the main element of the page grows.'}
-				</Typography>
-				<Typography variant="body1">Sticky footer placeholder.</Typography>
-			</Container>
 			<footer className={classes.footer}>
 				<Container spacing={3} maxWidth="lg">
 					<Typography variant="body1">My sticky footer can be found here.</Typography>
 					<Grid container spacing={2}>
 						<Grid item xs={3}>
 							<Paper className={classes.paper}>
-								<Typography variant="h6" component="h3">
+								<Typography gutterBottom variant="h3" component="h3">
 									Nuestra compañia
 								</Typography>
-								<Typography component="p">* Quienes somos</Typography>
-								<Typography component="p">* Trabaja con Nostros</Typography>
-								<Typography component="p">* Garantia Extenduda</Typography>
-								<Typography component="p">* Marco Legal</Typography>
+								<Typography align={'justify'} component="p">
+									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+									Ipsum has been the industry's standard dummy text ever since the 1500s, when an
+									unknown printer took a galley of type and scrambled it to make a type specimen book.
+									It has survived not only five centuries.
+								</Typography>
+								<Typography gutterBottom component="p">
+									* Trabaja con Nostros
+								</Typography>
+								<Typography gutterBottom component="p">
+									* Garantia Extenduda
+								</Typography>
+								<Typography  component="p">
+									* Marco Legal
+								</Typography>
 							</Paper>
 						</Grid>
 						<Grid item xs={6}>
-							<Typography align={"center"} variant="h6" component="h3">
-								Be the first to find out about our news!
-							</Typography>
-							<centercontent />
+							<Paper className={classes.paper}>
+								<Typography align={'center'} variant="h3" component="h3">
+									Be the first to find out about our news!
+								</Typography>
+								<FormContact />
+							</Paper>
 						</Grid>
 						<Grid item xs={3}>
-							<Paper className={classes.paper}>xs=3</Paper>
+							<Paper className={classes.paper}>
+								<Typography gutterBottom variant="h3" component="h3">
+									CONTACTO
+								</Typography>
+								<Typography gutterBottom variant="h4" component="h3">
+									Línea de servicio al cliente
+									<br></br>
+									Teléfono de contacto:
+									<br></br>
+									(1) 307 70 53 (Bogotá)
+									<br></br>
+									Escríbenos a: scliente@Neuromarket.com.co
+									<br></br>
+								</Typography>
+
+								<Typography align={'justify'} component="p">
+									-Esta página es propiedad de Industrias Neuromarket S.A.S, con NIT. 1532083-271, las
+									ventas de los productos es responsabilidad de Industrias Neuromarket S.A.S, con NIT.
+									1532083-271.
+								</Typography>
+							</Paper>
 						</Grid>
 					</Grid>
 					<Copyright />
