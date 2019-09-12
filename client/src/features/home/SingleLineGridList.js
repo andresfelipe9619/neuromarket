@@ -5,7 +5,7 @@ import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import IconButton from '@material-ui/core/IconButton';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-import { Product } from "@neuromarket/services";
+import { Link, withRouter } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -31,22 +31,20 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export default function SingleLineGridList({products}) {
-  const classes = useStyles();
-  
-  console.log(products.length);
-  const tileData =[];
-    products.map(product=>{
-      if(product.offer === true){
-        console.log(product.offer);
-        
-        tileData.push(product)
-        return tileData  
-      }    
-    })
- 
-  console.log(tileData);
-    
+function SingleLineGridList({ products }) {
+	const classes = useStyles();
+
+	console.log(products.length);
+	const tileData = [];
+	products.map(product => {
+		if (product.offer === true) {
+			console.log(product);
+			tileData.push(product);
+			return tileData;
+		}
+	});
+
+	console.log(tileData);
 
 	return (
 		<div className={classes.root}>
@@ -54,21 +52,24 @@ export default function SingleLineGridList({products}) {
 				{tileData.map(tile => (
 					<GridListTile key={tile._id}>
 						<img src={tile.imageurls} alt={tile.price} />
-						<GridListTileBar
-							title={tile.name}
-							classes={{
-								root: classes.titleBar,
-								title: classes.title,
-							}}
-							actionIcon={
-								<IconButton aria-label={`star ${tile.name}`}>
-									<StarBorderIcon className={classes.title} />
-								</IconButton>
-							}
-						/>
+						<Link to={`/products/${tile._id}`}>
+							<GridListTileBar
+								title={tile.name}
+								classes={{
+									root: classes.titleBar,
+									title: classes.title,
+								}}
+								actionIcon={
+									<IconButton aria-label={`star ${tile.name}`}>
+										<StarBorderIcon className={classes.title} />
+									</IconButton>
+								}
+							/>
+						</Link>
 					</GridListTile>
 				))}
 			</GridList>
 		</div>
 	);
 }
+export default withRouter(SingleLineGridList);
