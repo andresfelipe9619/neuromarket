@@ -57,7 +57,6 @@ function Navbar(props) {
   const handleProfileMenuOpen = event => {
     setProfileAnchorEl(event.currentTarget);
   };
->>>>>>> 0489c2277cf74d2ee2d026c1d02a8f050aedd89f
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);

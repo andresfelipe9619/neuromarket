@@ -90,14 +90,15 @@ export default function StickyFooter() {
 								<Typography gutterBottom variant="h3" component="h3">
 									CONTACTO
 								</Typography>
-								<Typography gutterBottom variant="h4" component="h3">
+								<Typography  align={'justify'} gutterBottom variant="h4" component="h3">
 									Línea de servicio al cliente
 									<br></br>
 									Teléfono de contacto:
 									<br></br>
 									(1) 307 70 53 (Bogotá)
 									<br></br>
-									Escríbenos a: scliente@Neuromarket.com.co
+									Escríbenos 
+									scliente@Neuromarket.com
 									<br></br>
 								</Typography>
 
