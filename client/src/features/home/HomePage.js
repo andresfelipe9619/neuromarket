@@ -21,12 +21,12 @@ export default function HomePage() {
 		<React.Fragment>
 			<main>
 				<div className={classes.title}>
-					<Typography variant="h2"> DISCOUNTED PRODUCTS</Typography>
+					<Typography variant="h2"> DISCOUNTED PRODUCTS 20 % </Typography>
 				</div>
 				<Paper className={classes.mainFeaturedPost}>
 					<Grid container>
 						<Grid item md={12}>
-							<SingleLineGridList />
+							<SingleLineGridList products={products} />
 						</Grid>
 					</Grid>
 				</Paper>

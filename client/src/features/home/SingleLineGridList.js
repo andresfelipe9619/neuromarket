@@ -31,18 +31,9 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export default function SingleLineGridList() {
+export default function SingleLineGridList({products}) {
   const classes = useStyles();
   
-	const [products, setProducts] = useState([]);
-	useEffect(() => {
-		async function getProducts() {
-			const { products } = await Product.getAll();
-			setProducts(products);
-		}
-		getProducts();
-  }, []);
-
   console.log(products.length);
   const tileData =[];
     products.map(product=>{
