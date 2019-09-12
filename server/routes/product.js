@@ -9,14 +9,12 @@ let Producto = require("../models/product");
 //  Obtener products
 // ===========================
 app.get("/products", (req, res) => {
-  // trae todos los products
-  // populate: user category
-  // paginado
+  const { query } = req;
 
-  let desde = req.query.desde || 0;
+  let desde = query.desde || 0;
   desde = Number(desde);
 
-  Producto.find()
+  Producto.find(query.category && { category: query.category })
     .skip(desde)
     .limit(40)
     // .populate('user', 'name email')
@@ -74,39 +72,33 @@ app.get("/products/:id", (req, res) => {
 // ===========================
 //  Search products
 // ===========================
-app.get("/products/search/:termino", verificaToken, (req, res) => {
+app.get("/products/search/:termino", (req, res) => {
   let termino = req.params.termino;
 
   let regex = new RegExp(termino, "i");
 
-  Producto.find({ name: regex })
-    .populate("category", "name")
-    .exec((err, products) => {
-      if (err) {
-        return res.status(500).json({
-          ok: false,
-          err
-        });
-      }
-
-      res.json({
-        ok: true,
-        products
+  Producto.find({ name: regex }).exec((err, products) => {
+    if (err) {
+      return res.status(500).json({
+        ok: false,
+        err
       });
+    }
+
+    res.json({
+      ok: true,
+      products
     });
+  });
 });
 
 // ===========================
 //  Crear un nuevo product
 // ===========================
-app.post("/products", verificaToken, (req, res) => {
-  // grabar el user
-  // grabar una category del listado
-
+app.post("/products", (req, res) => {
   let body = req.body;
 
   let product = new Producto({
-    user: req.user._id,
     name: body.name,
     price: body.price,
     description: body.description,

@@ -9,10 +9,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import AlertContext from "./context/alert-context";
 import Dashboard from "./features/Dashboard";
-import ProductList from "./features/AdminProductList";
-import Soldproducts from "./features/Soldproducts";
-import SaleProducts from "./features/SaleProducts";
-import Icons from "./features/Icons";
+import PurchasedProducts from "./features/PurchasedProducts";
 import Account from "./features/Account";
 import Settings from "./features/Settings";
 import SignUp from "./features/SignUp";
@@ -26,6 +23,7 @@ import {
   ProductsDetailsPage,
   ProductsFound
 } from "./features/products";
+import Footer from "../src/components/footer/Footer";
 
 export default function AppRouter() {
   const { open, message, variant, closeAlert } = useContext(AlertContext);
@@ -62,18 +60,6 @@ export default function AppRouter() {
           />
           <PrivateRoute
             restricted={true}
-            component={ProductList}
-            exact
-            path="/dashboard/products"
-          />
-          <PrivateRoute
-            restricted={true}
-            component={Icons}
-            exact
-            path="/dashboard/icons"
-          />
-          <PrivateRoute
-            restricted={true}
             component={Account}
             exact
             path="/dashboard/account"
@@ -85,19 +71,16 @@ export default function AppRouter() {
             path="/dashboard/settings"
           />
           <PrivateRoute
-            component={Soldproducts}
+            restricted={true}
+            component={PurchasedProducts}
             exact
-            path="/dashboard/soldproducts"
-          />
-          <PrivateRoute
-            component={SaleProducts}
-            exact
-            path="/dashboard/SaleProducts"
+            path="/dashboard/purchase/history"
           />
           <Route component={UnderDevelopment} exact path="/under-development" />
           <Route component={NotFound} exact path="/not-found" />
           <Redirect to="/not-found" />
         </Switch>
+        <Footer />
       </Container>
     </BrowserRouter>
   );

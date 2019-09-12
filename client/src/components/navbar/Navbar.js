@@ -1,8 +1,10 @@
+import { Product } from "@neuromarket/services";
 import React, { memo, useState, useContext, useCallback } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
+import Button from "@material-ui/core/Button";
 import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import SearchIcon from "@material-ui/icons/Search";
@@ -12,6 +14,7 @@ import { ShoppingCart, Favorite } from "@material-ui/icons";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
 import ShopContext from "../../context/shop-context";
+import UserContext from "../../context/user-context";
 import { withRouter } from "react-router-dom";
 import ProfileMenu from "./ProfileMenu";
 import MobileMenu from "./MobileMenu";
@@ -19,6 +22,7 @@ import CategoriesMenu from "./CategoriesMenu";
 function Navbar(props) {
   const classes = useStyles();
   const shopContext = useContext(ShopContext);
+  const user = useContext(UserContext);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
   const [categoriesAnchorEl, setCategoriesAnchorEl] = useState(null);
@@ -36,8 +40,13 @@ function Navbar(props) {
     props.history
   ]);
 
-  const busquedacomparar = product => e => {
-    shopContext.lookForProduct(product);
+  const busquedacomparar = product => async e => {
+    console.log("tu producto:" + product);
+    function getSearchProducts(product) {
+      return Product.search(product);
+    }
+    const { products } = await getSearchProducts(product);
+    shopContext.lookForProduct(products);
     goTo("/busqueda")(e);
   };
 
@@ -124,16 +133,38 @@ function Navbar(props) {
                 <Favorite />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="Account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+
+            {user.loggedIn ? (
+              <IconButton
+                edge="end"
+                aria-label="Account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            ) : (
+              <div>
+                <Button
+                  onClick={goTo("/sign-in")}
+                  variant="contained"
+                  color="default"
+                  className={classes.signinButton}
+                >
+                  Sign in
+                </Button>
+                <Button
+                  onClick={goTo("/sign-up")}
+                  variant="contained"
+                  color="secondary"
+                  className={classes.signupButton}
+                >
+                  Sign up
+                </Button>
+              </div>
+            )}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

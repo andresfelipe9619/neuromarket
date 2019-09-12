@@ -1,31 +1,26 @@
 module.exports = [
-    {
-        name:"Sports",
-        description: ""
-    },
-    {
-        name:"Technology",
-        description: ""
-    },
-    {
-        name:"Toys & Babies",
-        description: ""
-    },
-    {
-        name:"Beauty and Personal Care",
-        description: ""
-    },
-    {
-        name:"Books",
-        description: ""
-    },
-    {
-        name:"Home appliances",
-        description: ""
-    },
-    {
-        name:"Vehicles",
-        description: ""
-    },
-
-]
+  {
+    name: "Smartphones",
+    description: ""
+  },
+  {
+    name: "Pc & Laptops",
+    description: ""
+  },
+  {
+    name: "TVs",
+    description: ""
+  },
+  {
+    name: "Audio",
+    description: ""
+  },
+  {
+    name: "Video Games",
+    description: ""
+  },
+  {
+    name: "Cameras",
+    description: ""
+  }
+];

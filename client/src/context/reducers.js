@@ -5,13 +5,12 @@ export const REMOVE_FAVORITE = "REMOVE_FAVORITE";
 export const LOOKING_FOR = "LOOKING_FOR";
 
 const getSubtotal = cart =>
-  +parseFloat(
-    cart.reduce((subtotal, { price, quantity }) => {
+  cart
+    .reduce((subtotal, { price, quantity }) => {
       let ammount = price * quantity;
       return ammount + subtotal;
-    }, 0),
-    2
-  );
+    }, 0)
+    .toFixed(2);
 
 const addProductToCart = (product, state) => {
   const updatedCart = [...state.cart];
@@ -26,7 +25,7 @@ const addProductToCart = (product, state) => {
       ...updatedCart[updatedItemIndex]
     };
     updatedItem.quantity++;
-    updatedItem.ammount = updatedItem.quantity * updatedItem.price;
+    updatedItem.ammount = (updatedItem.quantity * updatedItem.price).toFixed(2);
     updatedCart[updatedItemIndex] = updatedItem;
   }
   return { ...state, cart: updatedCart, subtotal: getSubtotal(updatedCart) };
@@ -43,7 +42,7 @@ const removeProductFromCart = (productId, state) => {
     ...updatedCart[updatedItemIndex]
   };
   updatedItem.quantity--;
-  updatedItem.ammount = updatedItem.quantity * updatedItem.price;
+  updatedItem.ammount = (updatedItem.quantity * updatedItem.price).toFixed(2);
   if (updatedItem.quantity <= 0) {
     updatedCart.splice(updatedItemIndex, 1);
   } else {
@@ -91,16 +90,9 @@ const removeProductFromFavorites = (productId, state) => {
 };
 
 const lookForProduct = (prodocutobusqueda, state) => {
-  const busquedanormalizada = prodocutobusqueda.toLowerCase();
-  const arreglo = [];
-  state.products.forEach(product => {
-    const productonormalizado = product.name.toLowerCase();
-    if (productonormalizado.includes(busquedanormalizada)) {
-      console.log("entontrado");
-      arreglo.push(product);
-    }
-  });
-  return { ...state, productsFound: arreglo };
+  const prodocutobusquedareducer = prodocutobusqueda;
+  console.log("productosencotrados", { prodocutobusquedareducer, state });
+  return { ...state, productsFound: prodocutobusquedareducer };
 };
 
 export const shopReducer = (state, action) => {

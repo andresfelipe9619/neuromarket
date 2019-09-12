@@ -1,42 +1,26 @@
-import React, { useState } from "react";
-import { Grid, Button, Typography } from "@material-ui/core";
+import React from "react";
+import { Grid, Typography } from "@material-ui/core";
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+import IconButton from "@material-ui/core/IconButton";
 
-export default function QuantitySelect() {
-  const [quantity, setQuantity] = useState(1);
-  const handlePlus = () => {
-    const value = quantity + 1;
-    setQuantity(value);
-  };
-  const handleMinus = () => {
-    const value = quantity > 1 ? quantity - 1 : quantity;
-    setQuantity(value);
-  };
+export default function QuantitySelect({ quantity, add, remove }) {
   return (
-    <Grid container>
-      {/* <Grid item md={2}>
-        <Button
-          size="small"
-          color="secondary"
-          variant="contained"
-          onClick={handleMinus}
-        >
-          -
-        </Button>
-      </Grid> */}
-      <Grid item md={3}>
+    <Grid container spacing={4} justify="center" alignItems="center">
+      <Grid item sm={4}>
+        <IconButton aria-label="remove">
+          <RemoveIcon size="small" color="secondary" onClick={remove} />
+        </IconButton>
+      </Grid>
+      <Grid item sm={4}>
         <Typography color="primary" variant="h2">
           {quantity}
         </Typography>
       </Grid>
-      <Grid item md={2}>
-        <Button
-          color="secondary"
-          size="small"
-          variant="contained"
-          onClick={handlePlus}
-        >
-          +
-        </Button>
+      <Grid item sm={4}>
+        <IconButton aria-label="remove">
+          <AddIcon color="secondary" size="small" onClick={add} />
+        </IconButton>
       </Grid>
     </Grid>
   );

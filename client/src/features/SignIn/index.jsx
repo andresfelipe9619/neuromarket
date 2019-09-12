@@ -21,14 +21,11 @@ import {
 // Material icons
 import {ArrowBack as ArrowBackIcon} from '@material-ui/icons';
 
-// Shared components
-import {Facebook as FacebookIcon} from '../../icons';
-
 // Component styles
 import styles from './styles';
 
 // Form validation schema
-import {userValidationSchema} from './schema';
+import userValidationSchema from './schema';
 import {Formik} from 'formik';
 
 // server services
@@ -55,21 +52,20 @@ const SignIn = (props) => {
 
 	const handleGoogleSignIn = async (user) => {
 		const {history} = props;
-		console.log('googleUser :', user);
+		setIsLoading(true);
 		Auth.loginGoogle(user)
 			.then(() => {
+				console.log('user :', user);
 				userLoggedIn({
 					name: user.name,
 					email: user.email,
 					img: user.img,
-          phone: '',
-          
+					phone: '',
 				});
-				setIsLoading(false);
 				history.push('/dashboard');
 			})
 			.catch((err) => {
-        console.log('err :', err);
+				console.log('err :', err);
 				setIsLoading(false);
 				openAlert({
 					message: 'Failed google login',
@@ -90,6 +86,7 @@ const SignIn = (props) => {
 					email: user.user.email,
 					img: user.user.img,
 					phone: user.user.phone,
+					_id: user.user._id,
 				});
 				setIsLoading(false);
 				history.push('/dashboard');
@@ -156,16 +153,6 @@ const SignIn = (props) => {
 											<Typography className={classes.subtitle} variant='body1'>
 												Sign in with social media
 											</Typography>
-											<Button
-												className={classes.facebookButton}
-												color='primary'
-												onClick={handleSignIn}
-												size='large'
-												variant='contained'
-											>
-												<FacebookIcon className={classes.facebookIcon} />
-												Login with Facebook
-											</Button>
 											<Google onLoginSuccess={handleGoogleSignIn} />
 											<Typography className={classes.sugestion} variant='body1'>
 												or login with email address
