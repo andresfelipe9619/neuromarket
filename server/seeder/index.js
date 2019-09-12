@@ -1,15 +1,15 @@
 const { Seeder } = require("mongo-seeding");
 const path = require("path");
 const config = {
-  database: {
-    protocol: "mongodb",
-    host: "localhost",
-    port: 27017,
-    name: "neuromarket",
-    username: undefined,
-    password: undefined
-  },
-  dropDatabase: true
+	database: {
+		protocol: 'mongodb',
+		host: 'ds347665.mlab.com',
+		port: 47665,
+		name: 'neuromarket',
+		username: 'superAdmin',
+		password: 'superadmin123',
+	},
+	dropDatabase: true,
 };
 const seeder = new Seeder(config);
 const collections = seeder.readCollectionsFromPath(path.resolve("./data"));

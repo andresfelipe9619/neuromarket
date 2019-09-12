@@ -16,7 +16,7 @@ const styles = (theme) => ({
 		},
 	},
 	descriptionContainer: {
-		[theme.breakpoints.up('sm')]: {
+		[theme.breakpoints.down('md')]: {
 			marginTop: theme.spacing(3),
 			marginBottom: theme.spacing(3),
 			padding: theme.spacing(5),

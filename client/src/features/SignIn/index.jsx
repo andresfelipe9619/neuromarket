@@ -55,6 +55,7 @@ const SignIn = (props) => {
 		setIsLoading(true);
 		Auth.loginGoogle(user)
 			.then(() => {
+				console.log('user :', user);
 				userLoggedIn({
 					name: user.name,
 					email: user.email,
@@ -85,6 +86,7 @@ const SignIn = (props) => {
 					email: user.user.email,
 					img: user.user.img,
 					phone: user.user.phone,
+					_id: user.user._id,
 				});
 				setIsLoading(false);
 				history.push('/dashboard');

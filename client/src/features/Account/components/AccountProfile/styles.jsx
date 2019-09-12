@@ -12,12 +12,14 @@ export default theme => ({
     color: theme.palette.text.secondary
   },
   avatar: {
-    display: 'flex',
-    marginLeft: "auto",
-    height: "110px",
-    width: "110px",
-    flexShrink: 0,
-    flexGrow: 0
+    [theme.breakpoints.down('md')]: {
+      display: 'flex',
+      height: "110px",
+      width: "110px",
+      flexShrink: 0,
+      flexGrow: 0,
+      margin: theme.spacing(2),
+    }
   },
   progressWrapper: {
     marginTop: theme.spacing.unit * 2
