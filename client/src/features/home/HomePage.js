@@ -5,6 +5,7 @@ import useStyles from "./styles";
 import { Product } from "@neuromarket/services";
 import ProductsList from "../products/ProductsList";
 import { Typography } from "@material-ui/core";
+import SingleLineGridList from './SingleLineGridList'
 
 export default function HomePage() {
 
@@ -21,17 +22,9 @@ export default function HomePage() {
     <React.Fragment>
       <main>
         <Paper className={classes.mainFeaturedPost}>
-          {
-            <img
-              style={{ display: "none" }}
-              src="https://source.unsplash.com/user/erondu"
-              alt="background"
-            />
-          }
-          <div className={classes.overlay} />
           <Grid container>
-            <Grid item md={6}>
-              <div className={classes.mainFeaturedPostContent}></div>
+            <Grid item md={12}>
+              <SingleLineGridList/>
             </Grid>
           </Grid>
         </Paper>
