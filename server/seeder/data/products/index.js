@@ -5,7 +5,7 @@ module.exports = [
     name: "SpeakerCraft - 6-1/2 In-Ceiling Speakers (5-Pack) - White",
     price: 449.99,
     brand: "SpeakerCraft",
-    category: ObjectId("5d771c9fdeb0c406525dd732"),
+    category: "TVS",
     imageurls:
       "https://pisces.bbystatic.com/image2/BestBuy_US/images/products/2888/2888377_sa.jpg,http://pisces.bbystatic.com/image2/BestBuy_US/images/products/2888/2888377_sa.jpg",
     manufacturer: "",
