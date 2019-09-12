@@ -7,6 +7,7 @@ import ProductsList from "../products/ProductsList";
 import { Typography } from "@material-ui/core";
 
 export default function HomePage() {
+
   const classes = useStyles();
   const [products, setProducts] = useState([]);
   useEffect(() => {

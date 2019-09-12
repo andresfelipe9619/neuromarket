@@ -26,6 +26,7 @@ import {
   ProductsDetailsPage,
   ProductsFound
 } from "./features/products";
+import Footer from "../src/components/footer/Footer";
 
 export default function AppRouter() {
   const { open, message, variant, closeAlert } = useContext(AlertContext);
@@ -35,6 +36,7 @@ export default function AppRouter() {
       <Switch>
         <Route path="/dashboard" component={null} />
         <Route path="/" component={Navbar} />
+        <Route path="/" component={Footer}/>
       </Switch>
 
       <Container maxWidth="lg">
@@ -46,6 +48,7 @@ export default function AppRouter() {
         />
         <Switch>
           <Route path="/" component={HomePage} exact />
+          <Route path="/" component={Footer} exact />
           <Route path="/cart" component={CartPage} exact />
           <Route path="/sign-up" component={SignUp} exact />
           <Route path="/sign-in" component={SignIn} exact />
@@ -109,6 +112,7 @@ export default function AppRouter() {
           <Redirect to="/not-found" />
         </Switch>
       </Container>
+      <Footer/>
     </BrowserRouter>
   );
 }
