@@ -19,6 +19,7 @@
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.1",
     "react": "^16.8.6",
+    "react-animated-slider": "^1.1.4",
     "react-chartjs-2": "^2.7.4",
     "react-dom": "^16.8.6",
     "react-dropzone": "^10.1.7",
@@ -58,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-react": "^7.12.4",
     "prettier-eslint": "^8.8.2",

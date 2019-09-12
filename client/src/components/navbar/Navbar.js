@@ -20,6 +20,7 @@ import CategoriesMenu from "./CategoriesMenu";
 function Navbar(props) {
   const classes = useStyles();
   const shopContext = useContext(ShopContext);
+  const user = useContext(UserContext);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
   const [categoriesAnchorEl, setCategoriesAnchorEl] = useState(null);
@@ -36,18 +37,16 @@ function Navbar(props) {
   const goTo = useCallback(route => event => props.history.push(route), [
     props.history
   ]);
-  
-  
-	const busquedacomparar = product => async e => {
-		console.log("tu producto:" + product);
-		function getSearchProducts(product) {
-			return Product.search(product);
-		}
-		const { products } = await getSearchProducts(product);
-		shopContext.lookForProduct(products);
-		goTo('/busqueda')(e);
-	};
 
+  const busquedacomparar = product => async e => {
+    console.log("tu producto:" + product);
+    function getSearchProducts(product) {
+      return Product.search(product);
+    }
+    const { products } = await getSearchProducts(product);
+    shopContext.lookForProduct(products);
+    goTo("/busqueda")(e);
+  };
 
   const favoriteItemsCount = shopContext.favorites.reduce(
     (count, curItem) => count + curItem.quantity,
@@ -132,16 +131,38 @@ function Navbar(props) {
                 <Favorite />
               </Badge>
             </IconButton>
-            <IconButton
-              edge="end"
-              aria-label="Account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
+
+            {user.loggedIn ? (
+              <IconButton
+                edge="end"
+                aria-label="Account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+            ) : (
+              <div>
+                <Button
+                  onClick={goTo("/sign-in")}
+                  variant="contained"
+                  color="default"
+                  className={classes.signinButton}
+                >
+                  Sign in
+                </Button>
+                <Button
+                  onClick={goTo("/sign-up")}
+                  variant="contained"
+                  color="secondary"
+                  className={classes.signupButton}
+                >
+                  Sign up
+                </Button>
+              </div>
+            )}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

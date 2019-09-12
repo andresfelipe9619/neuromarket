@@ -26,19 +26,38 @@ import styles from "./styles";
 //Form control
 import { Formik } from "formik";
 import { detailsValidationSchema } from "../schema";
+import UserContext from "../../../../context/user-context";
+import AlertContext from '../../../../context/alert-context';
+import { User } from "@neuromarket/services";
 
 const Account = props => {
   const [isLoading, setIsLoading] = useState(false);
   const { classes, className, ...rest } = props;
   const rootClassName = classNames(classes.root, className);
+  const user = useContext(UserContext);
+  const {openAlert} = useContext(AlertContext);
+  
 
-  const handleSave = async () => {
-    // setIsLoading(true)
-    // try{
+  const handleSave = async (values) => {
+    setIsLoading(true);
+    try{
+      await User.update({_id: user._id, name:values.name, phone: values.phone});
+      let modifiedUser = await User.get(user._id);
+      user.userLoggedIn({
+				_id: modifiedUser._id,
+				name: modifiedUser.name,
+				email: modifiedUser.email,
+				img: modifiedUser.img,
+				phone: modifiedUser.phone,
+			});
+    }catch (error){
+      setIsLoading(false);
+      openAlert({
+				message: 'Error while saving new details',
+				variant: 'error',
+			});
 
-    // }catch (error){
-    //   setIsLoading(false);
-    // }
+    }
   };
 
   return (
@@ -84,7 +103,7 @@ const Account = props => {
                     label="Email Address"
                     name="email"
                     margin="dense"
-                    value={values.email}
+                    value={user.email}
                     variant="outlined"
                     disabled
                   />

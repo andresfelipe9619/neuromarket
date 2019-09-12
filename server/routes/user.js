@@ -80,9 +80,9 @@ app.post('/users', function(req, res) {
 
 });
 
-app.put('/user/:id', [verificaToken, verificaAdmin_Role], function(req, res) {
+app.put('/user/:id', function(req, res) {
 
-    let id = req.params.id;
+    let id = ObjectId(req.params.id);
     let body = _.pick(req.body, ['name', 'email', 'img', 'role', 'state']);
 
     user.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, usuarioDB) => {

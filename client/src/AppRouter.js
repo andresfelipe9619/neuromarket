@@ -9,10 +9,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import AlertContext from "./context/alert-context";
 import Dashboard from "./features/Dashboard";
-import ProductList from "./features/AdminProductList";
-import Soldproducts from "./features/Soldproducts";
-import SaleProducts from "./features/SaleProducts";
-import Icons from "./features/Icons";
+import PurchasedProducts from "./features/PurchasedProducts";
 import Account from "./features/Account";
 import Settings from "./features/Settings";
 import SignUp from "./features/SignUp";
@@ -36,7 +33,6 @@ export default function AppRouter() {
       <Switch>
         <Route path="/dashboard" component={null} />
         <Route path="/" component={Navbar} />
-        <Route path="/" component={Footer}/>
       </Switch>
 
       <Container maxWidth="lg">
@@ -48,42 +44,19 @@ export default function AppRouter() {
         />
         <Switch>
           <Route path="/" component={HomePage} exact />
-          <Route path="/" component={Footer} exact />
           <Route path="/cart" component={CartPage} exact />
           <Route path="/sign-up" component={SignUp} exact />
           <Route path="/sign-in" component={SignIn} exact />
-          <Route path="/busqueda" component={ProductsFound} exact />
+          <Route path="/checkout" component={CheckoutPage} exact />
           <Route path="/category/:id" component={ProductsPage} exact />
+          <Route path="/favorites" component={FavoritesPage} exact />
           <Route path="/products/:id" component={ProductsDetailsPage} exact />
-          <PrivateRoute
-            restricted={true}
-            path="/checkout"
-            component={CheckoutPage}
-            exact
-          />
-          <PrivateRoute
-            restricted={true}
-            path="/favorites"
-            component={FavoritesPage}
-            exact
-          />
+          <Route path="/busqueda" component={ProductsFound} exact />
           <PrivateRoute
             restricted={true}
             component={Dashboard}
             exact
             path="/dashboard"
-          />
-          <PrivateRoute
-            restricted={true}
-            component={ProductList}
-            exact
-            path="/dashboard/products"
-          />
-          <PrivateRoute
-            restricted={true}
-            component={Icons}
-            exact
-            path="/dashboard/icons"
           />
           <PrivateRoute
             restricted={true}
@@ -98,21 +71,17 @@ export default function AppRouter() {
             path="/dashboard/settings"
           />
           <PrivateRoute
-            component={Soldproducts}
+            restricted={true}
+            component={PurchasedProducts}
             exact
-            path="/dashboard/soldproducts"
-          />
-          <PrivateRoute
-            component={SaleProducts}
-            exact
-            path="/dashboard/SaleProducts"
+            path="/dashboard/purchase/history"
           />
           <Route component={UnderDevelopment} exact path="/under-development" />
           <Route component={NotFound} exact path="/not-found" />
           <Redirect to="/not-found" />
         </Switch>
+        <Footer />
       </Container>
-      <Footer/>
     </BrowserRouter>
   );
 }

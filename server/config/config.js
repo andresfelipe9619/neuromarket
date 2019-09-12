@@ -31,7 +31,7 @@ if (process.env.NODE_ENV === "dev") {
   urlDB =
     "mongodb://superAdmin:superadmin123@ds347665.mlab.com:47665/neuromarket";
 } else {
-  urlDB = process.env.MONGO_URI;
+  urlDB = "mongodb://localhost:27017/neuromarket";
 }
 process.env.URLDB = urlDB;
 
