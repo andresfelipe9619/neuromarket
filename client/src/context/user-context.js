@@ -1,6 +1,7 @@
 import React from "react";
 
 const initialUserState = {
+  _id: "",
   name: "",
   email: "",
   img: "",

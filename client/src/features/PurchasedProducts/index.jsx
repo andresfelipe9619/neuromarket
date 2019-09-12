@@ -13,7 +13,7 @@ import { CircularProgress, Typography } from '@material-ui/core';
 import { Dashboard as DashboardLayout } from '../../layouts';
 
 // Shared services
-import { getUsers } from '../../services/user';
+import { getUsers } from '@neuromarket/services/user';
 
 // Custom components
 import { UsersToolbar } from './components';
@@ -21,8 +21,8 @@ import { UsersToolbar } from './components';
 // Component styles
 import styles from './style';
 // producto
-import ProductList from '../../features/Dashboard/components/ProductList';
-class soldproducts extends Component {
+import ProductList from '../Dashboard/components/ProductList';
+class PurchasedProducts extends Component {
   signal = true;
 
   state = {
@@ -112,9 +112,9 @@ class soldproducts extends Component {
   }
 }
 
-soldproducts.propTypes = {
-  className: PropTypes.string,
-  classes: PropTypes.object.isRequired
+PurchasedProducts.propTypes = {
+	className: PropTypes.string,
+	classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(soldproducts);
+export default withStyles(styles)(PurchasedProducts);

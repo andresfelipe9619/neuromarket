@@ -1,26 +1,23 @@
-import React, { useContext } from "react";
-import CartPage from "./features/cart";
-import HomePage from "./features/home";
-import CheckoutPage from "./features/checkout";
-import FavoritesPage from "./features/favorites";
-import Navbar from "./components/navbar/Navbar";
-import Alert from "./components/alert/Alert";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Container from "@material-ui/core/Container";
-import AlertContext from "./context/alert-context";
-import Dashboard from "./features/Dashboard";
-import ProductList from "./features/AdminProductList";
-import Soldproducts from "./features/Soldproducts";
-import SaleProducts from "./features/SaleProducts";
-import Icons from "./features/Icons";
-import Account from "./features/Account";
-import Settings from "./features/Settings";
-import SignUp from "./features/SignUp";
-import SignIn from "./features/SignIn";
-import UnderDevelopment from "./features/UnderDevelopment";
-import NotFound from "./features/NotFound";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-import PrivateRoute from "./components/privateRoute/PrivateRoute";
+import React, {useContext} from 'react';
+import CartPage from './features/cart';
+import HomePage from './features/home';
+import CheckoutPage from './features/checkout';
+import FavoritesPage from './features/favorites';
+import Navbar from './components/navbar/Navbar';
+import Alert from './components/alert/Alert';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Container from '@material-ui/core/Container';
+import AlertContext from './context/alert-context';
+import Dashboard from './features/Dashboard';
+import PurchasedProducts from './features/PurchasedProducts';
+import Account from './features/Account';
+import Settings from './features/Settings';
+import SignUp from './features/SignUp';
+import SignIn from './features/SignIn';
+import UnderDevelopment from './features/UnderDevelopment';
+import NotFound from './features/NotFound';
+import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import PrivateRoute from './components/privateRoute/PrivateRoute';
 import {
   ProductsPage,
   ProductsDetailsPage,

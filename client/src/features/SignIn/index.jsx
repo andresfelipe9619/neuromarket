@@ -21,9 +21,6 @@ import {
 // Material icons
 import {ArrowBack as ArrowBackIcon} from '@material-ui/icons';
 
-// Shared components
-import {Facebook as FacebookIcon} from '../../icons';
-
 // Component styles
 import styles from './styles';
 
@@ -58,6 +55,7 @@ const SignIn = (props) => {
 		setIsLoading(true);
 		Auth.loginGoogle(user)
 			.then(() => {
+				console.log('user :', user);
 				userLoggedIn({
 					name: user.name,
 					email: user.email,
@@ -88,6 +86,7 @@ const SignIn = (props) => {
 					email: user.user.email,
 					img: user.user.img,
 					phone: user.user.phone,
+					_id: user.user._id,
 				});
 				setIsLoading(false);
 				history.push('/dashboard');
@@ -154,15 +153,6 @@ const SignIn = (props) => {
 											<Typography className={classes.subtitle} variant='body1'>
 												Sign in with social media
 											</Typography>
-											<Button
-												className={classes.facebookButton}
-												color='primary'
-												size='large'
-												variant='contained'
-											>
-												<FacebookIcon className={classes.facebookIcon} />
-												Login with Facebook
-											</Button>
 											<Google onLoginSuccess={handleGoogleSignIn} />
 											<Typography className={classes.sugestion} variant='body1'>
 												or login with email address

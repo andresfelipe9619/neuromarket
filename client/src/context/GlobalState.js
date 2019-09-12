@@ -21,6 +21,7 @@ export default function GlobalState(props) {
     setUserState({
       ...userState,
       loggedIn: true,
+      _id: user._id,
       name: user.name,
       email: user.email,
       img: user.img,
@@ -32,6 +33,7 @@ export default function GlobalState(props) {
     setUserState({
       ...userState,
       loggedIn: false,
+      _id: "",
       name: "",
       email: "",
       img: ""
@@ -80,6 +82,7 @@ export default function GlobalState(props) {
         <UserContext.Provider
           value={{
             loggedIn: userState.loggedIn,
+            _id: userState._id,
             name: userState.name,
             email: userState.email,
             img: userState.img,
