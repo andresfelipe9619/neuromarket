@@ -86,26 +86,28 @@ const CartPage = props => {
             })}
             {/* </Paper> */}
           </Grid>
-          <Grid container item xs={3} sm={3} justify="center">
-            {/* <Paper> */}
-            <Grid item xs={12} sm={12}>
-              <Typography variant="h6">
-                {" "}
-                Subtotal: USD
-                {subtotal}
-              </Typography>
+          <div className={classes.sticky}>
+            <Grid container item xs={3} sm={3} justify="center">
+              {/* <Paper> */}
+              <Grid item xs={12} sm={12}>
+                <Typography variant="h6">
+                  {" "}
+                  Subtotal: USD
+                  {subtotal}
+                </Typography>
+              </Grid>
+              <Grid item xs={8} sm={8}>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={goTo("/checkout")}
+                >
+                  Proceed with the Checkout
+                </Button>
+              </Grid>
+              {/* </Paper> */}
             </Grid>
-            <Grid item xs={8} sm={8}>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={goTo("/checkout")}
-              >
-                Proceed with the Checkout
-              </Button>
-            </Grid>
-            {/* </Paper> */}
-          </Grid>
+          </div>
         </Grid>
       )}
     </React.Fragment>
