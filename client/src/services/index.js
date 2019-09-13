@@ -1,5 +1,5 @@
 import { Product } from "./product";
-import { Order } from "./product";
+import { Order } from "./order";
 import { Auth } from "./auth";
 import { User } from "./user";
 import { Category } from "./category";
