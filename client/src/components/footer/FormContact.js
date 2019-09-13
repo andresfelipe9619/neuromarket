@@ -51,10 +51,10 @@ export default function TextFields() {
 				description,
 				email,
 			};
-			console.log(objetoContenido);
 			// mandamos la info
 			try {
 				const contact = await Contact.create(objetoContenido);
+				console.log(contact)
 				Swal.fire({
 					position: 'top-end',
 					type: 'success',
@@ -63,8 +63,6 @@ export default function TextFields() {
 					timer: 1500,
 				});
 			} catch (error) {
-				console.log('estoy en el error');
-
 				Swal.fire({
 					type: 'error',
 					title: 'Oops...',
@@ -80,10 +78,6 @@ export default function TextFields() {
 	const [description, setdescription] = useState('');
 	const [email, setEmail] = useState('');
 
-	console.log(name);
-	console.log(lastname);
-	console.log(description);
-	console.log(email);
 
 	return (
 		<form className={classes.container} onSubmit={footer_contact}>

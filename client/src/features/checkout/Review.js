@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from 'react';
+import UserContext from '../../context/user-context';
 import Typography from "@material-ui/core/Typography";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -15,6 +16,7 @@ export default function Review({
   shippingData,
   showOrderSuccesMessage
 }) {
+  const user = useContext(UserContext);
   const { firstName, lastName, address, city, state, country } = shippingData;
   const handlePlaceOrder = () => {
     const orderData = {
@@ -24,7 +26,8 @@ export default function Review({
         state,
         country
       },
-      products: cart
+      products: cart,
+      user
     };
     showOrderSuccesMessage();
     console.log("orderData", orderData);

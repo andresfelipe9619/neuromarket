@@ -51,7 +51,7 @@ const styles = (theme) => ({
 	},
 });
 const ProductsDetailsPage = (props) => {
-	const {addProductToCart, addProductToFavorites} = useContext(ShopContext);
+	const {addProductToCart} = useContext(ShopContext);
 	const [product, setProduct] = useState(null);
 	const {match} = props;
 

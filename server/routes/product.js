@@ -16,7 +16,7 @@ app.get("/products", (req, res) => {
 
   Producto.find(query.category && { category: query.category })
     .skip(desde)
-    .limit(40)
+    .limit(100)
     // .populate('user', 'name email')
     // .populate('category', 'description')
     .exec((err, products) => {
