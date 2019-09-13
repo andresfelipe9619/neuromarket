@@ -31,7 +31,7 @@ export default function HomePage() {
 					</Grid>
 				</Paper>
 				<div className={classes.title}>
-					<Typography variant="h3">Best Sellers</Typography>
+					<Typography variant="h3">BEST SELLERS</Typography>
 				</div>
 				<ProductsList products={products} />
 				<Grid container spacing={5} className={classes.mainGrid}></Grid>

@@ -7,13 +7,11 @@ import { Order } from "@neuromarket/services";
 import { withStyles } from "@material-ui/core";
 import {
   Button,
-  IconButton,
   Typography,
   CircularProgress
 } from "@material-ui/core";
 import {
   ArrowRight as ArrowRightIcon,
-  MoreVert as MoreVertIcon
 } from "@material-ui/icons";
 import {
   Portlet,
@@ -45,15 +43,6 @@ class ProductList extends Component {
       this.setState({ isLoading: true });
       const order = await Order.getAll();
       const newOrder = order.orders;
-      console.log(newOrder);
-      {
-        newOrder.map(order => {
-          const json = order.products
-          console.log(json);
-        })
-      }
-
-
       if (this.signal) {
         this.setState({
           isLoading: false,

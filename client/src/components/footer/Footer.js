@@ -5,7 +5,8 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import { Grid, Paper } from '@material-ui/core';
 import FormContact from './FormContact';
-
+import CssBaseline from '@material-ui/core/CssBaseline';
+import SkyFooter from './SkyFooter';
 function Copyright() {
 	return (
 		<Typography variant="body2" color="textSecondary" align="center">
@@ -25,6 +26,11 @@ const useStyles = makeStyles(theme => ({
 		flexDirection: 'column',
 		marginTop: '20px',
 	},
+ main: {
+    marginTop: theme.spacing(8),
+    marginBottom: theme.spacing(2),
+  },
+
 	footer: {
 		borderTopColor: 'black',
 		borderTopWidth: '4px',
@@ -50,6 +56,14 @@ export default function StickyFooter() {
 	const classes = useStyles();
 	return (
 		<div className={classes.root}>
+		<CssBaseline />
+      <Container component="main" className={classes.main} maxWidth="sm">
+        <Typography  align="center" variant="h2" component="h1" gutterBottom>
+          BANCOS ASOCIADOS CON NOSOSTROS
+        </Typography>
+        <SkyFooter/>
+        <Typography  align="center" variant="body1">PROYECTO NeuroMarket WWW univalle {'Copyright © '} </Typography>
+      </Container>
 			<footer className={classes.footer}>
 				<Container spacing={3} maxWidth="lg">
 					<Typography variant="body1">My sticky footer can be found here.</Typography>
