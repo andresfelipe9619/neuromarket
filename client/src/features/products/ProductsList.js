@@ -4,7 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Sppiner from '../Spinner/Sppiner';
 
 const ProductsList = ({ products, ...actions }) => {
-	console.log('el arreglo de productos es ' + products);
 	const [isLoading, setIsLoading] = useState(false);
 	useEffect(() => {
 		setIsLoading(true);

@@ -1,18 +1,9 @@
+
 import * as Yup from "yup";
 
-export const addressInitialValues = {
-  address: "asdkasjdkasd",
-  firstName: "andres",
-  lastName: "suarez",
-  city: "cali",
-  state: "valle",
-  zip: "abccd",
-  country: "colombia"
-};
 
 export const addressValidationSchema = Yup.object().shape({
-  firstName: Yup.string().required("Required"),
-  lastName: Yup.string().required("Required"),
+  fullName: Yup.string().required("Required"),
   city: Yup.string().required("Required")
 });
 

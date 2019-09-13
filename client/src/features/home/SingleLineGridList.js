@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
@@ -33,18 +33,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function SingleLineGridList({ products }) {
 	const classes = useStyles();
-
-	console.log(products.length);
 	const tileData = [];
 	products.map(product => {
 		if (product.offer === true) {
-			console.log(product);
 			tileData.push(product);
 			return tileData;
 		}
+		return null;
 	});
-
-	console.log(tileData);
 
 	return (
 		<div className={classes.root}>

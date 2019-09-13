@@ -55,14 +55,13 @@ const SignIn = (props) => {
 		setIsLoading(true);
 		Auth.loginGoogle(user)
 			.then(() => {
-				console.log('user :', user);
 				userLoggedIn({
 					name: user.name,
 					email: user.email,
 					img: user.img,
 					phone: '',
 				});
-				history.push('/dashboard');
+				history.push('/checkout');
 			})
 			.catch((err) => {
 				console.log('err :', err);
@@ -80,7 +79,6 @@ const SignIn = (props) => {
 
 		Auth.login({email: values.email, password: values.password})
 			.then((user) => {
-				console.log('user :', user);
 				userLoggedIn({
 					name: user.user.name,
 					email: user.user.email,
@@ -89,7 +87,7 @@ const SignIn = (props) => {
 					_id: user.user._id,
 				});
 				setIsLoading(false);
-				history.push('/dashboard');
+				history.push('/checkout');
 			})
 			.catch(() => {
 				setIsLoading(false);
