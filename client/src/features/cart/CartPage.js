@@ -71,7 +71,7 @@ const CartPage = props => {
                     />
                   </Grid>
                   <Grid item xs={12} sm={3}>
-                    <Typography align="center" variant="h6" a>
+                    <Typography align="center" variant="h6">
                       {price}
                     </Typography>
                   </Grid>
