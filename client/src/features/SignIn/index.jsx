@@ -87,7 +87,7 @@ const SignIn = (props) => {
 					_id: user.user._id,
 				});
 				setIsLoading(false);
-				history.push('/checkout');
+				history.push('/dashboard/purchase/history');
 			})
 			.catch(() => {
 				setIsLoading(false);

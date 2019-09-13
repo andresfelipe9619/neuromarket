@@ -2,7 +2,8 @@ import React, { Component, Fragment } from "react";
 import { Link } from "react-router-dom";
 import classNames from "classnames";
 import PropTypes from "prop-types";
-import { Product } from "@neuromarket/services";
+import { Order } from "@neuromarket/services";
+
 import { withStyles } from "@material-ui/core";
 import {
   Button,
@@ -25,6 +26,7 @@ import styles from "./styles";
 
 class ProductList extends Component {
 
+
   signal = true;
 
   state = {
@@ -32,20 +34,31 @@ class ProductList extends Component {
     limit: 4,
     products: [],
     productsTotal: 0,
+    order: [],
+    orderTotal: 0,
     error: null
   };
 
-  async getProducts() {
+
+  async getorders() {
     try {
       this.setState({ isLoading: true });
-      const { limit } = this.state;
-      const { products } = await Product.getAll(limit);
-      const productsTotal = products.length;
+      const order = await Order.getAll();
+      const newOrder = order.orders;
+      console.log(newOrder);
+      {
+        newOrder.map(order => {
+          const json = order.products
+          console.log(json);
+        })
+      }
+
+
       if (this.signal) {
         this.setState({
           isLoading: false,
-          products,
-          productsTotal
+          products: newOrder,
+
         });
       }
     } catch (error) {
@@ -58,9 +71,12 @@ class ProductList extends Component {
     }
   }
 
+
+
+
   componentDidMount() {
     this.signal = true;
-    this.getProducts();
+    this.getorders();
   }
 
   componentWillUnmount() {
@@ -70,11 +86,13 @@ class ProductList extends Component {
   renderProducts() {
     const { classes } = this.props;
     const { isLoading, products } = this.state;
+    console.log(products);
+
 
     if (isLoading) {
       return (
         <div className={classes.progressWrapper}>
-          <CircularProgress/>
+          <CircularProgress />
         </div>
       );
     }
@@ -88,32 +106,33 @@ class ProductList extends Component {
     return (
       <Fragment>
         {products.map((product, i) => (
-          <div className={classes.product} key={i}>
-            <div className={classes.productImageWrapper}>
-              <img
-                alt="Product Name"
-                className={classes.productImage}
-                src={product.imageUrl}
-              />
-            </div>
-            <div className={classes.productDetails}>
-              <Link to="#">
-                <Typography className={classes.productTitle} variant="h5">
-                  {product.name}
-                </Typography>
-              </Link>
-              <Typography className={classes.productTimestamp} variant="body2">
-                Updated 5hr ago
-              </Typography>
-            </div>
-            <div>
-              <IconButton>
-                <MoreVertIcon
-                />
-              </IconButton>
-            </div>
+          <div className={classes.product}
+            key={i}>
+            {product.products.map(product => (
+              <>
+                < div className={classes.productImageWrapper}>
+                  <img
+                    alt="Product Name"
+                    className={classes.productImage}
+                    src={product.imageUrl}
+                  />
+                </div>
+                <div className={classes.productDetails}>
+                  <Link to="#">
+                    <Typography className={classes.productTitle} variant="h5">
+                      {product.name}
+                    </Typography>
+                  </Link>
+                  <Typography className={classes.productTimestamp} variant="body2">
+                    Updated 5hr ago
+                   </Typography>
+                </div>
+
+              </>
+            ))}
           </div>
-        ))}
+        ))
+        }
       </Fragment>
     );
   }
