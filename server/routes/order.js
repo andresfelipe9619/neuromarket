@@ -11,17 +11,13 @@ let OrderItem = require("../models/orderItem");
 //  Obtener orders
 // ===========================
 app.get("/orders", (req, res) => {
-  // trae todos los orders
-  // populate: user category
-  // paginado
-
   let desde = req.query.desde || 0;
   desde = Number(desde);
 
   Order.find()
     .skip(desde)
     .limit(5)
-    // .populate('user', 'name email')
+    .populate("user", "name email")
     .exec((err, orders) => {
       if (err) {
         return res.status(500).json({
@@ -41,13 +37,10 @@ app.get("/orders", (req, res) => {
 //  Obtener un order por ID
 // ===========================
 app.get("/orders/:id", (req, res) => {
-  // populate: user category
-  // paginado
   let id = req.params.id;
 
   Order.findById(id)
     .populate("user", "name email")
-    .populate("orderItems")
     .exec((err, orderDB) => {
       if (err) {
         return res.status(500).json({
@@ -101,22 +94,12 @@ app.get("/orders/search/:termino", verificaToken, (req, res) => {
 //  Crear un nuevo order
 // ===========================
 app.post("/orders", (req, res) => {
-  // grabar el user
-  // grabar una category del listado
-
   let body = req.body;
-  let clientAddress = body.address._id || body.address;
-  // if("address" in clientAddress){
-  //   let address = new Address({
-  //       // user: req.user._id,
-  //       address: clientAddress.address,
-  //     });
-  // }
+
   let order = new Order({
-    // user: req.user._id,
     user: body.user,
-    address: clientAddress,
-    orderItems: body.orderItems
+    address: body.address,
+    products: body.products
   });
 
   order.save((err, orderDB) => {
