@@ -85,10 +85,10 @@ export default function AppRouter() {
           <Route component={NotFound} exact path="/not-found" />
           <Redirect to="/not-found" />
         </Switch>
-        <Switch>
+        {/* <Switch>
           <Route path="/dashboard" component={null} />
           <Route path="/" component={Footer} />
-        </Switch>
+        </Switch> */}
       </Container>
     </BrowserRouter>
   );
