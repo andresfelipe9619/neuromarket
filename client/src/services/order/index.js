@@ -1,24 +1,11 @@
-// Mock data
-import orders from '../../data/orders';
-import users from '../../data/users';
+import { serverRequests } from "../axios-server";
 
-function lookupOrder(order) {
-  order.customer = users.find(user => user.id === order.customer);
-
-  return order;
-}
-
-export const getOrders = (limit = 6) => {
-  return new Promise(resolve => {
-    const ordersLookup = JSON.parse(JSON.stringify(orders))
-      .slice(0, limit)
-      .map(lookupOrder);
-
-    setTimeout(() => {
-      resolve({
-        orders: ordersLookup,
-        ordersTotal: orders.length
-      });
-    }, 700);
-  });
+export const Order = {
+  getAll: () => serverRequests.get(`/orders`),
+  getAllBy: query => serverRequests.get(`/orders?${query}`),
+  delete: id => serverRequests.del(`/orders/${id}`),
+  get: id => serverRequests.get(`/orders/${id}`),
+  update: order => serverRequests.put(`/orders/${order._id}`, order),
+  create: order => serverRequests.post("/orders", order),
+  search: orderlook => serverRequests.get(`/orders/search/${orderlook}`)
 };
