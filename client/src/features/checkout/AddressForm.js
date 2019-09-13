@@ -12,11 +12,11 @@ import {  addressValidationSchema } from './form-schemas';
 function AddressForm({ classes, handleNext, setShippingData }) {
 	const user = useContext(UserContext);
 	const addressInitialValues = {
-		address: 'calle No 53-34',
+		address: '',
 		fullName: user.name,
-		city: 'cali',
-		state: 'valle',
-		zip: 'abccd',
+		city: '',
+		state: '',
+		zip: '',
 		country: 'colombia',
 	};
 	return (
@@ -27,7 +27,6 @@ function AddressForm({ classes, handleNext, setShippingData }) {
 			<Formik
 				initialValues={addressInitialValues}
 				onSubmit={(values, { setSubmitting, ...rest }) => {
-					console.log('values', { values, rest });
 					setSubmitting(true);
 					setShippingData(values);
 					handleNext();
