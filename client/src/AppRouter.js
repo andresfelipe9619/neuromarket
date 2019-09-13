@@ -47,7 +47,12 @@ export default function AppRouter() {
           <Route path="/cart" component={CartPage} exact />
           <Route path="/sign-up" component={SignUp} exact />
           <Route path="/sign-in" component={SignIn} exact />
-          <Route path="/checkout" component={CheckoutPage} exact />
+          <PrivateRoute
+            restricted={true}
+            path="/checkout"
+            component={CheckoutPage}
+            exact
+          />
           <Route path="/category/:id" component={ProductsPage} exact />
           <Route path="/favorites" component={FavoritesPage} exact />
           <Route path="/products/:id" component={ProductsDetailsPage} exact />
@@ -80,7 +85,10 @@ export default function AppRouter() {
           <Route component={NotFound} exact path="/not-found" />
           <Redirect to="/not-found" />
         </Switch>
-        <Footer />
+        <Switch>
+          <Route path="/dashboard" component={null} />
+          <Route path="/" component={Footer} />
+        </Switch>
       </Container>
     </BrowserRouter>
   );

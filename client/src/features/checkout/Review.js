@@ -6,7 +6,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
-
+import { Order } from "@neuromarket/services";
 export default function Review({
   cart,
   classes,
@@ -26,7 +26,7 @@ export default function Review({
     country,
     zip
   } = shippingData;
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
     const orderData = {
       address: {
         address,
@@ -38,8 +38,13 @@ export default function Review({
       products: cart,
       user: user._id
     };
-    showOrderSuccesMessage();
-    console.log("orderData", orderData);
+    try {
+      await Order.create(orderData);
+      showOrderSuccesMessage();
+    } catch (error) {
+      console.log("error", error);
+    }
+
   };
 
   const ObjectKeyToHumanString = key => {

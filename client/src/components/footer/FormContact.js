@@ -5,7 +5,7 @@ import { Contact } from '@neuromarket/services';
 import Swal from 'sweetalert2';
 import Button from '@material-ui/core/Button';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles((theme) =>
 	createStyles({
 		container: {
 			display: 'flex',
@@ -90,7 +90,7 @@ export default function TextFields() {
 			/>
 
 			<TextField
-				id="standard-name"
+				id="standard-lastname"
 				label="Last Name"
 				className={classes.textField}
 				margin="normal"
