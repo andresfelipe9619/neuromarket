@@ -22,7 +22,6 @@ export default function PaymentForm({
       <Formik
         initialValues={paymentInitialValues}
         onSubmit={(values, { setSubmitting }) => {
-          console.log("values", values);
           setSubmitting(true);
           setPaymentData(values);
           handleNext();

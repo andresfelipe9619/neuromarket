@@ -41,7 +41,6 @@ function Navbar(props) {
 	]);
 
   const busquedacomparar = product => async e => {
-    console.log("tu producto:" + product);
     function getSearchProducts(product) {
       return Product.search(product);
     }

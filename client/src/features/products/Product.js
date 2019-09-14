@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const Product = ({product, addProductToCart, addProductToFavorites}) => {
+const Product = ({user, product, addProductToCart, addProductToFavorites}) => {
 	const classes = useStyles();
 	const handleOnAddFavorite = useCallback(
 		() => addProductToFavorites(product),
@@ -64,7 +64,7 @@ const Product = ({product, addProductToCart, addProductToFavorites}) => {
 						Add to Cart
 					</Button>
 				)}
-				{addProductToFavorites && (
+				{user.loggedIn && addProductToFavorites && (
 					<IconButton color='inherit' onClick={handleOnAddFavorite}>
 						<FavoriteBorderIcon />
 					</IconButton>

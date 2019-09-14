@@ -5,14 +5,8 @@ import PropTypes from "prop-types";
 import { Order } from "@neuromarket/services";
 
 import { withStyles } from "@material-ui/core";
-import {
-  Button,
-  Typography,
-  CircularProgress
-} from "@material-ui/core";
-import {
-  ArrowRight as ArrowRightIcon,
-} from "@material-ui/icons";
+import { Button, Typography, CircularProgress } from "@material-ui/core";
+import { ArrowRight as ArrowRightIcon } from "@material-ui/icons";
 import {
   Portlet,
   PortletHeader,
@@ -23,8 +17,6 @@ import {
 import styles from "./styles";
 
 class ProductList extends Component {
-
-
   signal = true;
 
   state = {
@@ -37,7 +29,6 @@ class ProductList extends Component {
     error: null
   };
 
-
   async getorders() {
     try {
       this.setState({ isLoading: true });
@@ -46,8 +37,7 @@ class ProductList extends Component {
       if (this.signal) {
         this.setState({
           isLoading: false,
-          products: newOrder,
-
+          products: newOrder
         });
       }
     } catch (error) {
@@ -59,9 +49,6 @@ class ProductList extends Component {
       }
     }
   }
-
-
-
 
   componentDidMount() {
     this.signal = true;
@@ -76,7 +63,6 @@ class ProductList extends Component {
     const { classes } = this.props;
     const { isLoading, products } = this.state;
     console.log(products);
-
 
     if (isLoading) {
       return (
@@ -95,15 +81,19 @@ class ProductList extends Component {
     return (
       <Fragment>
         {products.map((product, i) => (
-          <div className={classes.product}
-            key={i}>
+          <div className={classes.product} key={i}>
             {product.products.map(product => (
               <>
-                < div className={classes.productImageWrapper}>
+                {console.log("product", product)}
+                <div className={classes.productImageWrapper}>
                   <img
                     alt="Product Name"
                     className={classes.productImage}
-                    src={product.imageUrl}
+                    src={
+                      product.imageUrl || product.imageurls
+                        ? product.imageurls.split(",")[0]
+                        : "https://source.unsplash.com/random"
+                    }
                   />
                 </div>
                 <div className={classes.productDetails}>
@@ -112,16 +102,17 @@ class ProductList extends Component {
                       {product.name}
                     </Typography>
                   </Link>
-                  <Typography className={classes.productTimestamp} variant="body2">
+                  <Typography
+                    className={classes.productTimestamp}
+                    variant="body2"
+                  >
                     Updated 5hr ago
-                   </Typography>
+                  </Typography>
                 </div>
-
               </>
             ))}
           </div>
-        ))
-        }
+        ))}
       </Fragment>
     );
   }

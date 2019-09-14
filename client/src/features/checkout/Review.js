@@ -17,15 +17,7 @@ export default function Review({
   showOrderSuccesMessage
 }) {
   const user = useContext(UserContext);
-  const {
-    firstName,
-    lastName,
-    address,
-    city,
-    state,
-    country,
-    zip
-  } = shippingData;
+  const { fullName, address, city, state, country, zip } = shippingData;
   const handlePlaceOrder = async () => {
     const orderData = {
       address: {
@@ -44,7 +36,6 @@ export default function Review({
     } catch (error) {
       console.log("error", error);
     }
-
   };
 
   const ObjectKeyToHumanString = key => {
@@ -71,7 +62,7 @@ export default function Review({
               secondary={`$${product.price} x ${product.quantity}`}
             />
             <Typography variant="body2">
-              ${product.price * product.quantity}
+              ${(product.price * product.quantity).toFixed(2)}
             </Typography>
           </ListItem>
         ))}
@@ -88,7 +79,7 @@ export default function Review({
             Shipping
           </Typography>
           <Typography gutterBottom>
-            {lastName}, {firstName}
+          {fullName}
           </Typography>
           <Typography gutterBottom>
             {[address, city, state, country].join(", ")}
