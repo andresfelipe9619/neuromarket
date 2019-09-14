@@ -106,14 +106,14 @@ const ProductsDetailsPage = (props) => {
 								>
 									Add to Cart
 								</Button>
-								<IconButton
+								{/* <IconButton
 									edge='end'
 									size='medium'
 									color='inherit'
 									className={classes.favsbtn}
 								>
 									<FavoriteBorderIcon fontSize='large' />
-								</IconButton>
+								</IconButton> */}
 							</Grid>
 						</Grid>
 					</Grid>

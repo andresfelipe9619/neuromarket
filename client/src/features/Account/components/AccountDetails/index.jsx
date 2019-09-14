@@ -38,6 +38,7 @@ const Account = props => {
 
   const handleSave = async values => {
     setIsLoading(true);
+    console.log('values', values)
     try {
       await User.update({
         _id: user._id,
@@ -72,7 +73,7 @@ const Account = props => {
           handleBlur,
           handleSubmit
         } = formikProps;
-
+        console.log('errors', errors)
         return (
           <Portlet {...rest} className={rootClassName}>
             <PortletHeader>
